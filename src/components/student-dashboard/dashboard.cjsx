@@ -58,6 +58,8 @@ module.exports = React.createClass
               <BS.Tab eventKey={2} title='All Past Work'>
                 <AllEventsByWeek courseId={courseId}/>
               </BS.Tab>
+              <BS.Tab eventKey={3} title='Forum'>
+              </BS.Tab>
             </BS.Tabs>
           </BS.Col>
 
