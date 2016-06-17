@@ -1,16 +1,16 @@
 _ = require 'underscore'
 moment = require 'moment-timezone'
 
-Builder = require '../../../src/components/task-plan/builder'
-{TaskPlanActions, TaskPlanStore} = require '../../../src/flux/task-plan'
-{Testing, sinon, expect, _, React} = require '../helpers/component-testing'
-{ExtendBasePlan, PlanRenderHelper} = require '../helpers/task-plan'
+Builder = require '../../../../src/components/task-plan/builder'
+{TaskPlanActions, TaskPlanStore} = require '../../../../src/flux/task-plan'
+{Testing, sinon, expect, _, React} = require '../../helpers/component-testing'
+{ExtendBasePlan, PlanRenderHelper} = require '../../helpers/task-plan'
 
-{CourseListingActions, CourseListingStore} = require '../../../src/flux/course-listing'
-{CourseStore} = require '../../../src/flux/course'
+{CourseListingActions, CourseListingStore} = require '../../../../src/flux/course-listing'
+{CourseStore} = require '../../../../src/flux/course'
 
-{TimeStore} = require '../../../src/flux/time'
-TimeHelper = require '../../../src/helpers/time'
+{TimeStore} = require '../../../../src/flux/time'
+TimeHelper = require '../../../../src/helpers/time'
 TutorDateFormat = TimeStore.getFormat()
 ISO_DATE_FORMAT = 'YYYY-MM-DD'
 
@@ -22,7 +22,7 @@ dayAfter = moment(TimeStore.getNow()).add(2, 'day').format(ISO_DATE_FORMAT)
 getDateString = (value) -> TimeHelper.getMomentPreserveDate(value).format(TutorDateFormat)
 getISODateString = (value) -> TimeHelper.getMomentPreserveDate(value).format(ISO_DATE_FORMAT)
 
-COURSES = require '../../../api/user/courses.json'
+COURSES = require '../../../../api/user/courses.json'
 NEW_READING = ExtendBasePlan({id: "_CREATING_1", settings: {page_ids: []}}, false, false)
 PUBLISHED_MODEL = ExtendBasePlan({
   id: '1'
@@ -220,10 +220,10 @@ describe 'Task Plan Builder', ->
     helper(NEW_READING).then ({dom, element}) ->
       expect([undefined, CourseStore.getTimezone(courseId)]).to.contain(moment().tz())
 
-  it 'disables name and description fields when plan is past due', ->
+  it 'name and description fields are enabled when plan is past due', ->
     helper(PUBLISHED_MODEL).then ({dom}) ->
-      expect(dom.querySelector('#reading-title').disabled).to.be.true
-      expect(dom.querySelector('.assignment-description textarea').disabled).to.be.true
+      expect(dom.querySelector('#reading-title').disabled).to.be.false
+      expect(dom.querySelector('.assignment-description textarea').disabled).to.be.false
 
   it 'sets the default due date when based on query string', ->
     helper(NEW_READING, {due_at: getISODateString(dayAfter)} ).then ({dom, element}) ->

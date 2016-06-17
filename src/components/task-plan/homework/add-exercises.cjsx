@@ -16,6 +16,7 @@ AddExercises = React.createClass
   propTypes:
     planId:     React.PropTypes.string.isRequired
     courseId:   React.PropTypes.string.isRequired
+    onAddClick: React.PropTypes.func.isRequired
     sectionIds: React.PropTypes.array
 
   getInitialState: ->
@@ -79,6 +80,9 @@ AddExercises = React.createClass
   getExerciseIsSelected: (exercise) ->
     TaskPlanStore.hasExercise(@props.planId, exercise.id)
 
+  setCurrentSection: (currentSection) ->
+    @setState({currentSection})
+
   render: ->
     return @renderLoading() if @exercisesAreLoading()
 
@@ -94,14 +98,17 @@ AddExercises = React.createClass
       when 'details'
         <ExerciseDetails
           {...sharedProps}
+          topScrollOffset={60}
           selectedExercise={@state.selectedExercise}
+          onSectionChange={@setCurrentSection}
+          selectedSection={@state.currentSection}
           displayFeedback={@state.displayFeedback}
           onShowCardViewClick={@onShowCardViewClick}
         />
       else
         <ExerciseCards
           {...sharedProps}
-          topScrollOffset={150}
+          topScrollOffset={110}
           onShowDetailsViewClick={@onShowDetailsViewClick}
         />
 
@@ -112,6 +119,7 @@ AddExercises = React.createClass
         canAdd={@props.canEdit}
         reviewClicked={@props.hide}
         onCancel={@props.cancel}
+        addClicked={@props.onAddClick}
         planId={@props.planId}
         onShowCardViewClick={@onShowCardViewClick}
         onShowDetailsViewClick={@onShowDetailsViewClick}

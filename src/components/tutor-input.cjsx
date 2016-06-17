@@ -151,16 +151,6 @@ TutorDateInput = React.createClass
   getValue: ->
     @props.value or @state.value
 
-  onToggle: (open) ->
-    @setState({expandCalendar: open})
-
-  clickHandler: (event) ->
-    if (event.target.tagName is "INPUT" and not @state.expandCalendar)
-      @setState({expandCalendar: true})
-
-  onBlur: (event) ->
-    @setState({hasFocus: false})
-
   render: ->
     classes = classnames 'form-control',
       empty: (not @props.value and not @state.hasFocus)
@@ -185,11 +175,11 @@ TutorDateInput = React.createClass
 
     if not @props.disabled
       dateElem = <DatePicker
+          readOnly={true}
           minDate={min}
           maxDate={max}
           onFocus={@expandCalendar}
           dateFormat={TutorDateFormat}
-          onBlur={@onBlur}
           key={@props.id}
           ref="picker"
           className={classes}
@@ -202,7 +192,7 @@ TutorDateInput = React.createClass
       displayValue = value.format(TutorDateFormat)
 
     <div className={wrapperClasses}>
-      <input type='text' disabled className={classes} value={displayValue}/>
+      <input type='text' disabled readonly className={classes} value={displayValue}/>
       <div className="floating-label">{@props.label}</div>
       <div className="hint required-hint">
         Required Field <i className="fa fa-exclamation-circle"></i>

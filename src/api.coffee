@@ -171,10 +171,12 @@ start = (bootstrapData) ->
       url: "/api/ecosystems/#{ecosystemId}/exercises/#{requestType}?#{toParams({page_ids})}"
   # And this one loads using a courseId
   apiHelper ExerciseActions, ExerciseActions.loadForCourse,
-    ExerciseActions.loadedForCourse, 'GET', (courseId, page_ids, requestType = 'homework_core') ->
-      url: "/api/courses/#{courseId}/exercises/#{requestType}?#{toParams({page_ids})}"
+    ExerciseActions.loadedForCourse, 'GET', (courseId, pageIds, ecosystemId = null, requestType = 'homework_core') ->
+      params = { page_ids: pageIds }
+      params['ecosystem_id'] = ecosystemId if ecosystemId?
+      url: "/api/courses/#{courseId}/exercises/#{requestType}?#{toParams(params)}"
 
-  apiHelper ExerciseActions, ExerciseActions.saveExclusions,
+  apiHelper ExerciseActions, ExerciseActions.saveExerciseExclusion,
     ExerciseActions.exclusionsSaved, 'PUT', (courseId) ->
       url: "/api/courses/#{courseId}/exercises"
       payload: _.map ExerciseStore.getUnsavedExclusions(), (is_excluded, id) -> {id, is_excluded}
@@ -219,6 +221,9 @@ start = (bootstrapData) ->
     url: "/api/tasks/#{id}/accept_late_work"
   apiHelper ScoresActions, ScoresActions.rejectLate, ScoresActions.rejectedLate, 'PUT', (id) ->
     url: "/api/tasks/#{id}/reject_late_work"
+  apiHelper StudentDashboardActions, StudentDashboardActions.hide, StudentDashboardActions.hidden, 'DELETE', (id) ->
+    url: "/api/tasks/#{id}"
+
 
   apiHelper ScoresExportActions, ScoresExportActions.load, ScoresExportActions.loaded, 'GET', (id) ->
     url: "/api/courses/#{id}/performance/exports"
@@ -253,6 +258,8 @@ start = (bootstrapData) ->
     url: "/api/periods/#{period}", payload: params
   apiHelper PeriodActions, PeriodActions.delete, PeriodActions.deleted, 'DELETE', (id) ->
     url: "/api/periods/#{id}"
+  apiHelper PeriodActions, PeriodActions.restore, PeriodActions.restored, 'PUT', (id) ->
+    url: "/api/periods/#{id}/restore"
 
   apiHelper TaskStepActions, TaskStepActions.load, TaskStepActions.loaded, 'GET', (id) ->
     throw new Error('BUG: Wrong type') unless typeof id is 'string' or typeof id is 'number'
@@ -276,9 +283,6 @@ start = (bootstrapData) ->
   apiHelper TaskStepActions, TaskStepActions.setAnswerId, TaskStepActions.saved, 'PATCH', (id, answer_id) ->
     url: "/api/steps/#{id}"
     payload: {answer_id}
-
-  apiHelper TaskActions, TaskActions.loadUserTasks, TaskActions.loadedUserTasks, 'GET', (courseId) ->
-    url: "/api/courses/#{courseId}/tasks"
 
   apiHelper TaskTeacherReviewActions, TaskTeacherReviewActions.load, TaskTeacherReviewActions.loaded, 'GET', (id) ->
     url: "/api/plans/#{id}/review"

@@ -4,7 +4,7 @@ Router = require 'react-router'
 {TaskPlanStore, TaskPlanActions} = require '../../flux/task-plan'
 {PlanPublishStore, PlanPublishActions} = require '../../flux/plan-publish'
 PlanHelper = require '../../helpers/plan'
-{AsyncButton} = require 'openstax-react-components'
+{AsyncButton, SuretyGuard} = require 'openstax-react-components'
 TutorDialog = require '../tutor-dialog'
 BackButton = require '../buttons/back-button'
 
@@ -50,9 +50,8 @@ PlanFooter = React.createClass
 
   onDelete: ->
     {id, courseId} = @props
-    if confirm('Are you sure you want to delete this?')
-      TaskPlanActions.delete(id)
-      @props.goBackToCalendar()
+    TaskPlanActions.delete(id)
+    @props.goBackToCalendar()
 
   onSave: ->
     @setState({saving: true, publishing: false})
@@ -74,7 +73,7 @@ PlanFooter = React.createClass
 
     saveable = not (TaskPlanStore.isPublished(id) or TaskPlanStore.isPublishing(id))
     isWaiting = TaskPlanStore.isSaving(id) or TaskPlanStore.isPublishing(id) or TaskPlanStore.isDeleteRequested(id)
-    deleteable = not TaskPlanStore.isNew(id) and not (TaskPlanStore.isOpened(id) and TaskPlanStore.isPublished(id)) and not isWaiting
+    deleteable = not TaskPlanStore.isNew(id) and not isWaiting
     isFailed = TaskPlanStore.isFailed(id)
 
     tips = <BS.Popover id='plan-footer-popover'>
@@ -92,18 +91,27 @@ PlanFooter = React.createClass
     </BS.Popover>
 
     if isEditable
-      publishButton =
-        <AsyncButton
-          bsStyle='primary'
-          className='-publish'
+
+      publishButtonProps =
+        bsStyle:  'primary'
+        className:  '-publish'
+        isFailed: isFailed
+        disabled: isWaiting
+
+      if TaskPlanStore.isPublished(id)
+        saveButton = <AsyncButton {...publishButtonProps}
+          onClick={@onSave}
+          isWaiting={isWaiting and @state.saving}
+          waitingText='Saving…'>
+          Save
+        </AsyncButton>
+      else
+        publishButton = <AsyncButton {...publishButtonProps}
           onClick={@onPublish}
           isWaiting={isWaiting and @state.publishing}
-          isFailed={isFailed}
           waitingText='Publishing…'
-          disabled={isWaiting}
-          isJob={true}
-          >
-          {'Publish'}
+          isJob={true}>
+          Publish
         </AsyncButton>
 
       cancelButton =
@@ -126,15 +134,22 @@ PlanFooter = React.createClass
 
     if deleteable
       deleteLink =
-        <AsyncButton
-          className='delete-link pull-right'
-          onClick={@onDelete}
-          isWaiting={TaskPlanStore.isDeleting(id)}
-          isFailed={isFailed}
-          waitingText='Deleting…'
+        <SuretyGuard
+          onConfirm={@publishExercise}
+          onConfirm={@onDelete}
+          okButtonLabel='Yes'
+          placement='top'
+          message="Some students may have started work on this assignment. Are you sure you want to delete?"
         >
-          <i className="fa fa-trash"></i> Delete Assignment
-        </AsyncButton>
+          <AsyncButton
+            className='delete-link pull-right'
+            isWaiting={TaskPlanStore.isDeleting(id)}
+            isFailed={isFailed}
+            waitingText='Deleting…'
+          >
+            <i className="fa fa-trash"></i> Delete Assignment
+          </AsyncButton>
+        </SuretyGuard>
 
     if saveable
       saveLink =
@@ -150,6 +165,7 @@ PlanFooter = React.createClass
           </AsyncButton>
 
     <div className='footer-buttons'>
+      {saveButton}
       {publishButton}
       {cancelButton}
       {backButton}

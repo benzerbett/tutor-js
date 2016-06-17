@@ -12,8 +12,6 @@ validator = require 'validator'
 ContentHelpers = require '../helpers/content'
 TimeHelper = require '../helpers/time'
 
-ISO_DATE_FORMAT = 'YYYY-MM-DD'
-ISO_TIME_FORMAT = 'HH:mm'
 ISO_DATE_ONLY_REGEX = /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
 
 
@@ -66,14 +64,16 @@ TaskPlanConfig =
     if @_local[planId]?.type is PLAN_TYPES.HOMEWORK or @_changed[planId]?.type is PLAN_TYPES.HOMEWORK
       @_changed[planId] ?= {}
       # need to default final posting json's is feedback immediate to false
-      @_changed[planId].is_feedback_immediate ?= false
+      @_local[planId].is_feedback_immediate ?= false
       @_local[planId].settings.exercise_ids ?= []
       @_local[planId].settings.exercises_count_dynamic ?= TUTOR_SELECTIONS.default
 
     if @_local[planId]?.tasking_plans?
       _.each @_local[planId]?.tasking_plans, (tasking) ->
-        tasking.due_at = TimeHelper.makeMoment(tasking.due_at).format("#{ISO_DATE_FORMAT} #{ISO_TIME_FORMAT}")
-        tasking.opens_at = TimeHelper.makeMoment(tasking.opens_at).format("#{ISO_DATE_FORMAT} #{ISO_TIME_FORMAT}")
+        tasking.due_at = TimeHelper.makeMoment(tasking.due_at)
+          .format("#{TimeHelper.ISO_DATE_FORMAT} #{TimeHelper.ISO_TIME_FORMAT}")
+        tasking.opens_at = TimeHelper.makeMoment(tasking.opens_at)
+          .format("#{TimeHelper.ISO_DATE_FORMAT} #{TimeHelper.ISO_TIME_FORMAT}")
 
     #TODO take out once TaskPlan api is in place
     obj = _.extend({}, @_local[planId], @_changed[planId])
@@ -134,7 +134,7 @@ TaskPlanConfig =
 
     periodTimes
 
-  setPeriods: (id, courseId, periods) ->
+  setPeriods: (id, courseId, periods, isDefault = false) ->
     plan = @_getPlan(id)
     course = CourseStore.get(courseId)
 
@@ -155,7 +155,7 @@ TaskPlanConfig =
 
     @_change(id, {tasking_plans})
 
-    @_setInitialPlan(id)
+    @_setInitialPlan(id) if isDefault
 
   replaceTaskings: (id, taskings) ->
     @_change(id, {tasking_plans: taskings})
@@ -409,7 +409,7 @@ TaskPlanConfig =
         _.each plan.tasking_plans, (tasking) ->
           unless tasking.due_at and tasking.opens_at
             flag = false
-        flag and plan.tasking_plans?.length
+        flag and plan.tasking_plans?.length?
 
       if (plan.type is 'reading')
         return plan.title and isValidDates() and plan.settings?.page_ids?.length > 0
@@ -439,13 +439,8 @@ TaskPlanConfig =
       due_at = @_getFirstTaskingByDueDate(id)?.due_at
 
     isEditable: (id) ->
-      plan = @_getPlan(id)
-      firstDueTasking = @_getFirstTaskingByDueDate(id)
-      isPublishedOrPublishing = !!plan?.published_at or !!plan?.is_publish_requested
-      isPastDue = moment(firstDueTasking?.due_at, ISO_DATE_FORMAT).isBefore(TimeStore.getNow())
-      # cannot be a publishing/published past due assignment, and
       # cannot be/being deleted
-      not ((isPublishedOrPublishing and isPastDue) or @_isDeleteRequested(id))
+      not @_isDeleteRequested(id)
 
     isPublishing: (id) ->
       @_changed[id]?.is_publish_requested or PlanPublishStore.isPublishing(id)
@@ -481,48 +476,48 @@ TaskPlanConfig =
 
     getOpensAtDate: (id, periodId) ->
       opensAt = @exports._getOpensAt.call(@, id, periodId)
-      opensAt?.format?(ISO_DATE_FORMAT) or opensAt
+      opensAt?.format?(TimeHelper.ISO_DATE_FORMAT) or opensAt
 
     getOpensAtTime: (id, periodId) ->
       opensAt = @exports._getOpensAt.call(@, id, periodId)
       return undefined if isDateStringOnly opensAt?.creationData?().input
 
-      opensAt?.format?(ISO_TIME_FORMAT)
+      opensAt?.format?(TimeHelper.ISO_TIME_FORMAT)
 
     getOpensAt: (id, periodId) ->
       opensAt = @exports._getOpensAt.call(@, id, periodId)
-      opensAt?.format?("#{ISO_DATE_FORMAT} #{ISO_TIME_FORMAT}") or opensAt
+      opensAt?.format?("#{TimeHelper.ISO_DATE_FORMAT} #{TimeHelper.ISO_TIME_FORMAT}") or opensAt
 
     _getDueAt: (id, periodId) ->
       dueAt = @exports._getAt.call(@, id, periodId, 'due_at')
 
     getDueAtDate: (id, periodId) ->
       dueAt = @exports._getDueAt.call(@, id, periodId)
-      dueAt?.format?(ISO_DATE_FORMAT) or dueAt
+      dueAt?.format?(TimeHelper.ISO_DATE_FORMAT) or dueAt
 
     getDueAtTime: (id, periodId) ->
       dueAt = @exports._getDueAt.call(@, id, periodId)
       return undefined if isDateStringOnly dueAt?.creationData?().input
 
-      dueAt?.format?(ISO_TIME_FORMAT)
+      dueAt?.format?(TimeHelper.ISO_TIME_FORMAT)
 
     getDueAt: (id, periodId) ->
       dueAt = @exports._getDueAt.call(@, id, periodId)
-      dueAt?.format?("#{ISO_DATE_FORMAT} #{ISO_TIME_FORMAT}") or dueAt
+      dueAt?.format?("#{TimeHelper.ISO_DATE_FORMAT} #{TimeHelper.ISO_TIME_FORMAT}") or dueAt
 
     getMaxDueAt: (id, periodId) ->
       dueAt = @exports.getDueAt.call(@, id, periodId)
       return dueAt unless dueAt?
 
       dueAt = TimeHelper.makeMoment(@exports.getDueAt.call(@, id, periodId))
-      dueAt.startOf('day').subtract(1, 'day').format(ISO_DATE_FORMAT)
+      dueAt.startOf('day').subtract(1, 'day').format(TimeHelper.ISO_DATE_FORMAT)
 
     getMinDueAt: (id, periodId) ->
       opensAt = TimeHelper.makeMoment(@exports.getOpensAt.call(@, id, periodId))
       if opensAt.isBefore(TimeStore.getNow())
         opensAt = moment(TimeStore.getNow())
 
-      opensAt.startOf('day').add(1, 'day').format(ISO_DATE_FORMAT)
+      opensAt.startOf('day').add(1, 'day').format(TimeHelper.ISO_DATE_FORMAT)
 
     hasTasking: (id, periodId) ->
       plan = @_getPlan(id)

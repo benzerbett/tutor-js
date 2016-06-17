@@ -70,7 +70,8 @@ CourseConfig =
     getGuide: (courseId) ->
       @_guides[courseId] or throw new Error('BUG: Not loaded yet')
 
-    isConceptCoach: (courseId) -> !! @_practices[courseId]?.is_concept_coach
+    isConceptCoach: (courseId) -> !! @_local[courseId]?.is_concept_coach
+    isCollege: (courseId) -> !! @_local[courseId]?.is_college
 
     isGuideLoading: (courseId) -> @_asyncStatusGuides[courseId] is 'loading'
     isGuideLoaded: (courseId) -> !! @_guides[courseId]
@@ -107,9 +108,10 @@ CourseConfig =
     getName: (courseId) ->
       @_get(courseId)?.name or ""
 
-    getPeriods: (courseId) ->
-      periods = @_get(courseId).periods or []
-      sortedPeriods = PeriodHelper.sort(periods)
+    getPeriods: (courseId, options = {includeArchived: false}) ->
+      course = @_get(courseId)
+      periods = if options.includeArchived then course.periods else PeriodHelper.activePeriods(course)
+      sortedPeriods = if periods then PeriodHelper.sort(periods) else []
 
     getTimezone: (courseId) ->
       @_get(courseId)?.time_zone or DEFAULT_TIME_ZONE

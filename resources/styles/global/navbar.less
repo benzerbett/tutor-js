@@ -35,7 +35,9 @@
   // override the bootstrap defaults with tutor defaults
   &.navbar.navbar{
     border-bottom: 1px solid @border-color;
-    background-color: @tutor-white;
+    &, .navbar-collapse{
+      background-color: @tutor-white;
+    }
   }
 
   .container-fluid { padding: 0 @tutor-navbar-padding-horizontal; }
@@ -72,6 +74,64 @@
     font-size: 1.6rem;
     line-height: 2.7rem;
     margin-top: 1px;
+  }
+
+  .navbar-overlay {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+  }
+  .center-control {
+    align-items: baseline;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    .fa {
+        color: #888;
+        font-size: 2.6rem;
+
+        &.fa-th {
+            position: relative;
+            top: 0.1em;
+        }
+    }
+
+    > * {
+        margin: 0 1rem;
+    }
+
+    .milestones-toggle {
+      padding: 0;
+
+      i {
+        margin-right: 0;
+      }
+
+      &:hover,
+      &.active {
+        i {
+          color: @tutor-info;
+        }
+      }
+
+      // TODO find out about universal focus style.
+      &:focus {}
+    }
+  }
+
+  // TODO make actually ellipsis when out of space
+  .center-control-assignment {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    
+    min-width: 0;
   }
 
   .dropdown-toggle {
