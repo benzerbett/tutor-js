@@ -6,6 +6,7 @@ EmptyPanel      = require './empty-panel'
 UpcomingPanel   = require './upcoming-panel'
 AllEventsByWeek = require './all-events-by-week'
 ThisWeekPanel   = require './this-week-panel'
+
 ForumPanel   = require '../integrated-forum/forum-panel'
 
 PracticeButton = require '../buttons/practice-button'
