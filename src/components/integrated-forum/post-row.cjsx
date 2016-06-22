@@ -62,7 +62,7 @@ module.exports = React.createClass
           task={@props.post}
           popverClassName='student-dashboard-instructions-popover'/>
       </BS.Col>
-      <BS.Col xs={5}  sm={3} className='feedback'>
+      <BS.Col xs={5}  sm={3} className='author'>
         {@props.post.author}
       </BS.Col>
       <BS.Col xs={5}  sm={2} className='due-at'>

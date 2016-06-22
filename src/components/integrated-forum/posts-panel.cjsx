@@ -23,26 +23,22 @@ module.exports = React.createClass
     className: React.PropTypes.string
 
   renderTitle: ->
-    if @props.title
-      <span className="title">{@props.title}</span>
-    else
-      <span className="date-range">
-        <Time date={moment(@props.startAt).toDate()}/>
-           &ndash;
-        <Time date={moment(@props.endAt).toDate()}/>
-      </span>
+    <span className="title-label">{@props.title}</span>
 
   renderPost: (post) ->
     <GenericPostRow courseId=@props.courseId key={post.id} post={post}/>
 
   render: ->
     <BS.Panel className={@props.className}>
+      
       <div className="row labels">
-        <BS.Col xs={12} sm={7}>{@renderTitle()}</BS.Col>
-        <BS.Col xs={5} xsOffset={2} smOffset={0} sm={3} className='progress-label'>
+        <BS.Col xs={10} xsOffset={2} smOffset={1} sm={6} className='title-label'>
+          Title
+        </BS.Col>
+        <BS.Col xs={5} sm={3} className='author-label'>
           Author
         </BS.Col>
-        <BS.Col xs={5} sm={2} className='due-at-label'>Text</BS.Col>
+        <BS.Col xs={5} sm={2} className='post-date-label'>Text</BS.Col>
       </div>
       {_.map(@props.posts, @renderPost)}
     </BS.Panel>
