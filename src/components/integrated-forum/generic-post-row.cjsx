@@ -14,5 +14,5 @@ module.exports = React.createClass
 
   render: ->
     <PostRow feedback='' {...@props} className='generic'>
-        {@props.post.id}
+        {@props.post.title}
     </PostRow>

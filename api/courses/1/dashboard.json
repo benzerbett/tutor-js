@@ -258,16 +258,19 @@
   "posts": [
     {
       "id": "1",
+      "title": "Problem with a question",
       "author": "Ted",
       "text": "im bad at math"
     },
     {
       "id": "2",
+      "title": "Why is Ted so bad at math?",
       "author": "Fred",
-      "text": "yea u are"
+      "text": "like woah"
     },
     {
       "id": "3",
+      "title": "Ted wins Bad at Math Award 2016",
       "author": "Ed",
       "text": "lol"
     }
