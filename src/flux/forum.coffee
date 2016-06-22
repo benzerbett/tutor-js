@@ -15,9 +15,11 @@ StudentDashboardConfig = {
 
   exports:
 
-    isDeleted: (event) -> event.is_deleted
+    isDeleted: (post) -> post.is_deleted
 
-    
+    posts: (courseId) ->
+      data = @_get(courseId)
+      posts = data.posts or []
 }
 
 extendConfig(ForumConfig, new CrudConfig())
