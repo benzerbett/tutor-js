@@ -64,7 +64,7 @@ TaskPlanConfig =
     if @_local[planId]?.type is PLAN_TYPES.HOMEWORK or @_changed[planId]?.type is PLAN_TYPES.HOMEWORK
       @_changed[planId] ?= {}
       # need to default final posting json's is feedback immediate to false
-      @_local[planId].is_feedback_immediate ?= false
+      @_changed[planId].is_feedback_immediate ?= false unless @_local[planId].is_feedback_immediate?
       @_local[planId].settings.exercise_ids ?= []
       @_local[planId].settings.exercises_count_dynamic ?= TUTOR_SELECTIONS.default
 
@@ -395,6 +395,16 @@ TaskPlanConfig =
     getDescription: (id) ->
       plan = @_getPlan(id)
       plan?.description
+
+    getChangedCleanedTaskings: (id) ->
+      serverPlan = @_getOriginal(id)
+      changes = @exports.getChanged.call(@, id)
+      return changes unless serverPlan?
+
+      if _.isEqual(changes.tasking_plans, serverPlan.tasking_plans)
+        changes = _.omit(changes, 'tasking_plans')
+
+      changes
 
     isHomework: (id) ->
       plan = @_getPlan(id)
