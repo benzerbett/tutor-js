@@ -1,6 +1,8 @@
 React  = require 'react'
 moment = require 'moment'
 EmptyPanel  = require '../student-dashboard/empty-panel'
+EventsPanel = require '../student-dashboard/events-panel'
+{StudentDashboardStore} = require '../../flux/student-dashboard'
 
 module.exports = React.createClass
   displayName: 'ForumPanel'
@@ -8,4 +10,14 @@ module.exports = React.createClass
     courseId: React.PropTypes.string.isRequired
 
   render: ->
-    <EmptyPanel>No Forum Posts</EmptyPanel>
+    posts  = StudentDashboardStore.posts(@props.courseId)
+    if posts.length
+      <EventsPanel
+        className='-forum'
+        onTaskClick={@onTaskClick}
+        courseId={@props.courseId}
+        events=posts
+        title='Forum Posts'
+      />
+    else
+      <EmptyPanel>No Forum Posts</EmptyPanel>

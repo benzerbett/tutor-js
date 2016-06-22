@@ -254,5 +254,19 @@
         "last_name": "Newhart"
       }
     ]
-  }
+  },
+  "posts": [
+    {
+      "author": "Ted",
+      "text": "im bad at math"
+    },
+    {
+      "author": "Fred",
+      "text": "yea u are"
+    },
+    {
+      "author": "Ed",
+      "text": "lol"
+    }
+  ]
 }

@@ -21,6 +21,10 @@ StudentDashboardConfig = {
 
   exports:
 
+    posts: (courseId) ->
+      data = @_get(courseId)
+      posts = data.posts or []
+
     eventsByWeek: (courseId) ->
       data = @_get(courseId)
       tasks = data.tasks or []
