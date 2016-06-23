@@ -4,7 +4,19 @@
       "id": "1",
       "title": "Problem with a question",
       "author": "Ted",
-      "text": "im bad at math"
+      "text": "im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah",
+      "comment":[
+        {
+        "id": "1",
+        "author": "Jed",
+        "text": "So am I"
+        },
+        {
+          "id": "2",
+          "author": "Ted",
+          "text": "Can we be friends?"
+        }
+    ]
     },
     {
       "id": "2",
