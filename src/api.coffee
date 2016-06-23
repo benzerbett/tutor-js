@@ -30,6 +30,8 @@ PerformanceForecast = require './flux/performance-forecast'
 {ExerciseActions, ExerciseStore} = require './flux/exercise'
 {TeacherTaskPlanActions, TeacherTaskPlanStore} = require './flux/teacher-task-plan'
 {StudentDashboardActions} = require './flux/student-dashboard'
+{ForumActions, ForumStore} = require './flux/forum'
+
 {CourseListingActions, CourseListingStore} = require './flux/course-listing'
 {CCDashboardStore, CCDashboardActions} = require './flux/cc-dashboard'
 
@@ -237,6 +239,8 @@ start = (bootstrapData) ->
 
   apiHelper StudentDashboardActions, StudentDashboardActions.load, StudentDashboardActions.loaded, 'GET', (courseId) ->
     url: "/api/courses/#{courseId}/dashboard"
+  apiHelper ForumActions, ForumActions.load, ForumActions.loaded, 'GET', (courseId) ->
+    url: "/api/courses/#{courseId}/forum"
 
   apiHelper NotificationActions, NotificationActions.loadUpdates, NotificationActions.loadedUpdates, 'GET', ->
     url: "/api/notifications"

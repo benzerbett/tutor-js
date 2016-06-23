@@ -8,6 +8,8 @@ AllEventsByWeek = require './all-events-by-week'
 ThisWeekPanel   = require './this-week-panel'
 
 ForumPanel   = require '../integrated-forum/forum-panel'
+ForumNewPostPanel   = require '../integrated-forum/forum-new-post-panel'
+
 
 PracticeButton = require '../buttons/practice-button'
 ProgressGuideShell = require './progress-guide'
@@ -61,7 +63,9 @@ module.exports = React.createClass
                 <AllEventsByWeek courseId={courseId}/>
               </BS.Tab>
               <BS.Tab eventKey={3} title='Forum'>
+                <ForumNewPostPanel courseId={courseId}/>
                 <ForumPanel courseId={courseId}/>
+
               </BS.Tab>
             </BS.Tabs>
           </BS.Col>

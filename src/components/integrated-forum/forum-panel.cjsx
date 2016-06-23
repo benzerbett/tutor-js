@@ -3,14 +3,16 @@ moment = require 'moment'
 EmptyPanel  = require '../student-dashboard/empty-panel'
 PostsPanel = require './posts-panel'
 {StudentDashboardStore} = require '../../flux/student-dashboard'
+{ForumActions, ForumStore} = require '../../flux/forum'
+LoadableItem = require '../loadable-item'
 
-module.exports = React.createClass
+ForumPanel = React.createClass
   displayName: 'ForumPanel'
   propTypes:
     courseId: React.PropTypes.string.isRequired
 
   render: ->
-    posts  = StudentDashboardStore.posts(@props.courseId)
+    posts  = ForumStore.posts(@props.courseId)
     if posts.length
       <PostsPanel
         className='-forum'
@@ -21,3 +23,22 @@ module.exports = React.createClass
       />
     else
       <EmptyPanel>No Forum Posts</EmptyPanel>
+
+
+
+ForumPanelShell = React.createClass
+  displayName: 'ForumPanelShell'
+  contextTypes:
+    router: React.PropTypes.func
+  render: ->
+    {courseId} = @context.router.getCurrentParams()
+    <div className='student-forum '>
+      <LoadableItem
+      id={courseId}
+      store={ForumStore}
+      actions={ForumActions}
+      renderItem={ -> <ForumPanel courseId={courseId}/> }
+      />
+    </div>
+
+module.exports = ForumPanelShell
