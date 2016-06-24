@@ -10,6 +10,11 @@
     border-top: thin dotted @tutor-neutral-light;
     position: relative;
     cursor: pointer;
+
+    .row {
+      max-width: @tutor-task-width;
+      margin: 0 auto;
+    }
     &:hover {
         background-color: @tutor-neutral-lightest;
         .icon { .tutor-icon-active(1.2); }
@@ -30,8 +35,9 @@
     }
     .title {
       padding-left: 0;
+      font-weight: bold;
     }
-    .title, .feedback, .post-date {
+    .title, .author, .post-date {
       line-height: @student-dashboard-row-height;
       white-space: nowrap;
       overflow: hidden;
@@ -56,11 +62,11 @@
         text-align: center;
         height: @student-dashboard-row-height;
       }
-      .title, .feedback, .due-at {
+      .title, .author, .post-date {
         line-height: @student-dashboard-row-height / 2;
       }
       // match the 0 left padding of the description
-      .feedback { padding-left: 0; }
+      .author { padding-left: 0; }
     }
     
     transition: all 0.1s ease-in;
