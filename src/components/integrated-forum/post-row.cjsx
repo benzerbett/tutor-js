@@ -21,7 +21,7 @@ module.exports = React.createClass
   getInitialState: ->
     hidden: false
     expanded: false
-  expandedPost: ->
+  toggleExpand: ->
       @setState({expanded: !@state.expanded})
 
   getmorePost: ->
@@ -31,6 +31,7 @@ module.exports = React.createClass
     @context.router.transitionTo 'viewTaskStep',
       # url is 1 based so it matches the breadcrumb button numbers. 1==first step
       {courseId:@props.courseId, id: @props.post.id, stepIndex: 1}
+
 
   hideTask: ->
     StudentDashboardActions.hide(@props.post.id)
@@ -43,10 +44,8 @@ module.exports = React.createClass
 
     if @state.hidden then return null
 
-    {workable} = @props
-    workable ?= StudentDashboardStore.canWorkTask(@props.post)
     deleted = StudentDashboardStore.isDeleted(@props.post)
-    classes = classnames("task row #{@props.className}", {workable, deleted})
+    classes = classnames("post row #{@props.className}", {deleted})
 
     if deleted
       hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
@@ -60,7 +59,7 @@ module.exports = React.createClass
         <EventInfoIcon event={@props.post} />
       ]
 
-    <div className={classes} onClick={@onClick if workable and not deleted}
+    <div className={classes} onClick={@toggleExpand}
       data-event-id={@props.post.id}>
       <BS.Col xs={2}  sm={1} className={"column-icon"}>
         <i className={"icon icon-lg icon-#{@props.className}"}/>
@@ -68,20 +67,12 @@ module.exports = React.createClass
       <BS.Col xs={10} sm={6} className='title'>
         {@props.children}
         {expandedDiv}
-        <Instructions
-          task={@props.post}
-          popverClassName='student-dashboard-instructions-popover'/>
       </BS.Col>
       <BS.Col xs={5}  sm={3} className='author'>
         {@props.post.author}
       </BS.Col>
       <BS.Col xs={5}  sm={2} className='post-date'>
         {postDate}
-      </BS.Col>
-      <BS.Col xs={5}  sm={2} className='post-date'>
-        <BS.Button className="-hide-button" onClick={@expandedPost}>
-          Full Post
-        </BS.Button>
       </BS.Col>
 
     </div>
