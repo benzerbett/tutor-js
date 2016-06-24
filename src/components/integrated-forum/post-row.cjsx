@@ -20,9 +20,9 @@ module.exports = React.createClass
 
   getInitialState: ->
     hidden: false
-    expanded:false
+    expanded: false
   expandedPost: ->
-      @setState({expanded:true})
+      @setState({expanded: !@state.expanded})
 
   getmorePost: ->
     morePost = if @state.expanded then <div> Math is BAAAAAAAAAAAAAAAAAAD </div> else null
