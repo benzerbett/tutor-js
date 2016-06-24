@@ -18,7 +18,14 @@ module.exports = React.createClass
   contextTypes:
     router: React.PropTypes.func
 
-  getInitialState: -> hidden: false
+  getInitialState: ->
+    hidden: false
+    expanded:false
+  expandedPost: ->
+      @setState({expanded:true})
+
+  getmorePost: ->
+    morePost = if @state.expanded then <div> Math is BAAAAAAAAAAAAAAAAAAD </div> else null
 
   onClick: ->
     @context.router.transitionTo 'viewTaskStep',
@@ -32,6 +39,8 @@ module.exports = React.createClass
   hidden: -> @setState({hidden: true})
 
   render: ->
+    expandedDiv = @getmorePost()
+
     if @state.hidden then return null
 
     {workable} = @props
@@ -58,6 +67,7 @@ module.exports = React.createClass
       </BS.Col>
       <BS.Col xs={10} sm={6} className='title'>
         {@props.children}
+        {expandedDiv}
         <Instructions
           task={@props.post}
           popverClassName='student-dashboard-instructions-popover'/>
@@ -68,4 +78,10 @@ module.exports = React.createClass
       <BS.Col xs={5}  sm={2} className='post-date'>
         {postDate}
       </BS.Col>
+      <BS.Col xs={5}  sm={2} className='post-date'>
+        <BS.Button className="-hide-button" onClick={@expandedPost}>
+          Full Post
+        </BS.Button>
+      </BS.Col>
+
     </div>
