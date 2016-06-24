@@ -16,8 +16,7 @@ module.exports = React.createClass
   propTypes:
     posts:   React.PropTypes.array.isRequired
     courseId: React.PropTypes.string.isRequired
-    startAt:  React.PropTypes.object
-    endAt:    React.PropTypes.object
+    postDate: React.PropTypes.object
     limit:    React.PropTypes.number
     title:    React.PropTypes.string
     className: React.PropTypes.string
@@ -30,7 +29,7 @@ module.exports = React.createClass
 
   render: ->
     <BS.Panel className={@props.className}>
-      
+
       <div className="row labels">
         <BS.Col xs={10} xsOffset={2} smOffset={1} sm={6} className='title-label'>
           Title
@@ -38,7 +37,7 @@ module.exports = React.createClass
         <BS.Col xs={5} sm={3} className='author-label'>
           Author
         </BS.Col>
-        <BS.Col xs={5} sm={2} className='post-date-label'>Text</BS.Col>
+        <BS.Col xs={5} sm={2} className='post-date-label'>Posted at</BS.Col>
       </div>
       {_.map(@props.posts, @renderPost)}
     </BS.Panel>

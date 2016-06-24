@@ -45,7 +45,7 @@ module.exports = React.createClass
       </BS.Button>
       feedback = <span>Withdrawn</span>
     else
-      text = @props.post.text
+      postDate = <Time date={@props.post.postDate} format='concise'/>
       feedback = [
         <span>{@props.feedback}</span>
         <EventInfoIcon event={@props.post} />
@@ -65,8 +65,7 @@ module.exports = React.createClass
       <BS.Col xs={5}  sm={3} className='author'>
         {@props.post.author}
       </BS.Col>
-      <BS.Col xs={5}  sm={2} className='due-at'>
-        {text}
-        {hideButton}
+      <BS.Col xs={5}  sm={2} className='post-date'>
+        {postDate}
       </BS.Col>
     </div>
