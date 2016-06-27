@@ -26,6 +26,7 @@ module.exports = React.createClass
     oldPosts  = ForumStore.posts(@props.courseId)
     newPost.id = oldPosts.length + 1
     oldPosts.push(newPost)
+    @setState({showModal:false})
     ForumActions.save(@props.courseId, {posts:oldPosts})
 
 
