@@ -26,11 +26,6 @@ module.exports = React.createClass
   toggleExpand: ->
     @setState({expanded: !@state.expanded})
 
-  onClick: ->
-    @context.router.transitionTo 'viewTaskStep',
-      # url is 1 based so it matches the breadcrumb button numbers. 1==first step
-      {courseId:@props.courseId, id: @props.post.id, stepIndex: 1}
-
   hideTask: ->
     StudentDashboardActions.hide(@props.post.id)
     StudentDashboardStore.on('hidden', @hidden)
@@ -38,7 +33,7 @@ module.exports = React.createClass
   hidden: -> @setState({hidden: true})
 
   renderComments: (comment) ->
-    <BS.Row className="comment-data">
+    <BS.Row className="comment-row">
       <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className='comment'>
         <span className="comment-author">{comment.author}:</span>
         <span className="comment-text">{comment.text}</span>
@@ -66,7 +61,11 @@ module.exports = React.createClass
           </form>
         </BS.Col>
       </BS.Row>
-
+      <BS.Row className="retract-row">
+        <BS.Col xs={2} sm={2} xsOffset={9} smOffset={9} className="retract">
+          {'Show less \u25B2'}
+        </BS.Col>
+      </BS.Row>
     </div>
 
   render: ->
