@@ -241,6 +241,9 @@ start = (bootstrapData) ->
     url: "/api/courses/#{courseId}/dashboard"
   apiHelper ForumActions, ForumActions.load, ForumActions.loaded, 'GET', (courseId) ->
     url: "/api/courses/#{courseId}/forum"
+  apiHelper ForumActions, ForumActions.save, ForumActions.saved, 'PUT', (courseId, post) ->
+    url: "/api/courses/#{courseId}/forum"
+    payload: post
 
   apiHelper NotificationActions, NotificationActions.loadUpdates, NotificationActions.loadedUpdates, 'GET', ->
     url: "/api/notifications"

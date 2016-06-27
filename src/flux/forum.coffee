@@ -4,6 +4,10 @@ _ = require 'underscore'
 moment = require 'moment'
 
 ForumConfig = {
+  addpost: (courseId, newComment) ->
+    @save(courseId, newComment)
+
+
   exports:
 
     isDeleted: (post) -> post.is_deleted

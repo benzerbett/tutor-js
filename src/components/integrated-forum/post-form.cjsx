@@ -1,7 +1,9 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
+ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
-{StudentDashboardStore, StudentDashboardActions} = require '../../flux/student-dashboard'
+
+{ForumActions, ForumStore} = require '../../flux/forum'
 EventInfoIcon = require '../student-dashboard/event-info-icon'
 {Instructions} = require '../task/details'
 classnames = require 'classnames'
@@ -10,55 +12,47 @@ module.exports = React.createClass
   displayName: 'PostForm'
 
   propTypes:
-    className: React.PropTypes.string.isRequired
-    # post:     React.PropTypes.object.isRequired
-    courseId:  React.PropTypes.string.isRequired
+    onCommentSubmit: React.PropTypes.func.isRequired
     # feedback:  React.PropTypes.string.isRequired
-  #
-  # contextTypes:
-  #   router: React.PropTypes.func
-  #
-  # getInitialState: -> hidden: false
-  #
-  # onClick: ->
-  #   @context.router.transitionTo 'viewTaskStep',
-  #     # url is 1 based so it matches the breadcrumb button numbers. 1==first step
-  #     {courseId:@props.courseId, id: @props.post.id, stepIndex: 1}
-  #
-  # hideTask: ->
-  #   StudentDashboardActions.hide(@props.post.id)
-  #   StudentDashboardStore.on('hidden', @hidden)
-  #
-  # hidden: -> @setState({hidden: true})
-  #
-  render: ->
-  #   if @state.hidden then return null
-  #
-  #   {workable} = @props
-  #   workable ?= StudentDashboardStore.canWorkTask(@props.post)
-  #   deleted = StudentDashboardStore.isDeleted(@props.post)
-    classes = classnames("task row #{@props.className}")
-  #
-  #   if deleted
-  #     hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
-  #       <i className="fa fa-close"/>
-  #     </BS.Button>
-  #     feedback = <span>Withdrawn</span>
-  #   else
-  #     text = @props.post.text
-  #     feedback = [
-  #       <span>{@props.feedback}</span>
-  #       <EventInfoIcon event={@props.post} />
-  #     ]
+  getInitialState: ->
+    title: ''
+    text: ''
 
-    <form className={classes}>
-      <input
+  handleTitleChange: (e)->
+    @setState({title: e.target.value})
+  handleTextChange: (e)->
+    @setState({text: e.target.value})
+  handleSubmit: (submitEvent) ->
+    submitEvent.preventDefault()
+
+    title = @state.title.trim()
+    text = @state.text.trim()
+    @props.onCommentSubmit({id:4, author: 'Johny Tran', text: text,postDate:'2016-06-23T11:45:30.565Z',title:title })
+    @setState({title: '', text: ''})
+
+  render: ->
+    <form className="commentForm" onSubmit={this.handleSubmit} style={display: "inline"}>
+        <br/>
+        Title:
+        <input
           type="text"
-          placeholder="Question Tag"
-      />
-      <input
+          placeholder="Title"
+          value= {@state.title}
+          onChange={@handleTitleChange}
+        />
+        <br/>
+        <br/>
+        Text:
+        <input
           type="text"
-          placeholder="Post"
-      />
-      <input type="submit" value="Post" />
+          placeholder="Text"
+          value={@state.text}
+          onChange={@handleTextChange}
+          style={width: '200px',height :'50px'}
+        />
+        <br/>
+        <br/>
+
+
+        <input type="submit" value="Post" />
     </form>
