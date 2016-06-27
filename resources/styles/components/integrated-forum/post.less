@@ -11,14 +11,27 @@
     position: relative;
     cursor: pointer;
 
+    transition: all 0.1s ease-in;
+
     .row {
       max-width: @tutor-task-width;
       margin: 0 auto;
     }
+    .post-data
+    {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-in-out;
+      opacity: 1;
+    }
+    .post-data.expanded {
+      max-height: 500px;
+    }
+
     &:hover {
-        background-color: @tutor-neutral-lightest;
-        .icon { .tutor-icon-active(1.2); }
-      }
+      background-color: @tutor-neutral-lightest;
+      .icon { .tutor-icon-active(1.2); }
+    }
     // if the screen is wide enought, set a hight and use line-height to vertically center content.
     // This breaks when the responsive small view kicks in and it becomes multi-line
     .column-icon {
@@ -68,8 +81,5 @@
       // match the 0 left padding of the description
       .author { padding-left: 0; }
     }
-    
-    transition: all 0.1s ease-in;
-
   }
 }

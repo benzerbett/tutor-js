@@ -5,6 +5,7 @@ Time   = require '../time'
 EventInfoIcon = require '../student-dashboard/event-info-icon'
 {Instructions} = require '../task/details'
 classnames = require 'classnames'
+_ = require 'underscore'
 
 module.exports = React.createClass
   displayName: 'PostRow'
@@ -21,8 +22,9 @@ module.exports = React.createClass
   getInitialState: ->
     hidden: false
     expanded: false
+
   toggleExpand: ->
-      @setState({expanded: !@state.expanded})
+    @setState({expanded: !@state.expanded})
 
   onClick: ->
     @context.router.transitionTo 'viewTaskStep',
@@ -35,7 +37,27 @@ module.exports = React.createClass
 
   hidden: -> @setState({hidden: true})
 
+  renderComments: (comment) ->
+    <BS.Row className="">
+      <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className='comment'>
+        {comment.text}
+      </BS.Col>
+    </BS.Row>
+
   renderExpansion: ->
+    className = "post-data"
+    if @state.expanded
+      className += " expanded"
+    <div className={className}>
+      <BS.Row className="post-text">
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='text'>
+          {@props.post.text}
+        </BS.Col>
+      </BS.Row>
+      {_.map(@props.post.comments, @renderComments)}
+    </div>
+
+    ###
     if !@state.expanded then return null
 
     <BS.Row>
@@ -43,6 +65,7 @@ module.exports = React.createClass
         {@props.post.text}
       </BS.Col>
     </BS.Row>
+    ###
 
   render: ->
 
@@ -65,7 +88,7 @@ module.exports = React.createClass
 
     <div className={classes} onClick={@toggleExpand}
       data-event-id={@props.post.id}>
-      <BS.Row>
+      <BS.Row className="post-header">
         <BS.Col xs={2}  sm={1} className={"column-icon"}>
           <i className={"icon icon-lg icon-#{@props.className}"}/>
         </BS.Col>
