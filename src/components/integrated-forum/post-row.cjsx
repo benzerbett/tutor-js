@@ -5,6 +5,7 @@ Time   = require '../time'
 EventInfoIcon = require '../student-dashboard/event-info-icon'
 {Instructions} = require '../task/details'
 classnames = require 'classnames'
+_ = require 'underscore'
 
 module.exports = React.createClass
   displayName: 'PostRow'
@@ -21,11 +22,9 @@ module.exports = React.createClass
   getInitialState: ->
     hidden: false
     expanded: false
-  expandedPost: ->
-      @setState({expanded: !@state.expanded})
 
-  getmorePost: ->
-    morePost = if @state.expanded then <div> Math is BAAAAAAAAAAAAAAAAAAD </div> else null
+  toggleExpand: ->
+    @setState({expanded: !@state.expanded})
 
   onClick: ->
     @context.router.transitionTo 'viewTaskStep',
@@ -38,15 +37,42 @@ module.exports = React.createClass
 
   hidden: -> @setState({hidden: true})
 
+  renderComments: (comment) ->
+    <BS.Row className="">
+      <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className='comment'>
+        {comment.text}
+      </BS.Col>
+    </BS.Row>
+
+  renderExpansion: ->
+    className = "post-data"
+    if @state.expanded
+      className += " expanded"
+    <div className={className}>
+      <BS.Row className="post-text">
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='text'>
+          {@props.post.text}
+        </BS.Col>
+      </BS.Row>
+      {_.map(@props.post.comments, @renderComments)}
+    </div>
+
+    ###
+    if !@state.expanded then return null
+
+    <BS.Row>
+      <BS.Col xs={20} sm={8} xsOffset={2} className='text'>
+        {@props.post.text}
+      </BS.Col>
+    </BS.Row>
+    ###
+
   render: ->
-    expandedDiv = @getmorePost()
 
     if @state.hidden then return null
 
-    {workable} = @props
-    workable ?= StudentDashboardStore.canWorkTask(@props.post)
     deleted = StudentDashboardStore.isDeleted(@props.post)
-    classes = classnames("task row #{@props.className}", {workable, deleted})
+    classes = classnames("post row #{@props.className}", {deleted})
 
     if deleted
       hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
@@ -60,28 +86,21 @@ module.exports = React.createClass
         <EventInfoIcon event={@props.post} />
       ]
 
-    <div className={classes} onClick={@onClick if workable and not deleted}
+    <div className={classes} onClick={@toggleExpand}
       data-event-id={@props.post.id}>
-      <BS.Col xs={2}  sm={1} className={"column-icon"}>
-        <i className={"icon icon-lg icon-#{@props.className}"}/>
-      </BS.Col>
-      <BS.Col xs={10} sm={6} className='title'>
-        {@props.children}
-        {expandedDiv}
-        <Instructions
-          task={@props.post}
-          popverClassName='student-dashboard-instructions-popover'/>
-      </BS.Col>
-      <BS.Col xs={5}  sm={3} className='author'>
-        {@props.post.author}
-      </BS.Col>
-      <BS.Col xs={5}  sm={2} className='post-date'>
-        {postDate}
-      </BS.Col>
-      <BS.Col xs={5}  sm={2} className='post-date'>
-        <BS.Button className="-hide-button" onClick={@expandedPost}>
-          Full Post
-        </BS.Button>
-      </BS.Col>
-
+      <BS.Row className="post-header">
+        <BS.Col xs={2}  sm={1} className={"column-icon"}>
+          <i className={"icon icon-lg icon-#{@props.className}"}/>
+        </BS.Col>
+        <BS.Col xs={10} sm={6} className='title'>
+          {@props.children}
+        </BS.Col>
+        <BS.Col xs={5}  sm={3} className='author'>
+          {@props.post.author}
+        </BS.Col>
+        <BS.Col xs={5}  sm={2} className='post-date'>
+          {postDate}
+        </BS.Col>
+      </BS.Row>
+      {@renderExpansion()}
     </div>

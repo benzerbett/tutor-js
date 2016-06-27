@@ -1,0 +1,85 @@
+.student-forum {
+  .post-date, .post-date-label { padding-left: 0px; }
+  
+  .post {
+    max-width: @tutor-task-width;
+    margin: 0 auto;
+
+
+    background: @tutor-white;
+    border-top: thin dotted @tutor-neutral-light;
+    position: relative;
+    cursor: pointer;
+
+    transition: all 0.1s ease-in;
+
+    .row {
+      max-width: @tutor-task-width;
+      margin: 0 auto;
+    }
+    .post-data
+    {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-in-out;
+      opacity: 1;
+    }
+    .post-data.expanded {
+      max-height: 500px;
+    }
+
+    &:hover {
+      background-color: @tutor-neutral-lightest;
+      .icon { .tutor-icon-active(1.2); }
+    }
+    // if the screen is wide enought, set a hight and use line-height to vertically center content.
+    // This breaks when the responsive small view kicks in and it becomes multi-line
+    .column-icon {
+      height: @student-dashboard-row-height;
+      padding: 0;
+    }
+    &.deleted {
+      opacity: 0.5;
+    }
+    .icon {
+      background-position: center;
+      // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
+      margin: (@student-dashboard-row-height - @icon-size-lg * 10)/2;
+    }
+    .title {
+      padding-left: 0;
+      font-weight: bold;
+    }
+    .title, .author, .post-date {
+      line-height: @student-dashboard-row-height;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    i.info {
+      .fa-icon();
+      margin-left: 0.5rem;
+      &.incomplete::before {
+        content: @fa-var-exclamation-circle;
+        color: @tutor-warning;
+      }
+      &.late::before {
+        content: @fa-var-clock-o;
+        color: @tutor-danger;
+      }
+    }
+
+    // Adjust height for when the columns collapse and progress appears below task title
+    @media screen and ( max-width: @screen-sm-min ){
+      .column-icon {
+        text-align: center;
+        height: @student-dashboard-row-height;
+      }
+      .title, .author, .post-date {
+        line-height: @student-dashboard-row-height / 2;
+      }
+      // match the 0 left padding of the description
+      .author { padding-left: 0; }
+    }
+  }
+}
