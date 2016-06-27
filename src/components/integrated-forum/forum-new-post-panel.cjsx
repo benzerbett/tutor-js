@@ -1,7 +1,7 @@
 React  = require 'react'
 moment = require 'moment'
 EmptyPanel  = require '../student-dashboard/empty-panel'
-PostForm = require './post-form'
+PostModal = require './post-modal'
 {StudentDashboardStore} = require '../../flux/student-dashboard'
 
 module.exports = React.createClass
@@ -10,7 +10,7 @@ module.exports = React.createClass
     courseId: React.PropTypes.string.isRequired
 
   render: ->
-    <PostForm
+    <PostModal
     courseId={@props.courseId}
     className='-forum'
     />

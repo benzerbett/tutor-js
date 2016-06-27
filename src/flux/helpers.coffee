@@ -141,6 +141,7 @@ CrudConfig = ->
         val
       else
         _.extend({}, val, @_changed[id])
+    
 
     exports:
       isUnknown: (id) -> not @_asyncStatus[id]
