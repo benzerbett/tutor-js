@@ -50,7 +50,7 @@ module.exports = React.createClass
     if @state.expanded
       className += " expanded"
     <div className={className}>
-      <BS.Row className="post-text">
+      <BS.Row className="post-text-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
           {@props.post.text}
         </BS.Col>
