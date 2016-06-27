@@ -27,7 +27,7 @@ module.exports = React.createClass
 
     title = @state.title.trim()
     text = @state.text.trim()
-    @props.onCommentSubmit({id:4, author: 'Johny Tran', text: text,postDate:'2016-06-23T11:45:30.565Z',title:title })
+    @props.onCommentSubmit({author: 'Johny Tran', text: text,postDate:'2016-06-23T11:45:30.565Z',title:title })
     @setState({title: '', text: ''})
 
   render: ->
