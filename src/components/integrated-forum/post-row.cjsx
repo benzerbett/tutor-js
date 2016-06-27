@@ -38,9 +38,10 @@ module.exports = React.createClass
   hidden: -> @setState({hidden: true})
 
   renderComments: (comment) ->
-    <BS.Row className="">
+    <BS.Row className="comment-data">
       <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className='comment'>
-        {comment.text}
+        <span className="comment-author">{comment.author}:</span>
+        <span className="comment-text">{comment.text}</span>
       </BS.Col>
     </BS.Row>
 
@@ -50,22 +51,23 @@ module.exports = React.createClass
       className += " expanded"
     <div className={className}>
       <BS.Row className="post-text">
-        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='text'>
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
           {@props.post.text}
         </BS.Col>
       </BS.Row>
+
       {_.map(@props.post.comments, @renderComments)}
+      
+      <BS.Row className="comment-form">
+        <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-box">
+          <form>
+            <input type="text" class="form-control" id="comment-input" placeholder="Add Comment...">
+            </input>
+          </form>
+        </BS.Col>
+      </BS.Row>
+
     </div>
-
-    ###
-    if !@state.expanded then return null
-
-    <BS.Row>
-      <BS.Col xs={20} sm={8} xsOffset={2} className='text'>
-        {@props.post.text}
-      </BS.Col>
-    </BS.Row>
-    ###
 
   render: ->
 
