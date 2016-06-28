@@ -23,8 +23,13 @@ module.exports = React.createClass
     hidden: false
     expanded: false
 
-  toggleExpand: ->
-    @setState({expanded: !@state.expanded})
+  expand: ->
+    if !@state.expanded
+      @setState({expanded: true})
+
+  retract: ->
+    if @state.expanded
+      @setState({expanded: false})
 
   hideTask: ->
     StudentDashboardActions.hide(@props.post.id)
@@ -41,10 +46,7 @@ module.exports = React.createClass
     </BS.Row>
 
   renderExpansion: ->
-    className = "post-data"
-    if @state.expanded
-      className += " expanded"
-    <div className={className}>
+    <div className="post-data">
       <BS.Row className="post-text-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
           {@props.post.text}
@@ -62,8 +64,10 @@ module.exports = React.createClass
         </BS.Col>
       </BS.Row>
       <BS.Row className="retract-row">
-        <BS.Col xs={2} sm={2} xsOffset={9} smOffset={9} className="retract">
-          {'Show less \u25B2'}
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className="retract">
+          <div className="retract-button" onClick={@retract} data-event-id={@props.post.id}>
+            {'Show less \u25B2'}
+          </div>
         </BS.Col>
       </BS.Row>
     </div>
@@ -74,6 +78,9 @@ module.exports = React.createClass
 
     deleted = StudentDashboardStore.isDeleted(@props.post)
     classes = classnames("post row #{@props.className}", {deleted})
+
+    if @state.expanded
+      classes += " expanded"
 
     if deleted
       hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
@@ -87,11 +94,11 @@ module.exports = React.createClass
         <EventInfoIcon event={@props.post} />
       ]
 
-    <div className={classes} onClick={@toggleExpand}
+    <div className={classes} onClick={@expand}
       data-event-id={@props.post.id}>
       <BS.Row className="post-header">
         <BS.Col xs={2}  sm={1} className={"column-icon"}>
-          <i className={"icon icon-lg icon-#{@props.className}"}/>
+          <i className={"icon icon-lg icon-check"}/>
         </BS.Col>
         <BS.Col xs={10} sm={6} className='title'>
           {@props.children}
