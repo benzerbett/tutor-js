@@ -23,8 +23,17 @@ module.exports = React.createClass
     hidden: false
     expanded: false
 
-  toggleExpand: ->
-    @setState({expanded: !@state.expanded})
+  expand: ->
+    if !@state.expanded
+      @setState({expanded: true})
+
+  retract: ->
+    if @state.expanded
+      @setState({expanded: false})
+
+  autoGrow: (event) ->
+    event.target.style.height = "5px"
+    event.target.style.height = (event.target.scrollHeight)+"px"
 
   hideTask: ->
     StudentDashboardActions.hide(@props.post.id)
@@ -41,10 +50,7 @@ module.exports = React.createClass
     </BS.Row>
 
   renderExpansion: ->
-    className = "post-data"
-    if @state.expanded
-      className += " expanded"
-    <div className={className}>
+    <div className="post-data">
       <BS.Row className="post-text-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
           {@props.post.text}
@@ -54,16 +60,21 @@ module.exports = React.createClass
       {_.map(@props.post.comments, @renderComments)}
 
       <BS.Row className="comment-form">
-        <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-box">
+        <BS.Col xs={8} sm={8} xsOffset={2} smOffset={2} className="comment-box">
           <form>
-            <input type="text" class="form-control" id="comment-input" placeholder="Add Comment...">
-            </input>
+            <textarea class="form-control" id="comment-input" placeholder="Add Comment..." onChange={@autoGrow}>
+            </textarea>
           </form>
+        </BS.Col>
+        <BS.Col xs={1} sm={1} className="comment-submit">
+          <BS.Button bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
         </BS.Col>
       </BS.Row>
       <BS.Row className="retract-row">
-        <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0} className="retract">
-          {'Show less \u25B2'}
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className="retract">
+          <div className="retract-button" onClick={@retract}>
+            {'Show less \u25B2'}
+          </div>
         </BS.Col>
       </BS.Row>
     </div>
@@ -74,6 +85,9 @@ module.exports = React.createClass
 
     deleted = StudentDashboardStore.isDeleted(@props.post)
     classes = classnames("post row #{@props.className}", {deleted})
+
+    if @state.expanded
+      classes += " expanded"
 
     if deleted
       hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
@@ -87,11 +101,10 @@ module.exports = React.createClass
         <EventInfoIcon event={@props.post} />
       ]
 
-    <div className={classes} onClick={@toggleExpand}
-      data-event-id={@props.post.id}>
+    <div className={classes} onClick={@expand}>
       <BS.Row className="post-header">
         <BS.Col xs={2}  sm={1} className={"column-icon"}>
-          <i className={"icon icon-lg icon-#{@props.className}"}/>
+          <i className={"icon icon-lg icon-check"}/>
         </BS.Col>
         <BS.Col xs={10} sm={6} className='title'>
           {@props.children}

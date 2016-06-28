@@ -1,11 +1,11 @@
 .student-forum {
   .post-date, .post-date-label { padding-left: 0px; }
   
-  .post {
+  .row {
     max-width: @tutor-task-width;
     margin: 0 auto;
-
-
+  }
+  .post {
     background: @tutor-white;
     border-top: thin dotted @tutor-neutral-light;
     position: relative;
@@ -13,10 +13,6 @@
 
     transition: all 0.1s ease-in;
 
-    .row {
-      max-width: @tutor-task-width;
-      margin: 0 auto;
-    }
     .post-data
     {
       max-height: 0;
@@ -36,10 +32,13 @@
       .comment-form {
         padding: 0px;
         margin-top: 5px;
-        input {
+        textarea {
+          resize: none;
+          overflow: hidden;
           display: inline-block;
           width: 100%;
-          height: 34px;
+          min-height: 42px;
+          height: 42px;
           padding: 6px 12px;
           font-size: 15px;
           font-family: 'Lato', Helvetica, sans-serif;
@@ -74,10 +73,20 @@
         .comment-box {
           padding: 0px;
         }
+        .comment-submit-button {
+          margin: 0px;
+        }
       }
-    }
-    .post-data.expanded {
-      max-height: 1500px;
+      .retract-row {
+        margin-top: 5px;
+        &:hover {
+          background-color: @tutor-neutral-lighter;
+        }
+        .retract-button {
+          text-align: center;
+          border-top: thin solid @tutor-neutral-light;
+        }
+      }
     }
 
     &:hover {
@@ -133,5 +142,19 @@
       // match the 0 left padding of the description
       .author { padding-left: 0; }
     }
+  }
+  .post.expanded {
+    .post-data{
+      max-height: 1500px;
+    }
+    &:hover {
+      background-color: @tutor-white;
+      // .icon {
+      //   .scale(1);
+      //   border: none;
+      //   box-shadow: none;
+      // }
+    }
+    .icon { .tutor-icon-active(1.2); }
   }
 }
