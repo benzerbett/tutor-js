@@ -52,7 +52,7 @@ module.exports = React.createClass
       </BS.Row>
 
       {_.map(@props.post.comments, @renderComments)}
-      
+
       <BS.Row className="comment-form">
         <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-box">
           <form>
@@ -62,7 +62,7 @@ module.exports = React.createClass
         </BS.Col>
       </BS.Row>
       <BS.Row className="retract-row">
-        <BS.Col xs={2} sm={2} xsOffset={9} smOffset={9} className="retract">
+        <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0} className="retract">
           {'Show less \u25B2'}
         </BS.Col>
       </BS.Row>
