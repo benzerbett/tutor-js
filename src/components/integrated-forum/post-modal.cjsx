@@ -36,35 +36,32 @@ module.exports = React.createClass
     classes = classnames("task row #{@props.className}")
 
     <div className={classes}>
-      <BS.Col xs={2}  sm={1} className={"column-icon"}>
-      </BS.Col>
-      <BS.Col xs={10} sm={6} className='title'>
-      </BS.Col>
-      <BS.Col xs={5}  sm={3} className='author'>
-      </BS.Col>
-      <BS.Col xs={5}  sm={2} className='post-date'>
-        <BS.Button className="-hide-button" onClick={@open}>
-          New Post
-        </BS.Button>
 
-        <BS.Modal show={@state.showModal} onHide={@close}>
+     <BS.Row className="retract-row">
+        <BS.Col xs={1} sm={1} md={1} mdOffset = {9} xsOffset={9} smOffset={10} className="new-post">
+          <BS.Button className="-hide-button" onClick={@open}>
+            New Post
+          </BS.Button>
 
-          <ModalHeader closeButton>
-            <BS.Modal.Title>New Post</BS.Modal.Title>
-          </ModalHeader>
+          <BS.Modal show={@state.showModal} onHide={@close}>
 
-          <BS.Modal.Body>
-            <PostForm onCommentSubmit = {@handleCommentSubmit}/>
-          </BS.Modal.Body>
+            <ModalHeader closeButton>
+              <BS.Modal.Title>New Post</BS.Modal.Title>
+            </ModalHeader>
 
-          <BS.Modal.Footer>
-            <BS.Button className="-hide-button" onClick={@close}>
-              Close
-            </BS.Button>
-          </BS.Modal.Footer>
+            <BS.Modal.Body>
+              <PostForm onCommentSubmit = {@handleCommentSubmit}/>
+            </BS.Modal.Body>
 
-        </BS.Modal>
+            <BS.Modal.Footer>
+              <BS.Button className="-hide-button" onClick={@close}>
+                Close
+              </BS.Button>
+            </BS.Modal.Footer>
 
-      </BS.Col>
+          </BS.Modal>
+
+        </BS.Col>
+      </BS.Row>
 
     </div>

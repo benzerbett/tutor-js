@@ -63,7 +63,7 @@ module.exports = React.createClass
       </BS.Row>
 
       {_.map(@props.post.comments, @renderComments)}
-      
+
       <BS.Row className="comment-form">
         <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className="comment-box">
           <form>
