@@ -42,10 +42,15 @@ module.exports = React.createClass
   hidden: -> @setState({hidden: true})
 
   renderComments: (comment) ->
+    cPostDate = <Time date={comment.postDate} format='concise'/>
+
     <BS.Row className="comment-row">
-      <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className='comment'>
+      <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className='comment'>
         <span className="comment-author">{comment.author}:</span>
         <span className="comment-text">{comment.text}</span>
+      </BS.Col>
+      <BS.Col xs={2} sm={2} className="comment-post-date">
+        {cPostDate}
       </BS.Col>
     </BS.Row>
 
@@ -60,13 +65,13 @@ module.exports = React.createClass
       {_.map(@props.post.comments, @renderComments)}
       
       <BS.Row className="comment-form">
-        <BS.Col xs={8} sm={8} xsOffset={2} smOffset={2} className="comment-box">
+        <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className="comment-box">
           <form>
-            <textarea class="form-control" id="comment-input" placeholder="Add Comment..." onChange={@autoGrow}>
+            <textarea className="comment-input" placeholder="Add Comment..." onChange={@autoGrow}>
             </textarea>
           </form>
         </BS.Col>
-        <BS.Col xs={1} sm={1} className="comment-submit">
+        <BS.Col xs={2} sm={2} className="comment-submit">
           <BS.Button bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
         </BS.Col>
       </BS.Row>
@@ -96,15 +101,11 @@ module.exports = React.createClass
       feedback = <span>Withdrawn</span>
     else
       postDate = <Time date={@props.post.postDate} format='concise'/>
-      feedback = [
-        <span>{@props.feedback}</span>
-        <EventInfoIcon event={@props.post} />
-      ]
 
     <div className={classes} onClick={@expand}>
       <BS.Row className="post-header">
         <BS.Col xs={2}  sm={1} className={"column-icon"}>
-          <i className={"icon icon-lg icon-check"}/>
+          <i className={"icon icon-lg icon-#{@props.className}"}/>
         </BS.Col>
         <BS.Col xs={10} sm={6} className='title'>
           {@props.children}
