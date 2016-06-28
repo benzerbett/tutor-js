@@ -110,11 +110,11 @@ module.exports = React.createClass
         <BS.Col xs={10} sm={6} className='title'>
           {@props.children}
         </BS.Col>
-        <BS.Col xs={5}  sm={3} className='author'>
-          {@props.post.author}
-        </BS.Col>
-        <BS.Col xs={5}  sm={2} className='post-date'>
-          {postDate}
+        <BS.Col xs={8} sm={5} className='post-info'>
+          <span className="post-author-label">{"Posted By: "}</span>
+          <span className="post-author">{@props.post.author}</span>
+          <span className="post-date-label">{" on "}</span>
+          <span className="post-date">{postDate}</span>
         </BS.Col>
       </BS.Row>
       {@renderExpansion()}

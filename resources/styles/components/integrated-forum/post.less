@@ -1,5 +1,5 @@
 .student-forum {
-  .post-date, .post-date-label { padding-left: 0px; }
+  .post-info { padding-left: 0px; }
   
   .row {
     max-width: @tutor-task-width;
@@ -115,12 +115,17 @@
     .title {
       padding-left: 0;
       font-weight: bold;
-    }
-    .title, .author, .post-date {
       line-height: @student-dashboard-row-height;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    .post-info {
+      line-height: @student-dashboard-row-height;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
     }
     i.info {
       .fa-icon();
@@ -141,11 +146,10 @@
         text-align: center;
         height: @student-dashboard-row-height;
       }
-      .title, .author, .post-date {
+      .title, .post-info {
         line-height: @student-dashboard-row-height / 2;
       }
       // match the 0 left padding of the description
-      .author { padding-left: 0; }
     }
   }
   .post.expanded {
