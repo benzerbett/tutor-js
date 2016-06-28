@@ -2,7 +2,7 @@ React  = require 'react'
 BS     = require 'react-bootstrap'
 ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
-require 'draft-js'
+#require 'draft-js'
 
 
 {ForumActions, ForumStore} = require '../../flux/forum'

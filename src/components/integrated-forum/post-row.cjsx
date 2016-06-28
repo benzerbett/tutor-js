@@ -31,6 +31,10 @@ module.exports = React.createClass
     if @state.expanded
       @setState({expanded: false})
 
+  autoGrow: (event) ->
+    event.target.style.height = "5px"
+    event.target.style.height = (event.target.scrollHeight)+"px"
+
   hideTask: ->
     StudentDashboardActions.hide(@props.post.id)
     StudentDashboardStore.on('hidden', @hidden)
@@ -56,16 +60,19 @@ module.exports = React.createClass
       {_.map(@props.post.comments, @renderComments)}
       
       <BS.Row className="comment-form">
-        <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-box">
+        <BS.Col xs={8} sm={8} xsOffset={2} smOffset={2} className="comment-box">
           <form>
-            <input type="text" class="form-control" id="comment-input" placeholder="Add Comment...">
-            </input>
+            <textarea class="form-control" id="comment-input" placeholder="Add Comment..." onChange={@autoGrow}>
+            </textarea>
           </form>
+        </BS.Col>
+        <BS.Col xs={1} sm={1} className="comment-submit">
+          <BS.Button bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
         </BS.Col>
       </BS.Row>
       <BS.Row className="retract-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className="retract">
-          <div className="retract-button" onClick={@retract} data-event-id={@props.post.id}>
+          <div className="retract-button" onClick={@retract}>
             {'Show less \u25B2'}
           </div>
         </BS.Col>
@@ -94,8 +101,7 @@ module.exports = React.createClass
         <EventInfoIcon event={@props.post} />
       ]
 
-    <div className={classes} onClick={@expand}
-      data-event-id={@props.post.id}>
+    <div className={classes} onClick={@expand}>
       <BS.Row className="post-header">
         <BS.Col xs={2}  sm={1} className={"column-icon"}>
           <i className={"icon icon-lg icon-check"}/>
