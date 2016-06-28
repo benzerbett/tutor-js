@@ -2,6 +2,7 @@ React  = require 'react'
 BS     = require 'react-bootstrap'
 ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
+require 'draft-js'
 
 
 {ForumActions, ForumStore} = require '../../flux/forum'
@@ -9,6 +10,9 @@ EventInfoIcon = require '../student-dashboard/event-info-icon'
 {Instructions} = require '../task/details'
 classnames = require 'classnames'
 PostForm = require './post-form'
+
+window.ForumStore = ForumStore
+window.ForumActions = ForumActions
 
 module.exports = React.createClass
   displayName: 'PostModal'
@@ -23,11 +27,8 @@ module.exports = React.createClass
   close: -> @setState({showModal:false})
   open: -> @setState({showModal:true})
   handleCommentSubmit: (newPost)->
-    oldPosts  = ForumStore.posts(@props.courseId)
-    newPost.id = oldPosts.length + 1
-    oldPosts.push(newPost)
     @setState({showModal:false})
-    ForumActions.save(@props.courseId, {posts:oldPosts})
+    ForumActions.save(@props.courseId, newPost)
 
 
   render: ->
