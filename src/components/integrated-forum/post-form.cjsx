@@ -3,6 +3,8 @@ BS     = require 'react-bootstrap'
 ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
 FormGroup = require 'react-bootstrap/lib/FormGroup'
+FC= require 'react-bootstrap/lib/FormControls'
+
 
 {ForumActions, ForumStore} = require '../../flux/forum'
 EventInfoIcon = require '../student-dashboard/event-info-icon'
@@ -32,30 +34,26 @@ module.exports = React.createClass
     @setState({title: '', text: ''})
 
   render: ->
-    <form className="commentForm" onSubmit={this.handleSubmit} style={display: "inline"}>
-        <br/>
-        Title:
-        <input
-          type="text"
-          placeholder="Title"
-          value= {@state.title}
-          onChange={@handleTitleChange}
-        />
-        <br/>
-        <br/>
-        Text:
-        <input
-          type="text"
-          placeholder="Text"
-          value={@state.text}
-          onChange={@handleTextChange}
-          style={width: '200px',height :'50px'}
-        />
-        <br/>
-        <br/>
-        <FormGroup/>
+    <form className="post-form" onSubmit={this.handleSubmit}>
+        <BS.Row className="post-text-row">
+          <label>Title: </label>
+          <input
+            type="text"
+            placeholder="Title"
+            value= {@state.title}
+            onChange={@handleTitleChange}
+          />
+        </BS.Row>
+
+        <BS.Row>
+          <label>Text: </label>
+          <textarea class="form-control" id="comment-input" placeholder="text" onChange={@handleTextChange}>
+          </textarea>
+        </BS.Row>
 
 
 
-        <input type="submit" value="Post" />
+        <BS.Col xs={1} sm={1} md={1} mdOffset = {8} xsOffset={8} smOffset={9} className="post-submit">
+          <BS.Button type = "submit" bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
+        </BS.Col>
     </form>
