@@ -4,8 +4,13 @@ _ = require 'underscore'
 moment = require 'moment'
 
 ForumConfig = {
-  addpost: (courseId, newComment) ->
-    @save(courseId, newComment)
+
+  _saved: (obj, courseId) ->
+    forum = @_get(courseId)
+    obj.id = forum.posts.length + 1
+    forum.posts.push(obj)
+
+    return forum
 
 
   exports:

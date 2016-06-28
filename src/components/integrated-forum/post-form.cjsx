@@ -2,6 +2,7 @@ React  = require 'react'
 BS     = require 'react-bootstrap'
 ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
+FormGroup = require 'react-bootstrap/lib/FormGroup'
 
 {ForumActions, ForumStore} = require '../../flux/forum'
 EventInfoIcon = require '../student-dashboard/event-info-icon'
@@ -52,6 +53,8 @@ module.exports = React.createClass
         />
         <br/>
         <br/>
+        <FormGroup/>
+
 
 
         <input type="submit" value="Post" />
