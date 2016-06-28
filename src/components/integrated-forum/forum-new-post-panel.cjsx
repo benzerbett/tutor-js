@@ -12,5 +12,5 @@ module.exports = React.createClass
   render: ->
     <PostModal
     courseId={@props.courseId}
-    className='-forum'
+    className='student-forum'
     />

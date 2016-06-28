@@ -54,9 +54,7 @@ module.exports = React.createClass
             </BS.Modal.Body>
 
             <BS.Modal.Footer>
-              <BS.Button className="-hide-button" onClick={@close}>
-                Close
-              </BS.Button>
+
             </BS.Modal.Footer>
 
           </BS.Modal>
