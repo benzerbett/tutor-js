@@ -68,7 +68,15 @@ module.exports = React.createClass
           {@props.post.text}
         </BS.Col>
       </BS.Row>
-
+      <BS.Row className="tag-row">
+        <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className="tags">
+          <BS.Label>Tag</BS.Label>
+          <BS.Label>Tag</BS.Label>
+          <BS.Label>Tag</BS.Label>
+          <BS.Label>Tag</BS.Label>
+          <BS.Label>Tag</BS.Label>
+        </BS.Col>
+      </BS.Row>
       {_.map(@props.post.comments, @renderComments)}
       <form onSubmit={@handleSubmit}>
         <BS.Row className="comment-form">
