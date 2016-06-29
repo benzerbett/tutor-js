@@ -1,14 +1,8 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
-ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 Time   = require '../time'
-FormGroup = require 'react-bootstrap/lib/FormGroup'
-FC= require 'react-bootstrap/lib/FormControls'
-
 
 {ForumActions, ForumStore} = require '../../flux/forum'
-EventInfoIcon = require '../student-dashboard/event-info-icon'
-{Instructions} = require '../task/details'
 classnames = require 'classnames'
 
 module.exports = React.createClass
@@ -23,8 +17,10 @@ module.exports = React.createClass
 
   handleTitleChange: (e)->
     @setState({title: e.target.value})
+
   handleTextChange: (e)->
     @setState({text: e.target.value})
+
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
 
@@ -34,26 +30,29 @@ module.exports = React.createClass
     @setState({title: '', text: ''})
 
   render: ->
-    <form className="post-form" onSubmit={this.handleSubmit}>
-        <BS.Row className="post-text-row">
-          <label>Title: </label>
-          <input
-            type="text"
-            placeholder="Title"
-            value= {@state.title}
-            onChange={@handleTitleChange}
-          />
-        </BS.Row>
+    <form className="post-form" onSubmit={@handleSubmit}>
+      <BS.Row className="title-row">
+        <label className="title-label">{"Title:"}</label>
+        <textarea
+          className="post-form-title"
+          placeholder="Title"
+          value= {@state.title}
+          onChange={@handleTitleChange}>
+        </textarea>
+      </BS.Row>
 
-        <BS.Row>
-          <label>Text: </label>
-          <textarea class="form-control" id="comment-input" placeholder="text" onChange={@handleTextChange}>
-          </textarea>
-        </BS.Row>
+      <BS.Row className="text-row">
+        <label className="text-label">{"Text:"}</label>
+        <textarea 
+          className="post-form-text"
+          placeholder="Text" 
+          onChange={@handleTextChange}>
+        </textarea>
+      </BS.Row>
 
-
-
-        <BS.Col xs={1} sm={1} md={1} mdOffset = {8} xsOffset={8} smOffset={9} className="post-submit">
-          <BS.Button type = "submit" bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
+      <BS.Row>
+        <BS.Col xs={2} sm={2} xsOffset={9} smOffset={9} className="post-submit">
+          <BS.Button type="submit" bsStyle="primary" className="post-submit-button">{"Submit"}</BS.Button>
         </BS.Col>
+      </BS.Row>
     </form>

@@ -1,9 +1,6 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
 Time   = require '../time'
-{StudentDashboardStore, StudentDashboardActions} = require '../../flux/student-dashboard'
-EventInfoIcon = require '../student-dashboard/event-info-icon'
-{Instructions} = require '../task/details'
 classnames = require 'classnames'
 _ = require 'underscore'
 
@@ -35,11 +32,8 @@ module.exports = React.createClass
     event.target.style.height = "5px"
     event.target.style.height = (event.target.scrollHeight)+"px"
 
-  hideTask: ->
-    StudentDashboardActions.hide(@props.post.id)
-    StudentDashboardStore.on('hidden', @hidden)
-
-  hidden: -> @setState({hidden: true})
+  hidden: -> 
+    @setState({hidden: true})
 
   renderComments: (comment) ->
     cPostDate = <Time date={comment.postDate} format='concise'/>
@@ -88,19 +82,12 @@ module.exports = React.createClass
 
     if @state.hidden then return null
 
-    deleted = StudentDashboardStore.isDeleted(@props.post)
-    classes = classnames("post row #{@props.className}", {deleted})
+    classes = classnames("post row #{@props.className}")
 
     if @state.expanded
       classes += " expanded"
 
-    if deleted
-      hideButton = <BS.Button className="-hide-button" onClick={@hideTask}>
-        <i className="fa fa-close"/>
-      </BS.Button>
-      feedback = <span>Withdrawn</span>
-    else
-      postDate = <Time date={@props.post.postDate} format='concise'/>
+    postDate = <Time date={@props.post.postDate} format='concise'/>
 
     <div className={classes} onClick={@expand}>
       <BS.Row className="post-header">

@@ -1,10 +1,49 @@
+.forum-toolbar {
+  background: @tutor-white;
+  max-width: @tutor-task-width;
+  margin: 0 auto;
+  overflow: hidden;
+
+  .row {
+    max-width: @tutor-task-width;
+    margin: 0 auto;
+  }
+
+  .new-post-button {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+}
+
+.post-form-modal {
+  .post-form-header {
+    .modal-title {
+      border-bottom: thin solid @tutor-neutral-light;
+      font-weight: bold;
+    }
+    margin-bottom: 5px;
+  }
+  .post-form-body {
+    padding: 0px;
+    width: auto;
+    height: auto;
+    .post-form-title {
+      .tutor-text-area();
+    }
+    .post-form-text {
+      .tutor-text-area();
+      min-height: 312px;
+    }
+    .row {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+  }
+}
+
 .student-forum {
 
   .post-date, .post-date-label { padding-left: 0px; }
-
-  .forum-toolbar{
-    background: @tutor-white;
-  }
 
   .post-info { padding-left: 0px; }
 
@@ -44,42 +83,7 @@
         padding: 0px;
         margin-top: 5px;
         textarea {
-          resize: none;
-          overflow: hidden;
-          display: inline-block;
-          width: 100%;
-          min-height: 42px;
-          height: 42px;
-          padding: 6px 12px;
-          font-size: 15px;
-          font-family: 'Lato', Helvetica, sans-serif;
-          font-style: normal;
-          color: #555;
-          background-color: #fff;
-          background-image: none;
-          border: thin solid @tutor-neutral-light;
-          border-radius: 4px;
-          -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-          box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-          -webkit-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
-          -o-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
-          transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
-          &:focus {
-            border-color: #66afe9;
-            outline: 0;
-            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
-          }
-          &::-webkit-input-placeholder {
-            font-size: 15px;
-            font-family: 'Lato', Helvetica, sans-serif;
-            font-style: normal;
-          }
-          &::-moz-placeholder {
-            font-size: 15px;
-            font-family: 'Lato', Helvetica, sans-serif;
-            font-style: normal;
-          }
+          .tutor-text-area(); //at bottom of this file
         }
         .comment-box {
           padding: 0px;
@@ -174,5 +178,44 @@
       // }
     }
     .icon { .tutor-icon-active(1.2); }
+  }
+}
+
+.tutor-text-area() {
+  resize: none;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  min-height: 42px;
+  height: 42px;
+  padding: 6px 12px;
+  font-size: 15px;
+  font-family: 'Lato', Helvetica, sans-serif;
+  font-style: normal;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: thin solid @tutor-neutral-light;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+  &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+  }
+  &::-webkit-input-placeholder {
+    font-size: 15px;
+    font-family: 'Lato', Helvetica, sans-serif;
+    font-style: normal;
+  }
+  &::-moz-placeholder {
+    font-size: 15px;
+    font-family: 'Lato', Helvetica, sans-serif;
+    font-style: normal;
   }
 }

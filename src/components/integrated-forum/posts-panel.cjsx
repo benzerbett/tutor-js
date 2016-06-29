@@ -29,16 +29,5 @@ module.exports = React.createClass
 
   render: ->
     <BS.Panel className={@props.className}>
-      {### saved in case labels are needed once again
-      <div className="row labels">
-        <BS.Col xs={10} xsOffset={2} smOffset={1} sm={6} className='title-label'>
-          Title
-        </BS.Col>
-        <BS.Col xs={5} sm={3} className='author-label'>
-          Author
-        </BS.Col>
-        <BS.Col xs={5} sm={2} className='post-date-label'>Posted at</BS.Col>
-      </div>
-      ###}
       {_.map(@props.posts, @renderPost)}
     </BS.Panel>

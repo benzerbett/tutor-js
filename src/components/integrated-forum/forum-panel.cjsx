@@ -30,6 +30,7 @@ ForumPanelShell = React.createClass
   displayName: 'ForumPanelShell'
   contextTypes:
     router: React.PropTypes.func
+    
   render: ->
     {courseId} = @context.router.getCurrentParams()
     <div className='student-forum '>
