@@ -10,6 +10,7 @@ ForumConfig = {
 
     if `Object.keys(obj).length ==5`
       obj.id = forum.posts.length + 1
+      obj.comments = []
       forum.posts.push(obj)
 
     if `Object.keys(obj).length ==4`
