@@ -6,23 +6,26 @@ ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 classnames = require 'classnames'
 PostForm = require './post-form'
 PostModal = require './post-modal'
+DropdownButton = require 'react-bootstrap/lib/DropdownButton'
+MenuItem = require 'react-bootstrap/lib/MenuItem'
+
 
 window.ForumStore = ForumStore
 window.ForumActions = ForumActions
 
 module.exports = React.createClass
   displayName: 'ForumToolbar'
-  
+
   propTypes:
     courseId: React.PropTypes.string.isRequired
 
   getInitialState: ->
     showModal :false
 
-  closeModal: -> 
+  closeModal: ->
     @setState({showModal:false})
 
-  openModal: -> 
+  openModal: ->
     @setState({showModal:true})
 
   handleCommentSubmit: (newPost)->
@@ -34,6 +37,16 @@ module.exports = React.createClass
 
     <div className="forum-toolbar">
       <BS.Row className={classes}>
+
+        <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0}>
+          <DropdownButton bsStyle='default' title='Tag'>
+            <MenuItem eventKey="1">Chapter1</MenuItem>
+            <MenuItem eventKey="2">Chapter2</MenuItem>
+            <MenuItem eventKey="3">Chapter3</MenuItem>
+            <MenuItem eventKey="4">Chapter4</MenuItem>
+          </DropdownButton>
+        </BS.Col>
+
         <BS.Col xs={2} sm={2} xsOffset={10} smOffset={10} className="new-post-modal">
           <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
             {"New Post"}
