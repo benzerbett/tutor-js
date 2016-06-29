@@ -13,8 +13,9 @@ ForumConfig = {
       forum.posts.push(obj)
 
     if `Object.keys(obj).length ==4`
-      obj.id = forum.posts[0].comments.length + 1
-      forum.posts[0].comments.push(obj)
+      obj.id = forum.posts[obj.postid-1].comments.length + 1
+      obj.author= 'Johny Tran'
+      forum.posts[obj.postid-1].comments.push(obj)
 
 
     return forum
