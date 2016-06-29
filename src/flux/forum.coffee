@@ -7,8 +7,15 @@ ForumConfig = {
 
   _saved: (obj, courseId) ->
     forum = @_get(courseId)
-    obj.id = forum.posts.length + 1
-    forum.posts.push(obj)
+
+    if `Object.keys(obj).length ==5`
+      obj.id = forum.posts.length + 1
+      forum.posts.push(obj)
+
+    if `Object.keys(obj).length ==4`
+      obj.id = forum.posts[0].comments.length + 1
+      forum.posts[0].comments.push(obj)
+
 
     return forum
 

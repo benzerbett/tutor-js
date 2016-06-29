@@ -23,7 +23,6 @@ module.exports = React.createClass
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
-
     title = @state.title.trim()
     text = @state.text.trim()
     @props.onCommentSubmit({author: 'Johny Tran', text: text,postDate:'2016-06-23T11:45:30.565Z',title:title })
@@ -43,9 +42,9 @@ module.exports = React.createClass
 
       <BS.Row className="text-row">
         <label className="text-label">{"Text:"}</label>
-        <textarea 
+        <textarea
           className="post-form-text"
-          placeholder="Text" 
+          placeholder="Text"
           onChange={@handleTextChange}>
         </textarea>
       </BS.Row>
