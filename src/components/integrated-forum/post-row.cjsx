@@ -52,12 +52,13 @@ module.exports = React.createClass
         {cPostDate}
       </BS.Col>
     </BS.Row>
-    
+
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
     comment= @state.comment.trim()
-    ForumActions.save(@props.courseId,{author: 'Johny Tran', text: comment,postDate:'2016-06-23T11:45:30.565Z'})
+    postid = @props.post.id
+    ForumActions.save(@props.courseId,{postid: postid, text: comment,postDate:'2016-06-23T11:45:30.565Z'})
     @setState({comment:''})
 
   renderExpansion: ->
