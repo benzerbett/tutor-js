@@ -49,9 +49,7 @@ module.exports = React.createClass
         </textarea>
       </BS.Row>
 
-      <BS.Row>
-        <BS.Col xs={2} sm={2} xsOffset={9} smOffset={9} className="post-submit">
+      <BS.Row className="post-submit-row">
           <BS.Button type="submit" bsStyle="primary" className="post-submit-button">{"Submit"}</BS.Button>
-        </BS.Col>
       </BS.Row>
     </form>
