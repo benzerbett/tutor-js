@@ -12,6 +12,7 @@
   .new-post-button {
     margin-right: 0px;
     margin-left: 0px;
+    white-space: normal;
   }
 }
 
@@ -138,6 +139,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: right;
+      .post-date-label {
+        font-weight: bold;
+        color: @tutor-neutral-light;
+      }
     }
     i.info {
       .fa-icon();
