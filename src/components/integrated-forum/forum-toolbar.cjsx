@@ -39,7 +39,7 @@ module.exports = React.createClass
       <BS.Row className={classes}>
 
         <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className = "toolbar-tag">
-          <DropdownButton bsStyle='success' title='Tag' className = "toolbar-tag-button" id='dropdown-basic-1'>
+          <DropdownButton bsStyle='success' title='Tags' className = "toolbar-tag-button" id='dropdown-basic-1'>
             <MenuItem eventKey="1" className = "toolbar-tag-menu">Chapter1</MenuItem>
             <MenuItem eventKey="2" className = "toolbar-tag-menu">Chapter2</MenuItem>
             <MenuItem eventKey="3" className = "toolbar-tag-menu">Chapter3</MenuItem>

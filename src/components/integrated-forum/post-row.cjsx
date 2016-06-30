@@ -56,7 +56,7 @@ module.exports = React.createClass
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
-    comment= @state.comment.trim()
+    comment = @state.comment.trim()
     postid = @props.post.id
     ForumActions.save(@props.courseId,{postid: postid, text: comment,postDate:'2016-06-23T11:45:30.565Z'})
     @setState({comment:''})
@@ -81,7 +81,11 @@ module.exports = React.createClass
       <form onSubmit={@handleSubmit}>
         <BS.Row className="comment-form">
           <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className="comment-box">
-              <textarea className="comment-input" placeholder="Add Comment..." onChange={@autoGrow}>
+              <textarea 
+                className="comment-input" 
+                placeholder="Add Comment..." 
+                value={@state.comment}
+                onChange={@autoGrow}>
               </textarea>
           </BS.Col>
           <BS.Col xs={2} sm={2} className="comment-submit">
