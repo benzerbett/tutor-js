@@ -47,7 +47,7 @@ module.exports = React.createClass
           </DropdownButton>
         </BS.Col>
 
-        <BS.Col xs={2} sm={2} xsOffset={10} smOffset={10} className="new-post-modal">
+        <BS.Col xs={2} sm={2} className="new-post-modal pull-right">
           <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
             {"New Post"}
           </BS.Button>
