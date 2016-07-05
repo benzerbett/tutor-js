@@ -12,7 +12,7 @@ ForumPanel = React.createClass
     courseId: React.PropTypes.string.isRequired
 
   render: ->
-    posts  = ForumStore.posts(@props.courseId)
+    posts  = ForumStore.postsByRecent(@props.courseId)
     if posts.length
       <PostsPanel
         className='-forum'
@@ -30,7 +30,7 @@ ForumPanelShell = React.createClass
   displayName: 'ForumPanelShell'
   contextTypes:
     router: React.PropTypes.func
-    
+
   render: ->
     {courseId} = @context.router.getCurrentParams()
     <div className='student-forum '>

@@ -1,6 +1,7 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
 Time   = require '../time'
+moment = require 'moment'
 
 {ForumActions, ForumStore} = require '../../flux/forum'
 classnames = require 'classnames'
@@ -9,8 +10,8 @@ module.exports = React.createClass
   displayName: 'PostForm'
 
   propTypes:
-    onCommentSubmit: React.PropTypes.func.isRequired
-    # feedback:  React.PropTypes.string.isRequired
+    onPostSubmit: React.PropTypes.func.isRequired
+
   getInitialState: ->
     title: ''
     text: ''
@@ -25,7 +26,13 @@ module.exports = React.createClass
     submitEvent.preventDefault()
     title = @state.title.trim()
     text = @state.text.trim()
-    @props.onCommentSubmit({author: 'Johny Tran', text: text,postDate:'2016-06-23T11:45:30.565Z',title:title })
+    @props.onPostSubmit({
+        author: 'Johny Tran', 
+        text: text,
+        post_date: {'2016-06-23T21:50:09.565Z'},
+        title: title
+      }
+    )
     @setState({title: '', text: ''})
 
   render: ->

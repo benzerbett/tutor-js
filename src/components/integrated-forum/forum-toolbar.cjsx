@@ -5,7 +5,6 @@ moment = require 'moment'
 ModalHeader = require 'react-bootstrap/lib/ModalHeader'
 classnames = require 'classnames'
 PostForm = require './post-form'
-PostModal = require './post-modal'
 DropdownButton = require 'react-bootstrap/lib/DropdownButton'
 MenuItem = require 'react-bootstrap/lib/MenuItem'
 
@@ -28,7 +27,7 @@ module.exports = React.createClass
   openModal: ->
     @setState({showModal:true})
 
-  handleCommentSubmit: (newPost)->
+  handlePostSubmit: (newPost)->
     @setState({showModal:false})
     ForumActions.save(@props.courseId, newPost)
 
@@ -40,14 +39,14 @@ module.exports = React.createClass
 
         <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className="toolbar-tag">
           <DropdownButton bsStyle='success' title='Tags' id="toolbar-tag-button">
-            <MenuItem eventKey="1" className = "toolbar-tag-menu">Chapter1</MenuItem>
-            <MenuItem eventKey="2" className = "toolbar-tag-menu">Chapter2</MenuItem>
-            <MenuItem eventKey="3" className = "toolbar-tag-menu">Chapter3</MenuItem>
-            <MenuItem eventKey="4" className = "toolbar-tag-menu">Chapter4</MenuItem>
+            <MenuItem eventKey="1" className="toolbar-tag-menu">Chapter1</MenuItem>
+            <MenuItem eventKey="2" className="toolbar-tag-menu">Chapter2</MenuItem>
+            <MenuItem eventKey="3" className="toolbar-tag-menu">Chapter3</MenuItem>
+            <MenuItem eventKey="4" className="toolbar-tag-menu">Chapter4</MenuItem>
           </DropdownButton>
         </BS.Col>
 
-        <BS.Col xs={3} sm={3} className="new-post-modal pull-right">
+        <BS.Col xs={3} sm={3} xsOffset={6} smOffset={6} className="new-post-modal">
           <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
             {"New Post"}
           </BS.Button>
@@ -58,7 +57,7 @@ module.exports = React.createClass
             </ModalHeader>
 
             <BS.Modal.Body className="post-form-body">
-              <PostForm onCommentSubmit = {@handleCommentSubmit}/>
+              <PostForm onPostSubmit = {@handlePostSubmit}/>
             </BS.Modal.Body>
 
             <BS.Modal.Footer>

@@ -29,6 +29,10 @@ ForumConfig = {
     posts: (courseId) ->
       data = @_get(courseId)
       posts = data.posts or []
+
+    postsByRecent: (courseId) ->
+      posts = this.exports.posts.call(this, courseId)
+      _.sortBy(posts, 'post_date').reverse()
 }
 
 extendConfig(ForumConfig, new CrudConfig())

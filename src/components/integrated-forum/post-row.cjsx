@@ -1,6 +1,7 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
 Time   = require '../time'
+moment = require 'moment'
 classnames = require 'classnames'
 _ = require 'underscore'
 {ForumActions, ForumStore} = require '../../flux/forum'
@@ -41,7 +42,7 @@ module.exports = React.createClass
     @setState({hidden: true})
 
   renderComments: (comment) ->
-    cPostDate = <Time date={comment.postDate} format='concise'/>
+    cPostDate = <Time date={comment.post_date} format='concise'/>
 
     <BS.Row className="comment-row">
       <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className='comment'>
@@ -58,7 +59,13 @@ module.exports = React.createClass
     submitEvent.preventDefault()
     comment = @state.comment.trim()
     postid = @props.post.id
-    ForumActions.save(@props.courseId,{postid: postid, text: comment,postDate:'2016-06-23T11:45:30.565Z'})
+    #dateTime = moment().format('YYYY-MM-DDTh:mm:ss.SSSZ')
+    ForumActions.save(@props.courseId,{
+        postid: postid, 
+        text: comment,
+        post_date: {'2016-06-23T21:50:09.565Z'}
+      }
+    )
     @setState({comment:''})
 
   renderExpansion: ->
@@ -111,7 +118,7 @@ module.exports = React.createClass
     if @state.expanded
       classes += " expanded"
 
-    postDate = <Time date={@props.post.postDate} format='concise'/>
+    postDate = <Time date={@props.post.post_date} format='concise'/>
 
     <div className={classes} onClick={@expand}>
       <BS.Row className="post-header">
