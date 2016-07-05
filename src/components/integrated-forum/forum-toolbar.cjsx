@@ -38,8 +38,8 @@ module.exports = React.createClass
     <div className="forum-toolbar">
       <BS.Row className={classes}>
 
-        <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className = "toolbar-tag">
-          <DropdownButton bsStyle='success' title='Tags' className = "toolbar-tag-button" id='dropdown-basic-1'>
+        <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className="toolbar-tag">
+          <DropdownButton bsStyle='success' title='Tags' id="toolbar-tag-button">
             <MenuItem eventKey="1" className = "toolbar-tag-menu">Chapter1</MenuItem>
             <MenuItem eventKey="2" className = "toolbar-tag-menu">Chapter2</MenuItem>
             <MenuItem eventKey="3" className = "toolbar-tag-menu">Chapter3</MenuItem>
@@ -47,7 +47,7 @@ module.exports = React.createClass
           </DropdownButton>
         </BS.Col>
 
-        <BS.Col xs={2} sm={2} className="new-post-modal pull-right">
+        <BS.Col xs={3} sm={3} className="new-post-modal pull-right">
           <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
             {"New Post"}
           </BS.Button>
