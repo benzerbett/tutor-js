@@ -53,6 +53,10 @@
     font-weight: 400;
     display: block;
 
+    &.tasking-time-default-set {
+      color: @tutor-success;
+    }
+
     &.btn {
       color: @tutor-info;
       text-transform: none;
@@ -71,6 +75,13 @@
   }
 }
 
+.due-before-open {
+	text-align: right;
+	line-height: 1.2rem;
+	margin: -10px 0 30px;
+}
+
+.due-before-open,
 .readings-required,
 .problems-required {
   color: @form-error-color;

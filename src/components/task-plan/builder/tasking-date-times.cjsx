@@ -6,9 +6,10 @@ _     = require 'underscore'
 {TimeStore} = require '../../../flux/time'
 TimeHelper  = require '../../../helpers/time'
 {PeriodActions, PeriodStore}     = require '../../../flux/period'
-{TaskPlanStore, TaskPlanActions} = require '../../../flux/task-plan'
+{TaskPlanStore} = require '../../../flux/task-plan'
 {CourseStore, CourseActions}     = require '../../../flux/course'
 
+Icon = require '../../icon'
 DateTime = require './date-time'
 
 TaskingDateTimes = React.createClass
@@ -26,9 +27,9 @@ TaskingDateTimes = React.createClass
     isVisibleToStudents: React.PropTypes.bool
     period:              React.PropTypes.object
 
-  isTimeDefault: (time, defaultTime) ->
-    return true if _.isUndefined(time)
-    TimeHelper.makeMoment(time, 'HH:mm').isSame(TimeHelper.makeMoment(defaultTime, 'HH:mm'), 'minute')
+  isPastDue: (date, time) ->
+    return false unless date?
+    TimeHelper.makeMoment("#{date} #{time}").isBefore(TimeHelper.makeMoment())
 
   setDefaultTime: (timeChange) ->
     {courseId, period} = @props
@@ -42,9 +43,17 @@ TaskingDateTimes = React.createClass
     {courseId, period} = @props
 
     if period?
-      PeriodStore.isSaving(courseId)
+      CourseStore.isLoading(courseId)
     else
       CourseStore.isSaving(courseId)
+
+  dueDateBeforeOpenDate: ->
+    {
+      taskingOpensAt,
+      taskingDueAt,
+    } = @props
+
+    taskingDueAt and taskingDueAt <= taskingOpensAt
 
   render: ->
     {
@@ -64,11 +73,17 @@ TaskingDateTimes = React.createClass
 
     commonDateTimesProps = _.pick @props, 'required', 'currentLocale', 'taskingIdentifier'
 
-    isDueTimeDefault = @isTimeDefault dueTime, defaultDueTime
-    isOpenTimeDefault = @isTimeDefault openTime, defaultOpenTime
-
     maxOpensAt = TaskPlanStore.getMaxDueAt(id, period?.id)
     minDueAt = TaskPlanStore.getMinDueAt(id, period?.id)
+
+    dueBeforeOpen = <BS.Row>
+      <BS.Col xs=12 md=6 mdOffset=6>
+        <p className="due-before-open">
+          Due time cannot be before open time
+          <Icon type='exclamation-circle' />
+        </p>
+      </BS.Col>
+    </BS.Row> if @dueDateBeforeOpenDate()
 
     <BS.Col sm=8 md=9>
       <DateTime
@@ -81,10 +96,11 @@ TaskingDateTimes = React.createClass
         onChange={_.partial(setOpensAt, _, period)}
         value={ taskingOpensAt }
         defaultValue={openTime or defaultOpenTime}
+        defaultTime={defaultOpenTime}
         setDefaultTime={@setDefaultTime}
         timeLabel='default_open_time'
-        isTimeDefault={isOpenTimeDefault}
-        isSetting={@isSetting} />
+        isSetting={@isSetting}
+      />
       <DateTime
         {...commonDateTimesProps}
         disabled={not isEditable}
@@ -94,10 +110,13 @@ TaskingDateTimes = React.createClass
         onChange={_.partial(setDueAt, _, period)}
         value={taskingDueAt}
         defaultValue={dueTime or defaultDueTime}
+        defaultTime={defaultDueTime}
         setDefaultTime={@setDefaultTime}
         timeLabel='default_due_time'
-        isTimeDefault={isDueTimeDefault}
-        isSetting={@isSetting} />
+        isSetting={@isSetting}
+      />
+
+      { dueBeforeOpen }
     </BS.Col>
 
 module.exports = TaskingDateTimes

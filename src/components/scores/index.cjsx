@@ -154,7 +154,7 @@ Scores = React.createClass
         (d.last_name or d.name).toLowerCase()
     )
     {
-      overall_average_score: scores.overall_average_score,
+      overall_average_score: scores.overall_average_score or 0,
       headings: scores.data_headings,
       rows: if sort.asc then sortData else sortData.reverse()
     }
@@ -193,9 +193,9 @@ Scores = React.createClass
         </span>
       else
         <span className='course-scores-note tab'>
-          Scores on the due date are displayed.
+          Scores reflect work submitted on time.
           &nbsp
-          Click an orange triangle to see late work.
+          To accept late work, click the orange triangle.
         </span>
     tableFilters =
       <TableFilters

@@ -35,7 +35,7 @@ sortTopics = (topics) ->
 
 
 isSameOrBeforeNow = (time) ->
-  moment(time).isSame(TimeStore.getNow()) or moment(time).isBefore(TimeStore.getNow())
+  moment(time).isSameOrBefore(TimeStore.getNow())
 
 isDateStringOnly = (timeString) ->
   ISO_DATE_ONLY_REGEX.test(timeString)
@@ -48,13 +48,17 @@ TaskPlanConfig =
   _server_copy: {}
 
   _loaded: (obj, planId) ->
-    @_server_copy[planId] = obj
+    @_server_copy[planId] = JSON.stringify(obj) if _.isObject(obj)
+
     obj
 
   # Somewhere, the local copy gets taken apart and rebuilt.
   # Keep a copy of what was served.
   _getOriginal: (planId) ->
-    @_server_copy[planId]
+    if _.isString(@_server_copy[planId])
+      JSON.parse(@_server_copy[planId])
+    else
+      {}
 
   _getPlan: (planId) ->
     @_local[planId] ?= {}
@@ -122,19 +126,53 @@ TaskPlanConfig =
     plan = @_getPlan(id)
     @_change(id, settings: _.extend({}, plan.settings, attributes))
 
-  setDefaultTimes: (course, period) ->
+  setDefaultTimes: (course, period, useCourseDefault) ->
     periodTimes = _.pick(period, 'opens_at', 'due_at')
     {default_open_time, default_due_time} = course
 
-    periodSettings = _.findWhere course.periods, id: period.id
-    {default_open_time, default_due_time} = periodSettings
+    unless useCourseDefault
+      periodSettings = _.findWhere course.periods, id: period.id
+      {default_open_time, default_due_time} = periodSettings
 
     periodTimes.opens_at += " #{default_open_time}" if isDateStringOnly(periodTimes.opens_at)
     periodTimes.due_at += " #{default_due_time}" if isDateStringOnly(periodTimes.due_at)
 
     periodTimes
 
-  setPeriods: (id, courseId, periods, isDefault = false) ->
+  _getDefaultTaskingTimes: (id, courseId, periods, useCourseDefault = true) ->
+    plan = @_getPlan(id)
+    course = CourseStore.get(courseId)
+
+    curTaskings = plan?.tasking_plans
+    findTasking = @_findTasking
+    {default_open_time, default_due_time} = course
+
+    _.map periods, (period) =>
+      tasking = findTasking(curTaskings, period.id)
+      tasking ?= target_id: period.id, target_type:'period'
+
+      opens_at = period.opens_at or tasking.opens_at
+      due_at = period.due_at or tasking.due_at
+      if useCourseDefault
+        opens_at ?= default_open_time
+        due_at   ?= default_due_time
+
+      period.opens_at = TimeHelper.makeMoment(opens_at).format(TimeHelper.ISO_DATE_FORMAT) if opens_at?
+      period.due_at = TimeHelper.makeMoment(due_at).format(TimeHelper.ISO_DATE_FORMAT) if due_at?
+
+      periodTimes = @setDefaultTimes(course, period, useCourseDefault) if opens_at? or due_at?
+
+      _.extend({}, tasking, periodTimes)
+
+  setDefaultTimesForPeriods: (id, courseId, periods) ->
+    tasking_plans = @_getDefaultTaskingTimes(id, courseId, periods, false)
+    @_change(id, {tasking_plans})
+
+  setDefaultTimesForCourse: (id, courseId, periods) ->
+    tasking_plans = @_getDefaultTaskingTimes(id, courseId, periods)
+    @_change(id, {tasking_plans})
+
+  setPeriods: (id, courseId, periods, isDefault = false, useCourseDefault = true) ->
     plan = @_getPlan(id)
     course = CourseStore.get(courseId)
 
@@ -143,17 +181,15 @@ TaskPlanConfig =
 
     tasking_plans = _.map periods, (period) =>
       tasking = findTasking(curTaskings, period.id)
-      if not tasking
-        tasking = target_id: period.id, target_type:'period'
+      tasking ?= target_id: period.id, target_type:'period'
 
-      periodTimes = @setDefaultTimes(course, period)
-
+      periodTimes = @setDefaultTimes(course, period, useCourseDefault)
       _.extend(periodTimes, tasking)
 
     if not @exports.isNew(id)
       tasking_plans = @_removeEmptyTaskings(tasking_plans)
 
-    @_change(id, {tasking_plans})
+    @_change(id, {tasking_plans}) unless _.isEqual(curTaskings, tasking_plans)
 
     @_setInitialPlan(id) if isDefault
 
@@ -285,12 +321,14 @@ TaskPlanConfig =
     unless exercise_ids.indexOf(exercise.id) >= 0
       exercise_ids.push(exercise.id)
     @_changeSettings(id, {exercise_ids})
+    @emit("change-exercise-#{exercise?.id}")
 
   removeExercise: (id, exercise) ->
     {exercise_ids} = @_getClonedSettings(id, 'exercise_ids')
     index = exercise_ids?.indexOf(exercise.id)
     exercise_ids?.splice(index, 1)
     @_changeSettings(id, {exercise_ids})
+    @emit("change-exercise-#{exercise?.id}")
 
   updateExercises: (id, exercise_ids) ->
     @_changeSettings(id, {exercise_ids})
@@ -349,7 +387,7 @@ TaskPlanConfig =
     obj
 
   resetPlan: (id) ->
-    @_local[id] = _.clone(@_server_copy[id])
+    @_local[id] = _.clone(@_getOriginal(id))
     @clearChanged(id)
 
 
@@ -417,7 +455,11 @@ TaskPlanConfig =
         flag = true
         # TODO: check that all periods are filled in
         _.each plan.tasking_plans, (tasking) ->
-          unless tasking.due_at and tasking.opens_at
+          unless (
+            tasking.due_at and
+            tasking.opens_at and
+            tasking.opens_at < tasking.due_at
+          )
             flag = false
         flag and plan.tasking_plans?.length?
 
@@ -432,7 +474,7 @@ TaskPlanConfig =
 
     isPublished: (id) ->
       plan = @_getPlan(id)
-      !!plan?.published_at
+      !!plan?.is_published
 
     isDeleteRequested: (id) -> @_isDeleteRequested(id)
 
@@ -448,12 +490,25 @@ TaskPlanConfig =
     getFirstDueDate: (id) ->
       due_at = @_getFirstTaskingByDueDate(id)?.due_at
 
+    areDefaultsCommon: (courseId) ->
+      course = CourseStore.get(courseId)
+
+      areOpenTimesSame = _.every course.periods, (period) ->
+        {default_open_time} = period
+        default_open_time is _.first(course.periods).default_open_time
+
+      areDueTimesSame = _.every course.periods, (period) ->
+        {default_due_time} = period
+        default_due_time is _.first(course.periods).default_due_time
+
+      areOpenTimesSame and areDueTimesSame
+
     isEditable: (id) ->
       # cannot be/being deleted
       not @_isDeleteRequested(id)
 
     isPublishing: (id) ->
-      @_changed[id]?.is_publish_requested or PlanPublishStore.isPublishing(id)
+      @_changed[id]?.is_publishing or PlanPublishStore.isPublishing(id)
 
     canDecreaseTutorExercises: (id) ->
       plan = @_getPlan(id)
@@ -527,7 +582,7 @@ TaskPlanConfig =
       if opensAt.isBefore(TimeStore.getNow())
         opensAt = moment(TimeStore.getNow())
 
-      opensAt.startOf('day').add(1, 'day').format(TimeHelper.ISO_DATE_FORMAT)
+      opensAt.startOf('day').add(1, 'minute').format(TimeHelper.ISO_DATE_FORMAT)
 
     hasTasking: (id, periodId) ->
       plan = @_getPlan(id)
@@ -537,6 +592,14 @@ TaskPlanConfig =
     hasAnyTasking: (id) ->
       plan = @_getPlan(id)
       !!plan?.tasking_plans
+
+    hasAllTaskings: (id, courseId) ->
+      {tasking_plans} = @_getOriginal(id)
+      course = CourseStore.get(courseId)
+
+      {periods} = course
+      _.every periods, (period) =>
+        @exports.hasTasking.call(@, id, period.id)
 
     getEnabledTaskings: (id) ->
       plan = @_getPlan(id)
@@ -548,7 +611,13 @@ TaskPlanConfig =
 
     isStatsFailed: (id) -> !! @_stats[id]
 
-    hasChanged: (id) -> not _.isEqual(@exports.getChanged.call(@, id), @_local[id].defaultPlan)
+    hasChanged: (id) ->
+      defaultPlan = @_local[id].defaultPlan
+      defaultPlan = @_getOriginal(id) if _.isEmpty(defaultPlan)
+      changed = @exports.getChanged.call(@, id)
+      return false if _.isEmpty(changed)
+
+      not _.isEqual(changed, _.pick(defaultPlan, _.keys(changed)))
 
 extendConfig(TaskPlanConfig, new CrudConfig())
 {actions, store} = makeSimpleStore(TaskPlanConfig)

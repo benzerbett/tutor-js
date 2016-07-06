@@ -1,10 +1,10 @@
+_ = require 'lodash'
 React = require 'react'
 BS = require 'react-bootstrap'
 
 {TocStore} = require '../../flux/toc'
-{ExerciseActions, ExerciseStore} = require '../../flux/exercise'
+
 Dialog = require '../tutor-dialog'
-{ExercisePreview} = require 'openstax-react-components'
 
 ExerciseHelpers = require '../../helpers/exercise'
 
@@ -12,6 +12,7 @@ ScrollTo = require '../scroll-to-mixin'
 
 ChapterSection = require '../task-plan/chapter-section'
 Icon = require '../icon'
+ExercisePreview = require './preview'
 
 SectionsExercises = React.createClass
 
@@ -23,33 +24,6 @@ SectionsExercises = React.createClass
     getExerciseIsSelected:  React.PropTypes.func.isRequired
     getExerciseActions:     React.PropTypes.func.isRequired
 
-  renderMinimumExclusionWarning: ->
-    [
-      <Icon key="icon" type="exclamation" />
-      <div key="message" className="message">
-        <p>
-          Tutor needs at least 5 questions for this topic to be
-          included in spaced practice and personalized learning.
-        </p>
-        <p>
-          If you exclude too many, your students will not get to practice on this topic.
-        </p>
-      </div>
-    ]
-
-  renderExercise: (exercise) ->
-
-    <ExercisePreview
-      key={exercise.id}
-      className='exercise-card'
-      isInteractive={false}
-      isVerticallyTruncated={true}
-      isSelected={@props.getExerciseIsSelected(exercise)}
-      exercise={exercise}
-      onOverlayClick={@onExerciseToggle}
-      overlayActions={@props.getExerciseActions(exercise)}
-    />
-
   render: ->
     title = TocStore.getSectionLabel(@props.chapter_section)?.title
     # IMPORTANT: the 'data-section' attribute is used as a scroll-to target and must be present
@@ -58,7 +32,8 @@ SectionsExercises = React.createClass
         <ChapterSection section={@props.chapter_section}/> {title}
       </label>
       <div className="exercises">
-        {@renderExercise(exercise) for exercise in @props.exercises}
+        {for exercise in @props.exercises
+          <ExercisePreview {...@props} exercise={exercise} />}
       </div>
     </div>
 
@@ -94,12 +69,21 @@ ExerciseCards = React.createClass
   render: ->
     chapter_sections = _.keys @props.exercises.grouped
 
-    <div className="exercise-cards">
-      {for cs in chapter_sections
+    if chapter_sections?.length
+      sections = _.map(chapter_sections, (cs) =>
         <SectionsExercises key={cs}
           {...@props}
           chapter_section={cs}
-          exercises={@props.exercises.grouped[cs]} />}
+          exercises={@props.exercises.grouped[cs]}
+        />
+      )
+    else
+      sections = <p className="no-exercises-found">
+        No exercises found in the selected sections.
+      </p>
+
+    <div className="exercise-cards">
+      {sections}
     </div>
 
 module.exports = ExerciseCards

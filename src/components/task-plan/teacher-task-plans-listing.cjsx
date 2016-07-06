@@ -11,8 +11,6 @@ LoadableItem = require '../loadable-item'
 {TimeStore} = require '../../flux/time'
 TimeHelper = require '../../helpers/time'
 
-DATE_FORMAT = 'YYYY-MM-DD'
-
 CourseCalendar = require '../course-calendar'
 CourseDataMixin = require '../course-data-mixin'
 
@@ -62,7 +60,27 @@ TeacherTaskPlanListing = React.createClass
     dateFormat: React.PropTypes.string
 
   getDefaultProps: ->
-    dateFormat: DATE_FORMAT
+    dateFormat: TimeHelper.ISO_DATE_FORMAT
+
+  getInitialState: ->
+    startingState =
+      displayAs: 'month'
+
+  getDateStates: (state) ->
+    date = @getDateFromParams()
+
+    bounds = @getBoundsForDate(date, state)
+    _.extend({date}, bounds)
+
+  getBoundsForDate: (date, state) ->
+    state ?= @state
+
+    {displayAs} = state
+
+    startAt = TimeHelper.toISO(date.clone().startOf(displayAs).subtract(1, 'day'))
+    endAt = TimeHelper.toISO(date.clone().endOf(displayAs).add(1, 'day'))
+
+    {startAt, endAt}
 
   mixins: [CourseDataMixin]
 
@@ -74,9 +92,9 @@ TeacherTaskPlanListing = React.createClass
         transition.redirect('cc-dashboard', {courseId})
         return callback()
 
-      unless date? and moment(date, DATE_FORMAT).isValid()
+      unless date? and moment(date, TimeHelper.ISO_DATE_FORMAT).isValid()
         date = moment(TimeStore.getNow())
-        params.date = date.format(DATE_FORMAT)
+        params.date = date.format(TimeHelper.ISO_DATE_FORMAT)
         transition.redirect('calendarByDate', params)
         return callback()
 
@@ -100,15 +118,27 @@ TeacherTaskPlanListing = React.createClass
       date = TimeHelper.getMomentPreserveDate(date, @props.dateFormat)
     date
 
+  isLoadingOrLoad: ->
+    {courseId} = @context.router.getCurrentParams()
+    {startAt, endAt} = @getDateStates()
+
+    TeacherTaskPlanStore.isLoadingRange(courseId, startAt, endAt)
+
+  loadRange: ->
+    {courseId} = @context.router.getCurrentParams()
+    {startAt, endAt} = @getDateStates()
+
+    TeacherTaskPlanActions.load(courseId, startAt, endAt)
+
   render: ->
     {courseId} = @context.router.getCurrentParams()
     courseDataProps = @getCourseDataProps(courseId)
-
-    date = @getDateFromParams()
+    {displayAs} = @state
+    {date, startAt, endAt} = @getDateStates()
 
     loadPlansList = _.partial(TeacherTaskPlanStore.getActiveCoursePlans, courseId)
-
-    loadedCalendarProps = {loadPlansList, courseId, date}
+    loadedCalendarProps = {loadPlansList, courseId, date, displayAs}
+    loadingCalendarProps = {loadPlansList, courseId, date, displayAs, className: 'calendar-loading'}
 
     <div {...courseDataProps} className="tutor-booksplash-background">
 
@@ -119,11 +149,13 @@ TeacherTaskPlanListing = React.createClass
         <LoadableItem
           store={TeacherTaskPlanStore}
           actions={TeacherTaskPlanActions}
+          load={@loadRange}
+          options={{startAt, endAt}}
           id={courseId}
+          isLoadingOrLoad={@isLoadingOrLoad}
           renderItem={-> <CourseCalendar {...loadedCalendarProps}/>}
-          renderLoading={-> <CourseCalendar className='calendar-loading'/>}
+          renderLoading={-> <CourseCalendar {...loadingCalendarProps}/>}
         />
-
       </BS.Panel>
     </div>
 

@@ -21,6 +21,7 @@ TutorInput = React.createClass
     type: React.PropTypes.string
     onChange: React.PropTypes.func
     validate: React.PropTypes.func
+    onUpdated: React.PropTypes.func
 
   getDefaultProps: ->
     validate: (inputValue) ->
@@ -31,6 +32,9 @@ TutorInput = React.createClass
     errors = @props.validate(@props.default)
     errors: errors or []
 
+  componentDidUpdate: (prevProps, prevState) ->
+    @props.onUpdated?(@state) unless _.isEqual(prevState, @state)
+
   onChange: (event) ->
     # TODO make this more intuitive to parent elements
     @props.onChange(event.target?.value, event.target, event)
@@ -39,7 +43,6 @@ TutorInput = React.createClass
   validate: (inputValue) ->
     errors = @props.validate(inputValue)
     errors ?= []
-
     @setState({errors})
 
   focus: ->
@@ -148,6 +151,13 @@ TutorDateInput = React.createClass
     @props.onChange(value)
     @setState({expandCalendar: false, valid, value, errors})
 
+  # TODO There's a bug in our version of datepicker where onBlur fires when
+  #   changing months.  Put this onBlur back as a prop for Datepicker when
+  #   we upgrade so that label and invalid date errors can display properly
+  #   on blur.
+  onBlur: ->
+    @setState({hasFocus: false})
+
   getValue: ->
     @props.value or @state.value
 
@@ -192,7 +202,7 @@ TutorDateInput = React.createClass
       displayValue = value.format(TutorDateFormat)
 
     <div className={wrapperClasses}>
-      <input type='text' disabled readonly className={classes} value={displayValue}/>
+      <input type='text' disabled readOnly className={classes} value={displayValue}/>
       <div className="floating-label">{@props.label}</div>
       <div className="hint required-hint">
         Required Field <i className="fa fa-exclamation-circle"></i>
@@ -207,8 +217,8 @@ TutorDateInput = React.createClass
 
 TutorTimeInput = React.createClass
   getDefaultProps: ->
-    fromMomentFormat: 'HH:mm'
-    toMomentFormat: 'h:mm a'
+    fromMomentFormat: TimeHelper.ISO_TIME_FORMAT
+    toMomentFormat: TimeHelper.HUMAN_TIME_FORMAT
     formatCharacters:
       i: validate: (char) -> /([0-2]|:)/.test(char)
       h: validate: (char) -> /[0-9]/.test(char)
@@ -270,7 +280,12 @@ TutorTimeInput = React.createClass
     {selection} = @getMask()
     selection = _.clone(selection)
 
-    if cursorChange > 0
+    if /^(_+[1-9])/.test(timeValue)
+      timeValue = S.removeAt(timeValue, 0)
+      selection.start = 2
+      selection.end = 2
+
+    else if cursorChange > 0
       timeValue = S.insertAt(timeValue, 1, @getMask()?.placeholderChar)
       selection.start = 1
       selection.end = 1
@@ -304,17 +319,18 @@ TutorTimeInput = React.createClass
     @getMask()?.setValue(@state.timeValue) if @state.timeValue isnt prevState.timeValue
     if @state.selection? and not _.isEqual(@getMask()?.selection, @state.selection)
       # update cursor to expected time, doesnt quite work for some reason for expanding mask
-      @getMask()?.setSelection(@state.selection)
-      @getInput()?._updateInputSelection()
+      _.defer =>
+        @getMask()?.setSelection(@state.selection)
+        @getInput()?._updateInputSelection()
 
     @refs.timeInput.validate(@state.timeValue)
 
   getPatternFromValue: (value, changeEvent) ->
-    if /^[2-9]/.test(value)
+    if /^([2-9])/.test(value) or /^(_+[1-9])/.test(value)
       patten = 'h:Mm P'
     else if /^1:/.test(value)
       if changeEvent? and not @shouldShrinkMask(changeEvent)
-        pattern = 'hi:Mm P'
+        pattern = 'hh:Mm P'
       else
         pattern = 'h:Mm P'
     else
