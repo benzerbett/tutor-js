@@ -46,7 +46,7 @@ module.exports = React.createClass
 
     <BS.Row className="comment-row">
       <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className='comment'>
-        <span className="comment-author">{comment.author}:</span>
+        <span className="comment-author">{comment.author}{": "}</span>
         <span className="comment-text">{comment.text}</span>
       </BS.Col>
       <BS.Col xs={2} sm={2} className="comment-post-date">
@@ -60,13 +60,15 @@ module.exports = React.createClass
     comment = @state.comment.trim()
     postid = @props.post.id
     #dateTime = moment().format('YYYY-MM-DDTh:mm:ss.SSSZ')
-    ForumActions.save(@props.courseId,{
-        postid: postid, 
-        text: comment,
-        post_date: {'2016-06-23T21:50:09.565Z'}
-      }
-    )
-    @setState({comment:''})
+    length = comment.length
+    if length > 1 and length < 5000
+      ForumActions.save(@props.courseId,{
+          postid: postid,
+          text: comment,
+          post_date: {'2016-06-23T21:50:09.565Z'}
+        }
+      )
+      @setState({comment:''})
 
   renderExpansion: ->
     <div className="post-data">
