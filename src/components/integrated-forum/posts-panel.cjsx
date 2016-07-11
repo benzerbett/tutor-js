@@ -1,13 +1,7 @@
 React = require 'react'
 BS    = require 'react-bootstrap'
-Time  = require '../time'
 moment = require 'moment'
-ReadingRow      = require '../student-dashboard/reading-row'
-HomeworkRow     = require '../student-dashboard/homework-row'
-ExternalRow     = require '../student-dashboard/external-row'
-EventTaskRow        = require '../student-dashboard/event-task-row'
 PostRow        = require './post-row'
-GenericPostRow = require './generic-post-row'
 _ = require 'underscore'
 
 module.exports = React.createClass
@@ -25,7 +19,9 @@ module.exports = React.createClass
     <span className="title-label">{@props.title}</span>
 
   renderPost: (post) ->
-    <GenericPostRow courseId=@props.courseId key={post.id} post={post}/>
+    <PostRow courseId={@props.courseId} post={post} className={post.status}>
+      {post.title}
+    </PostRow>
 
   render: ->
     <BS.Panel className={@props.className}>

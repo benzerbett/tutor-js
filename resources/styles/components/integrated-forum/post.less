@@ -8,6 +8,22 @@
     max-width: @tutor-task-width;
     margin: 0 auto;
   }
+  .post.active {
+    .icon {
+      background-image: url("../../../images/icons/icon-question-mark.svg");
+      background-position: center;
+      // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
+      margin: (@student-dashboard-row-height - @icon-size-lg * 10)/2;
+    }
+  }
+  .post.resolved {
+    .icon {
+      background-image: url("../../../images/icons/icon-check.svg");
+      background-position: center;
+      // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
+      margin: (@student-dashboard-row-height - @icon-size-lg * 10)/2;
+    }
+  }
   .post {
     background: @tutor-white;
     border-top: thin dotted @tutor-neutral-light;
@@ -33,12 +49,30 @@
         margin-bottom: 5px;
         .post-text {
           word-wrap: break-word;
+          white-space: pre-line;
+        }
+      }
+      .comment-alert-col{
+        padding-left: 0px;
+        .comment-alert {
+          //Alert
+          padding: 15px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+
+          //Warning alert
+          background-color: #fcf8e3;
+          border-color: #faebcc;
+          color: #8a6d3b;
         }
       }
       .comment {
         border-top: thin solid @tutor-neutral-light;
         padding: 0px;
         word-wrap: break-word;
+        white-space: pre-line;
         .comment-author {
           font-weight: bold;
         }
@@ -77,7 +111,7 @@
       background-color: @tutor-neutral-lightest;
       .icon { .tutor-icon-active(1.2); }
     }
-    // if the screen is wide enought, set a hight and use line-height to vertically center content.
+    // if the screen is wide enough, set a height and use line-height to vertically center content.
     // This breaks when the responsive small view kicks in and it becomes multi-line
     .column-icon {
       height: @student-dashboard-row-height;
@@ -85,12 +119,6 @@
     }
     &.deleted {
       opacity: 0.5;
-    }
-    .icon {
-      background-image: url("../../../images/icons/icon-question-mark.svg");
-      background-position: center;
-      // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
-      margin: (@student-dashboard-row-height - @icon-size-lg * 10)/2;
     }
     .title {
       padding-left: 0;

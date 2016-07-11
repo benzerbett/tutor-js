@@ -16,7 +16,6 @@ module.exports = React.createClass
     className: React.PropTypes.string.isRequired
     post:     React.PropTypes.object.isRequired
     courseId:  React.PropTypes.string.isRequired
-    feedback:  React.PropTypes.string.isRequired
 
   contextTypes:
     router: React.PropTypes.func
@@ -34,11 +33,16 @@ module.exports = React.createClass
     if @state.expanded
       @setState({expanded: false})
 
+  showLengthAlert: ->
+    @setState({commentLengthAlert: true})
+
+  hideLengthAlert: ->
+    @setState({commentLengthAlert: false})
+
   autoGrow: (event) ->
     @setState({comment: event.target.value})
     event.target.style.height = "5px"
     event.target.style.height = (event.target.scrollHeight)+"px"
-
 
   hidden: ->
     @setState({hidden: true})
@@ -59,13 +63,12 @@ module.exports = React.createClass
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
-    comment = @state.comment.trim()
+    comment = @state.comment.trim().replace(/\n\s*\n/g, '\n')
     postid = @props.post.id
     #dateTime = moment().format('YYYY-MM-DDTh:mm:ss.SSSZ')
     length = comment.length
-    if length > 1 and length < 5000
-      # console.log(moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS'))
-      # debugger;
+
+    if length > 1 and length < 5001
       ForumActions.save(@props.courseId,{
           postid: postid,
           text: comment,
@@ -73,12 +76,16 @@ module.exports = React.createClass
         }
       )
       @setState({comment:''})
+      @hideLengthAlert()
+    else
+      @showLengthAlert()
 
   renderExpansion: ->
+    postText = @props.post.text.trim().replace(/\n\s*\n/g, '\n')
     <div className="post-data">
       <BS.Row className="post-text-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
-          {@props.post.text}
+          {postText}
         </BS.Col>
       </BS.Row>
       <BS.Row className="tag-row">
@@ -91,6 +98,15 @@ module.exports = React.createClass
         </BS.Col>
       </BS.Row>
       {_.map(@props.post.comments, @renderComments)}
+      {if @state.commentLengthAlert
+        <BS.Row>
+          <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-alert-col">
+            <BS.Alert className="comment-alert" bsStyle="warning">
+              {"Your comment must be between 2 and 5000 characters!"}
+            </BS.Alert>
+          </BS.Col>
+        </BS.Row>
+      }
       <form onSubmit={@handleSubmit}>
         <BS.Row className="comment-form">
           <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className="comment-box">
@@ -102,7 +118,7 @@ module.exports = React.createClass
               </textarea>
           </BS.Col>
           <BS.Col xs={2} sm={2} className="comment-submit">
-            <BS.Button type="submit" bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
+            <BS.Button type="submit" bsStyle="primary" className="comment-submit-button">Comment</BS.Button>
           </BS.Col>
         </BS.Row>
       </form>
