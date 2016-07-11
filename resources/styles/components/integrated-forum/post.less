@@ -35,10 +35,27 @@
           word-wrap: break-word;
         }
       }
+      .comment-alert-col{
+        padding-left: 0px;
+        .comment-alert {
+          //Alert
+          padding: 15px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+
+          //Warning alert
+          background-color: #fcf8e3;
+          border-color: #faebcc;
+          color: #8a6d3b;
+        }
+      }
       .comment {
         border-top: thin solid @tutor-neutral-light;
         padding: 0px;
         word-wrap: break-word;
+        white-space: pre-line;
         .comment-author {
           font-weight: bold;
         }
