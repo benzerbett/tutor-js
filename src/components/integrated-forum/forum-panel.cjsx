@@ -35,10 +35,10 @@ ForumPanelShell = React.createClass
     {courseId} = @context.router.getCurrentParams()
     <div className='student-forum '>
       <LoadableItem
-      id={courseId}
-      store={ForumStore}
-      actions={ForumActions}
-      renderItem={ -> <ForumPanel courseId={courseId}/> }
+        id={courseId}
+        store={ForumStore}
+        actions={ForumActions}
+        renderItem={ -> <ForumPanel courseId={courseId}/> }
       />
     </div>
 

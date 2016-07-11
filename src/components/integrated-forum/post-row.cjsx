@@ -14,7 +14,6 @@ module.exports = React.createClass
     className: React.PropTypes.string.isRequired
     post:     React.PropTypes.object.isRequired
     courseId:  React.PropTypes.string.isRequired
-    feedback:  React.PropTypes.string.isRequired
 
   contextTypes:
     router: React.PropTypes.func
@@ -79,10 +78,11 @@ module.exports = React.createClass
       @showLengthAlert()
 
   renderExpansion: ->
+    postText = @props.post.text.trim().replace(/\n\s*\n/g, '\n')
     <div className="post-data">
       <BS.Row className="post-text-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className='post-text'>
-          {@props.post.text}
+          {postText}
         </BS.Col>
       </BS.Row>
       <BS.Row className="tag-row">
@@ -115,7 +115,7 @@ module.exports = React.createClass
               </textarea>
           </BS.Col>
           <BS.Col xs={2} sm={2} className="comment-submit">
-            <BS.Button type="submit" bsStyle="primary" className="comment-submit-button">Submit</BS.Button>
+            <BS.Button type="submit" bsStyle="primary" className="comment-submit-button">Comment</BS.Button>
           </BS.Col>
         </BS.Row>
       </form>

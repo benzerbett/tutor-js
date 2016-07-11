@@ -18,7 +18,6 @@ ForumConfig = {
       obj.author= 'Johny Tran'
       forum.posts[obj.postid-1].comments.push(obj)
 
-
     return forum
 
 

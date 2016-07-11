@@ -1,20 +1,21 @@
 {
   "posts": [
     {
-      "id": "1",
+      "id": 1,
       "title": "Problem with a question",
       "author": "Ted",
       "post_date":"2016-06-23T19:04:31.565Z",
       "text": "This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.",
+      "status": "resolved",
       "comments":[
         {
-          "id": "1",
+          "id": 1,
           "author": "Ned",
           "post_date":"2016-06-23T21:55:35.565Z",
           "text": "This is a comment on your question"
         },
         {
-          "id": "2",
+          "id": 2,
           "author": "Ted",
           "post_date":"2016-06-23T21:50:09.565Z",
           "text": "Can we be friends?"
@@ -22,19 +23,21 @@
       ]
     },
     {
-      "id": "2",
+      "id": 2,
       "title": "Why is Ted so bad at math? ",
       "author": "Fred",
       "post_date":"2016-06-23T18:12:22.565Z",
       "text": "With lack of power comes great zero",
+      "status": "active",
       "comments":[]
     },
     {
-      "id": "3",
+      "id": 3,
       "title": "Ted wins Bad at Math Award 2016",
       "author": "Ed",
       "post_date":"2016-06-23T11:45:30.565Z",
       "text": "We did it, Tutor!",
+      "status": "active",
       "comments":[]
     }
 

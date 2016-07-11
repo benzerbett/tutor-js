@@ -24,13 +24,14 @@ module.exports = React.createClass
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
-    title = @state.title.trim()
-    text = @state.text.trim()
+    title = @state.title.trim().replace(/\n\s*\n/g, '\n')
+    text = @state.text.trim().replace(/\n\s*\n/g, '\n')
     @props.onPostSubmit({
         author: 'Johny Tran', 
         text: text,
         post_date: {'2016-06-23T21:50:09.565Z'},
-        title: title
+        title: title,
+        resolved: false
       }
     )
     @setState({title: '', text: ''})
