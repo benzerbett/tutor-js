@@ -8,12 +8,12 @@ ForumConfig = {
   _saved: (obj, courseId) ->
     forum = @_get(courseId)
 
-    if `Object.keys(obj).length ==5`
+    if `obj.type=='post'`
       obj.id = forum.posts.length + 1
       obj.comments = []
       forum.posts.push(obj)
 
-    if `Object.keys(obj).length ==4`
+    if `obj.type =='comment'`
       obj.id = forum.posts[obj.postid-1].comments.length + 1
       obj.author= 'Johny Tran'
       forum.posts[obj.postid-1].comments.push(obj)

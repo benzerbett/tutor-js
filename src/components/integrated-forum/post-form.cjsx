@@ -2,6 +2,8 @@ React  = require 'react'
 BS     = require 'react-bootstrap'
 Time   = require '../time'
 moment = require 'moment'
+{TimeStore} = require '../../flux/time'
+moment = require 'moment-timezone'
 
 {ForumActions, ForumStore} = require '../../flux/forum'
 classnames = require 'classnames'
@@ -27,9 +29,10 @@ module.exports = React.createClass
     title = @state.title.trim().replace(/\n\s*\n/g, '\n')
     text = @state.text.trim().replace(/\n\s*\n/g, '\n')
     @props.onPostSubmit({
-        author: 'Johny Tran', 
+        type: 'post',
+        author: 'Johny Tran',
         text: text,
-        post_date: {'2016-06-23T21:50:09.565Z'},
+        postDate: moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS')+"Z",
         title: title,
         status: "active"
       }

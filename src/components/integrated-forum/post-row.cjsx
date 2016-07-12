@@ -73,6 +73,7 @@ module.exports = React.createClass
 
     if length > 1 and length < 5001
       ForumActions.save(@props.courseId,{
+          type: 'comment',
           postid: postid,
           text: comment,
           postDate: moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS')+"Z"
