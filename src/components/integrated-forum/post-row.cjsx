@@ -5,6 +5,8 @@ moment = require 'moment'
 classnames = require 'classnames'
 _ = require 'underscore'
 {ForumActions, ForumStore} = require '../../flux/forum'
+{TimeStore} = require '../../flux/time'
+moment = require 'moment-timezone'
 
 
 module.exports = React.createClass
@@ -68,11 +70,12 @@ module.exports = React.createClass
     postid = @props.post.id
     #dateTime = moment().format('YYYY-MM-DDTh:mm:ss.SSSZ')
     length = comment.length
+
     if length > 1 and length < 5001
       ForumActions.save(@props.courseId,{
           postid: postid,
           text: comment,
-          post_date: {'2016-06-23T21:50:09.565Z'}
+          postDate: moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS')+"Z"
         }
       )
       @setState({comment:''})
@@ -110,9 +113,9 @@ module.exports = React.createClass
       <form onSubmit={@handleSubmit}>
         <BS.Row className="comment-form">
           <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className="comment-box">
-              <textarea 
-                className="comment-input" 
-                placeholder="Add Comment..." 
+              <textarea
+                className="comment-input"
+                placeholder="Add Comment..."
                 value={@state.comment}
                 onChange={@autoGrow}>
               </textarea>
