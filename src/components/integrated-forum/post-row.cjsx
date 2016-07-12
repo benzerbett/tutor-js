@@ -83,6 +83,8 @@ module.exports = React.createClass
       @hideLengthAlert()
     else
       @showLengthAlert()
+  renderTag: (tag) ->
+    <BS.Label>{tag}</BS.Label>
 
   renderExpansion: ->
     postText = @props.post.text.trim().replace(/\n\s*\n/g, '\n')
@@ -94,11 +96,7 @@ module.exports = React.createClass
       </BS.Row>
       <BS.Row className="tag-row">
         <BS.Col xs={10} sm={10} xsOffset={1} smOffset={1} className="tags">
-          <BS.Label>Tag</BS.Label>
-          <BS.Label>Tag</BS.Label>
-          <BS.Label>Tag</BS.Label>
-          <BS.Label>Tag</BS.Label>
-          <BS.Label>Tag</BS.Label>
+          {_.map(@props.post.tags, @renderTag)}
         </BS.Col>
       </BS.Row>
       {_.map(@props.post.comments, @renderComments)}

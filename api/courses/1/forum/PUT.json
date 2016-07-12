@@ -1,44 +1,54 @@
 {
   "posts": [
     {
-      "id": "1",
-      "type":"post",
+      "id": 1,
       "title": "Problem with a question",
       "author": "Ted",
-      "postDate":"2016-06-23T11:45:30.565Z",
-      "text": "im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah im bad at math, I hate it so much, It is gross, it is bad, ahahahahahahhahahahahah",
+      "post_date":"2016-06-23T19:04:31.565Z",
+      "text": "This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.This is a question.",
+      "status": "resolved",
+      "tags":["Chapter 2","Speed"],
+      "type":"post",
       "comments":[
         {
-          "id": "1",
-          "type":"comment",
+          "type":"post",
+          "id": 1,
           "author": "Ned",
-          "postDate":"2016-06-23T11:50:35.565Z",
-          "text": "So am I"
+          "post_date":"2016-06-23T21:55:35.565Z",
+          "text": "This is a comment on your question"
         },
         {
-          "id": "2",
-          "type":"comment",
+          "type":"post",
+          "id": 2,
           "author": "Ted",
-          "postDate":"2016-06-23T11:55:09.565Z",
+          "post_date":"2016-06-23T21:50:09.565Z",
           "text": "Can we be friends?"
         }
       ]
     },
     {
-      "id": "2",
-      "type":"post",
-      "title": "Why is Ted so bad at math? bad at math? bad at math? bad at math? bad at math? bad at math? bad at math? bad at math?",
+      "id": 2,
+      "title": "Why is Ted so bad at math? ",
       "author": "Fred",
-      "postDate":"2016-06-23T18:12:22.565Z",
-      "text": "like woah"
+      "post_date":"2016-06-23T18:12:22.565Z",
+      "text": "With lack of power comes great zero",
+      "status": "active",
+      "tags":["Chapter 2","Speed"],
+      "comments":[],
+      "type":"post"
+
     },
     {
-      "id": "3",
-      "type":"post",
+      "id": 3,
       "title": "Ted wins Bad at Math Award 2016",
       "author": "Ed",
-      "postDate":"2016-06-23T19:04:31.565Z",
-      "text": "lol"
+      "post_date":"2016-06-23T11:45:30.565Z",
+      "text": "We did it, Tutor!",
+      "status": "active",
+      "tags":["Chapter 2","Speed"],
+      "comments":[],
+      "type":"post"
+
     }
 
   ]
