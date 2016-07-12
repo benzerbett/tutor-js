@@ -31,7 +31,7 @@ module.exports = React.createClass
         text: text,
         post_date: {'2016-06-23T21:50:09.565Z'},
         title: title,
-        resolved: false
+        status: "active"
       }
     )
     @setState({title: '', text: ''})

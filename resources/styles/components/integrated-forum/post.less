@@ -36,7 +36,7 @@
     {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.6s ease-in-out;
+      transition: max-height 0.75s ease-in-out;
       .tag-row {
         margin-bottom: 10px;
         line-height: 1em;
@@ -66,6 +66,30 @@
           background-color: #fcf8e3;
           border-color: #faebcc;
           color: #8a6d3b;
+        }
+      }
+      .comment-row {
+        .reply-prompt-col {
+          text-align: right;
+          padding: 0px;
+          font-weight: bold;
+          margin-top: 1px;
+          margin-right: 5px;
+          white-space: nowrap;
+          .reply-prompt {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+          }
+        }
+        &:hover {
+          background-color: @tutor-neutral-lightest;
+          .reply-prompt-col {
+            .reply-prompt {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
         }
       }
       .comment {

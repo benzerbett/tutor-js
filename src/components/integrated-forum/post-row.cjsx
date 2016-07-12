@@ -49,7 +49,10 @@ module.exports = React.createClass
     cPostDate = <Time date={comment.post_date} format='concise'/>
 
     <BS.Row className="comment-row">
-      <BS.Col xs={7} sm={7} xsOffset={2} smOffset={2} className='comment'>
+      <BS.Col xs={2} sm={2} className="reply-prompt-col">
+        <span className="reply-prompt">{"Reply to"}</span>
+      </BS.Col>
+      <BS.Col xs={7} sm={7} className='comment'>
         <span className="comment-author">{comment.author}{": "}</span>
         <span className="comment-text">{comment.text}</span>
       </BS.Col>
