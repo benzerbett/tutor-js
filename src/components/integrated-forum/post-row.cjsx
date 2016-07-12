@@ -44,13 +44,17 @@ module.exports = React.createClass
     event.target.style.height = "5px"
     event.target.style.height = (event.target.scrollHeight)+"px"
 
+  addReplyTag: (author) ->
+    tagConcat = '@' + author + ': ' + @state.comment
+    @setState({comment: tagConcat})
+
   hidden: ->
     @setState({hidden: true})
 
-  renderComments: (comment) ->
+  renderComment: (comment) ->
     cPostDate = <Time date={comment.post_date} format='concise'/>
 
-    <BS.Row className="comment-row">
+    <BS.Row className="comment-row" onClick={_.partial(@addReplyTag, comment.author)}>
       <BS.Col xs={2} sm={2} className="reply-prompt-col">
         <span className="reply-prompt">{"Reply to"}</span>
       </BS.Col>
@@ -62,7 +66,6 @@ module.exports = React.createClass
         {cPostDate}
       </BS.Col>
     </BS.Row>
-
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
@@ -101,7 +104,7 @@ module.exports = React.createClass
           <BS.Label>Tag</BS.Label>
         </BS.Col>
       </BS.Row>
-      {_.map(@props.post.comments, @renderComments)}
+      {_.map(@props.post.comments, @renderComment)}
       {if @state.commentLengthAlert
         <BS.Row>
           <BS.Col xs={9} sm={9} xsOffset={2} smOffset={2} className="comment-alert-col">
