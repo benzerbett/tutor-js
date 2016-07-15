@@ -12,6 +12,10 @@ PerformanceForecastShell = require './components/performance-forecast'
 {ScoresShell} = require './components/scores'
 {ReadingShell, HomeworkShell, ExternalShell, EventShell} = require './components/task-plan'
 {StudentDashboardShell} = require './components/student-dashboard'
+{TeacherForumShell} = require './components/teacher-forum'
+
+{ForumShell} = require './components/integrated-forum/forum-panel'
+
 TeacherTaskPlans = require './components/task-plan/teacher-task-plans-listing'
 {TaskTeacherReviewShell} = require './components/task-teacher-review'
 {ReferenceBookShell, ReferenceBookPageShell, ReferenceBookFirstPage} =
@@ -58,6 +62,8 @@ routes = (
           <Router.DefaultRoute handler={TeacherTaskPlans} />
           <Route path='scores/?' name='viewScores'
             handler={Handler(ScoresShell, requireRole: 'teacher', requirePeriods: true)} />
+          <Route path='forum/?' name='viewForum'
+            handler={Handler(TeacherForumShell, requireRole: 'teacher', requirePeriods: true)} />
           <Route path='guide' name='viewTeacherPerformanceForecast'
             handler={Handler(PerformanceForecastShell.Teacher, requireRole: 'teacher', requirePeriods: true)} />
           <Route path='guide/student/:roleId?' name='viewStudentTeacherPerformanceForecast'
@@ -110,6 +116,7 @@ routes = (
           </Route>
         </Route>
       </Route>
+
       <Route path='sandbox/?' name='sandbox' handler={Sandbox} />
     </Route> # end of routes handled by App
 

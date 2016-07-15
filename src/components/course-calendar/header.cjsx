@@ -71,6 +71,9 @@ CourseCalendarHeader = React.createClass
         <Router.Link className='btn btn-default' to='viewScores' params={{courseId}}>
           Student Scores
         </Router.Link>
+        <Router.Link className='btn btn-default' to='viewForum' params={{courseId}}>
+          Forum
+        </Router.Link>
       </BS.Row>
       <BS.Row>
         <BS.Col xs={4}>
