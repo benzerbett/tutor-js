@@ -37,8 +37,8 @@ module.exports = React.createClass
     <div className="forum-toolbar">
       <BS.Row className={classes}>
 
-        <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className="toolbar-tag">
-          <DropdownButton bsStyle='success' title='Tags' id="toolbar-tag-button">
+        <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0} className="toolbar-tag">
+          <DropdownButton bsStyle='success' title='Chapters' id="toolbar-tag-button">
             <MenuItem eventKey="1" className="toolbar-tag-menu">Chapter1</MenuItem>
             <MenuItem eventKey="2" className="toolbar-tag-menu">Chapter2</MenuItem>
             <MenuItem eventKey="3" className="toolbar-tag-menu">Chapter3</MenuItem>
@@ -46,7 +46,16 @@ module.exports = React.createClass
           </DropdownButton>
         </BS.Col>
 
-        <BS.Col xs={3} sm={3} xsOffset={6} smOffset={6} className="new-post-modal">
+        <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0} className="toolbar-tag">
+          <DropdownButton bsStyle='success' title='Topics' id="toolbar-tag-button">
+            <MenuItem eventKey="1" className="toolbar-tag-menu">Momentum</MenuItem>
+            <MenuItem eventKey="2" className="toolbar-tag-menu">Acceleration</MenuItem>
+            <MenuItem eventKey="3" className="toolbar-tag-menu">Very Difficult Physics</MenuItem>
+            <MenuItem eventKey="4" className="toolbar-tag-menu">Relativity</MenuItem>
+          </DropdownButton>
+        </BS.Col>
+
+        <BS.Col xs={3} sm={3} xsOffset={5} smOffset={5} className="new-post-modal">
           <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
             {"New Post"}
           </BS.Button>

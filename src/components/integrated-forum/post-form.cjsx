@@ -63,13 +63,26 @@ module.exports = React.createClass
       </BS.Row>
       <BS.Row>
           <div class = "form-group">
-            <label className="text-label">{"Tags:"}</label>
+            <label className="text-label">{"Chapters:"}</label>
             <select class = "form-control">
                <option>Chapter1</option>
                <option>Chapter2</option>
                <option>Chapter3</option>
                <option>Chapter4</option>
                <option>Chapter5</option>
+            </select>
+          </div>
+      </BS.Row>
+
+      <BS.Row>
+          <div class = "form-group">
+            <label className="text-label">{"Topics:"}</label>
+            <select class = "form-control">
+               <option>Relativity</option>
+               <option>Momentum</option>
+               <option>Acceleration</option>
+               <option>Relativity</option>
+               <option>Very Difficult Physics</option>
             </select>
           </div>
       </BS.Row>
