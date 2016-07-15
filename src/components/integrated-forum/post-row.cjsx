@@ -24,6 +24,7 @@ module.exports = React.createClass
     hidden: false
     expanded: false
     comment: ''
+    commentLengthAlert: false
 
   expand: ->
     if !@state.expanded
