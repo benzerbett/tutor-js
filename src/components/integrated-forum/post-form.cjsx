@@ -7,6 +7,8 @@ moment = require 'moment-timezone'
 
 {ForumActions, ForumStore} = require '../../flux/forum'
 classnames = require 'classnames'
+FormGroup = require 'react-bootstrap/lib/FormGroup'
+FormControl= require 'react-bootstrap/lib/FormControls'
 
 module.exports = React.createClass
   displayName: 'PostForm'
@@ -58,6 +60,18 @@ module.exports = React.createClass
           placeholder="Text"
           onChange={@handleTextChange}>
         </textarea>
+      </BS.Row>
+      <BS.Row>
+          <div class = "form-group">
+            <label className="text-label">{"Tags:"}</label>
+            <select class = "form-control">
+               <option>Chapter1</option>
+               <option>Chapter2</option>
+               <option>Chapter3</option>
+               <option>Chapter4</option>
+               <option>Chapter5</option>
+            </select>
+          </div>
       </BS.Row>
 
       <BS.Row className="post-submit-row">
