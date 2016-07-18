@@ -23,7 +23,8 @@ module.exports = React.createClass
     title: ''
     text: ''
     chapterTag:'Chapter 1'
-
+    sectionTag:'Section 1'
+    topicTag: @props.topicTags[0]
 
   handleTitleChange: (e)->
     @setState({title: e.target.value})
@@ -32,11 +33,17 @@ module.exports = React.createClass
     @setState({text: e.target.value})
   handleChapterTagChange: (e)->
     @setState({chapterTag: e.target.value})
+  handleSectionTagChange: (e)->
+    @setState({sectionTag: e.target.value})
+  handleTopicTagChange: (e)->
+    @setState({topicTag: e.target.value})
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
     title = @state.title.trim().replace(/\n\s*\n/g, '\n')
     text = @state.text.trim().replace(/\n\s*\n/g, '\n')
+    chapterTag = @state.chapterTag + "."+@state.sectionTag.substring(8)
+    topicTag = @state.topicTag
     @props.onPostSubmit({
         type: 'post',
         author: 'Johny Tran',
@@ -44,6 +51,7 @@ module.exports = React.createClass
         postDate: moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS')+"Z",
         title: title,
         status: "active"
+        tags:[chapterTag,topicTag]
       }
     )
     @setState({title: '', text: ''})
@@ -100,7 +108,7 @@ module.exports = React.createClass
       <BS.Row>
           <div class = "form-group">
             <label className="text-label">{"Sections:"}</label>
-            <select class = "form-control">
+            <select class = "form-control" onChange = {@handleSectionTagChange}>
               {@renderSectionTags(chapterTags)}
             </select>
           </div>
@@ -109,7 +117,7 @@ module.exports = React.createClass
       <BS.Row>
           <div class = "form-group">
             <label className="text-label">{"Topics:"}</label>
-            <select class = "form-control">
+            <select class = "form-control" onChange = {@handleTopicTagChange}>
               {_.map(topicTags, @renderTopicTag)}
             </select>
           </div>
