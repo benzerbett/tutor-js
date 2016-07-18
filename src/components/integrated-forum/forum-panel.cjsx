@@ -5,6 +5,7 @@ PostsPanel = require './posts-panel'
 {StudentDashboardStore} = require '../../flux/student-dashboard'
 {ForumActions, ForumStore} = require '../../flux/forum'
 LoadableItem = require '../loadable-item'
+ForumToolbar   = require './forum-toolbar'
 
 ForumPanel = React.createClass
   displayName: 'ForumPanel'
@@ -33,13 +34,15 @@ ForumPanelShell = React.createClass
 
   render: ->
     {courseId} = @context.router.getCurrentParams()
-    <div className='student-forum '>
-      <LoadableItem
-        id={courseId}
-        store={ForumStore}
-        actions={ForumActions}
-        renderItem={ -> <ForumPanel courseId={courseId}/> }
-      />
-    </div>
+    <LoadableItem
+      id={courseId}
+      store={ForumStore}
+      actions={ForumActions}
+      renderItem={ ->
+        <div className='student-forum '>
+          <ForumToolbar courseId={courseId}/>
+          <ForumPanel courseId={courseId}/>
+        </div>}
+    />
 
 module.exports = ForumPanelShell

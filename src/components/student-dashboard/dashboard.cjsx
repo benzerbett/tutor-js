@@ -63,7 +63,6 @@ module.exports = React.createClass
                 <AllEventsByWeek courseId={courseId}/>
               </BS.Tab>
               <BS.Tab eventKey={3} title='Forum'>
-                <ForumToolbar courseId={courseId}/>
                 <ForumPanel courseId={courseId}/>
 
               </BS.Tab>

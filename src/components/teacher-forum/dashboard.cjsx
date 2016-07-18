@@ -18,7 +18,6 @@ module.exports = React.createClass
       <span className='course-scores-title'>Forum</span>
         <BS.Row>
           <BS.Col xs=12 md=12 lg=12>
-              <ForumToolbar courseId={courseId}/>
               <ForumPanel courseId={courseId}/>
           </BS.Col>
         </BS.Row>

@@ -30,9 +30,13 @@ module.exports = React.createClass
   handlePostSubmit: (newPost)->
     @setState({showModal:false})
     ForumActions.save(@props.courseId, newPost)
+  renderTopicTag: (topicTag)->
+    <MenuItem eventKey="1" className="toolbar-tag-menu">{topicTag}</MenuItem>
+
 
   render: ->
     classes = classnames("toolbar row")
+    topicTags = ForumStore.topicTags(@props.courseId)
 
     <div className="forum-toolbar">
       <BS.Row className={classes}>
@@ -48,10 +52,7 @@ module.exports = React.createClass
 
         <BS.Col xs={2} sm={2} xsOffset={0} smOffset={0} className="toolbar-tag">
           <DropdownButton bsStyle='success' title='Topics' id="toolbar-tag-button">
-            <MenuItem eventKey="1" className="toolbar-tag-menu">Momentum</MenuItem>
-            <MenuItem eventKey="2" className="toolbar-tag-menu">Acceleration</MenuItem>
-            <MenuItem eventKey="3" className="toolbar-tag-menu">Very Difficult Physics</MenuItem>
-            <MenuItem eventKey="4" className="toolbar-tag-menu">Relativity</MenuItem>
+            {_.map(topicTags, @renderTopicTag)}
           </DropdownButton>
         </BS.Col>
 

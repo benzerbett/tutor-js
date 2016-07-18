@@ -25,6 +25,10 @@ ForumConfig = {
 
     isDeleted: (post) -> post.is_deleted
 
+    topicTags: (courseId) ->
+      data = @_get(courseId)
+      topics = data.topics or []
+
     posts: (courseId) ->
       data = @_get(courseId)
       posts = data.posts or []
