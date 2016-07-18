@@ -15,6 +15,9 @@ module.exports = React.createClass
 
   propTypes:
     onPostSubmit: React.PropTypes.func.isRequired
+    topicTags: React.PropTypes.array.isRequired
+    chapterTags: React.PropTypes.array.isRequired
+
 
   getInitialState: ->
     title: ''
@@ -40,8 +43,19 @@ module.exports = React.createClass
       }
     )
     @setState({title: '', text: ''})
+  renderTopicTag: (topicTag)->
+    <option>{topicTag}</option>
+  renderChapterTags: (chapterLength)->
+    optionRow = []
+    for i in [1...chapterLength+1]
+      optionRow.push(<option>{"Chapter "+i.toString()}</option>);
+    optionRow
+
+
 
   render: ->
+    topicTags = @props.topicTags
+    chapterTags = @props.chapterTags
     <form className="post-form" onSubmit={@handleSubmit}>
       <BS.Row className="title-row">
         <label className="title-label">{"Title:"}</label>
@@ -65,11 +79,7 @@ module.exports = React.createClass
           <div class = "form-group">
             <label className="text-label">{"Chapters:"}</label>
             <select class = "form-control">
-               <option>Chapter1</option>
-               <option>Chapter2</option>
-               <option>Chapter3</option>
-               <option>Chapter4</option>
-               <option>Chapter5</option>
+              {@renderChapterTags(chapterTags.length)}
             </select>
           </div>
       </BS.Row>
@@ -78,11 +88,7 @@ module.exports = React.createClass
           <div class = "form-group">
             <label className="text-label">{"Topics:"}</label>
             <select class = "form-control">
-               <option>Relativity</option>
-               <option>Momentum</option>
-               <option>Acceleration</option>
-               <option>Relativity</option>
-               <option>Very Difficult Physics</option>
+              {_.map(topicTags, @renderTopicTag)}
             </select>
           </div>
       </BS.Row>

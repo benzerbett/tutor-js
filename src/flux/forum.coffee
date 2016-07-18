@@ -28,6 +28,9 @@ ForumConfig = {
     topicTags: (courseId) ->
       data = @_get(courseId)
       topics = data.topics or []
+    chapterTags: (courseId) ->
+      data = @_get(courseId)
+      chapters = data.chapters or []
 
     posts: (courseId) ->
       data = @_get(courseId)

@@ -33,11 +33,10 @@ module.exports = React.createClass
   renderTopicTag: (topicTag)->
     <MenuItem eventKey="1" className="toolbar-tag-menu">{topicTag}</MenuItem>
 
-
   render: ->
     classes = classnames("toolbar row")
     topicTags = ForumStore.topicTags(@props.courseId)
-
+    chapterTags = ForumStore.chapterTags(@props.courseId)
     <div className="forum-toolbar">
       <BS.Row className={classes}>
 
@@ -67,7 +66,7 @@ module.exports = React.createClass
             </ModalHeader>
 
             <BS.Modal.Body className="post-form-body">
-              <PostForm onPostSubmit = {@handlePostSubmit}/>
+              <PostForm onPostSubmit = {@handlePostSubmit} topicTags = {topicTags} chapterTags = {chapterTags}/>
             </BS.Modal.Body>
 
             <BS.Modal.Footer>

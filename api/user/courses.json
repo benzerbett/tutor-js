@@ -6,7 +6,7 @@
     "name":"Local Test Course",
     "roles": [
       {
-        "type": "teacher"
+        "type": "student"
       }
     ],
     "time_zone": "Central Time (US & Canada)",
