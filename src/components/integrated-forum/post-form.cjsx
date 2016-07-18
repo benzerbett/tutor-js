@@ -22,12 +22,16 @@ module.exports = React.createClass
   getInitialState: ->
     title: ''
     text: ''
+    chapterTag:'Chapter 1'
+
 
   handleTitleChange: (e)->
     @setState({title: e.target.value})
 
   handleTextChange: (e)->
     @setState({text: e.target.value})
+  handleChapterTagChange: (e)->
+    @setState({chapterTag: e.target.value})
 
   handleSubmit: (submitEvent) ->
     submitEvent.preventDefault()
@@ -48,8 +52,17 @@ module.exports = React.createClass
   renderChapterTags: (chapterLength)->
     optionRow = []
     for i in [1...chapterLength+1]
-      optionRow.push(<option>{"Chapter "+i.toString()}</option>);
+      optionRow.push(<option>{"Chapter "+i.toString()}</option>)
     optionRow
+  renderSectionTags: (chapterTags)->
+    chapterIdx = Number(@state.chapterTag.substring(8))-1
+    sectionLength = chapterTags[chapterIdx]
+    optionRow = []
+    for i in [1...sectionLength+1]
+      optionRow.push(<option>{"Section "+i.toString()}</option>)
+    optionRow
+
+
 
 
 
@@ -78,8 +91,17 @@ module.exports = React.createClass
       <BS.Row>
           <div class = "form-group">
             <label className="text-label">{"Chapters:"}</label>
-            <select class = "form-control">
+            <select class = "form-control" onChange = {@handleChapterTagChange}>
               {@renderChapterTags(chapterTags.length)}
+            </select>
+          </div>
+      </BS.Row>
+
+      <BS.Row>
+          <div class = "form-group">
+            <label className="text-label">{"Sections:"}</label>
+            <select class = "form-control">
+              {@renderSectionTags(chapterTags)}
             </select>
           </div>
       </BS.Row>
