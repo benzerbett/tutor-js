@@ -4,10 +4,15 @@
 
   .post-info { padding-left: 0px; }
 
+  .panel {
+    margin: 0px;
+  }
+
   .row {
     max-width: @tutor-task-width;
     margin: 0 auto;
   }
+
   .post.active {
     .icon {
       background-image: url("../../../images/icons/icon-question-mark.svg");
@@ -186,7 +191,9 @@
       .title, .post-info {
         line-height: @student-dashboard-row-height / 2;
       }
-      // match the 0 left padding of the description
+      .post-info {
+        text-align: left;
+      }
     }
   }
   .post.expanded {

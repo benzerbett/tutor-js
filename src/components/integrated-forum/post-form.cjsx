@@ -42,7 +42,7 @@ module.exports = React.createClass
     submitEvent.preventDefault()
     title = @state.title.trim().replace(/\n\s*\n/g, '\n')
     text = @state.text.trim().replace(/\n\s*\n/g, '\n')
-    chapterTag = @state.chapterTag + "."+@state.sectionTag.substring(8)
+    chapterTag = @state.chapterTag + "." + @state.sectionTag.substring(8)
     topicTag = @state.topicTag
     @props.onPostSubmit({
         type: 'post',
@@ -51,17 +51,20 @@ module.exports = React.createClass
         postDate: moment(TimeStore.getNow()).format('YYYY-MM-DDTh:mm:ss.SSS')+"Z",
         title: title,
         status: "active"
-        tags:[chapterTag,topicTag]
+        tags:[chapterTag, topicTag]
       }
     )
     @setState({title: '', text: ''})
+
   renderTopicTag: (topicTag)->
     <option>{topicTag}</option>
+
   renderChapterTags: (chapterLength)->
     optionRow = []
     for i in [1...chapterLength+1]
       optionRow.push(<option>{"Chapter "+i.toString()}</option>)
     optionRow
+
   renderSectionTags: (chapterTags)->
     chapterIdx = Number(@state.chapterTag.substring(8))-1
     sectionLength = chapterTags[chapterIdx]
@@ -71,19 +74,17 @@ module.exports = React.createClass
     optionRow
 
 
-
-
-
   render: ->
     topicTags = @props.topicTags
     chapterTags = @props.chapterTags
+
     <form className="post-form" onSubmit={@handleSubmit}>
       <BS.Row className="title-row">
         <label className="title-label">{"Title:"}</label>
         <textarea
           className="post-form-title"
           placeholder="Title"
-          value= {@state.title}
+          value={@state.title}
           onChange={@handleTitleChange}>
         </textarea>
       </BS.Row>
@@ -96,28 +97,25 @@ module.exports = React.createClass
           onChange={@handleTextChange}>
         </textarea>
       </BS.Row>
-      <BS.Row>
-          <div class = "form-group">
-            <label className="text-label">{"Chapters:"}</label>
-            <select class = "form-control" onChange = {@handleChapterTagChange}>
-              {@renderChapterTags(chapterTags.length)}
-            </select>
-          </div>
+      <BS.Row className="book-tag-row">
+        <div className="form-group chapter-tag-select">
+          <label className="chapter-tag-label">{"Chapter: "}</label>
+          <select className="form-control" onChange={@handleChapterTagChange}>
+            {@renderChapterTags(chapterTags.length)}
+          </select>
+        </div>
+        <div className="form-group section-tag-select">
+          <label className="section-tag-label">{"Section: "}</label>
+          <select className="form-control" onChange={@handleSectionTagChange}>
+            {@renderSectionTags(chapterTags)}
+          </select>
+        </div>
       </BS.Row>
 
-      <BS.Row>
-          <div class = "form-group">
-            <label className="text-label">{"Sections:"}</label>
-            <select class = "form-control" onChange = {@handleSectionTagChange}>
-              {@renderSectionTags(chapterTags)}
-            </select>
-          </div>
-      </BS.Row>
-
-      <BS.Row>
-          <div class = "form-group">
-            <label className="text-label">{"Topics:"}</label>
-            <select class = "form-control" onChange = {@handleTopicTagChange}>
+      <BS.Row className="topic-tag-row">
+          <div className="form-group">
+            <label className="topic-tag-label">{"Topic: "}</label>
+            <select className="form-control topic-tag-select" onChange={@handleTopicTagChange}>
               {_.map(topicTags, @renderTopicTag)}
             </select>
           </div>
