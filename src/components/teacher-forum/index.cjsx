@@ -1,7 +1,7 @@
 React = require 'react'
 BS = require 'react-bootstrap'
 
-{StudentDashboardStore, StudentDashboardActions} = require '../../flux/student-dashboard'
+{ForumStore, ForumActions} = require '../../flux/forum'
 LoadableItem = require '../loadable-item'
 isStepComplete = (step) -> step.is_completed
 TeacherForum = require './dashboard'
@@ -17,8 +17,8 @@ TeacherForumShell = React.createClass
     <BS.Panel className='student-dashboard '>
       <LoadableItem
         id={courseId}
-        store={StudentDashboardStore}
-        actions={StudentDashboardActions}
+        store={ForumStore}
+        actions={ForumActions}
         renderItem={ -> <TeacherForum courseId={courseId}/> }
       />
     </BS.Panel>
