@@ -64,6 +64,8 @@ routes = (
             handler={Handler(ScoresShell, requireRole: 'teacher', requirePeriods: true)} />
           <Route path='forum/?' name='viewForum'
             handler={Handler(TeacherForumShell, requireRole: 'teacher', requirePeriods: true)} />
+          <Route path='studentforum/?' name='viewStudentForum'
+            handler={Handler(StudentDashboardShell, requireRole: 'teacher', requirePeriods: true)} />
           <Route path='guide' name='viewTeacherPerformanceForecast'
             handler={Handler(PerformanceForecastShell.Teacher, requireRole: 'teacher', requirePeriods: true)} />
           <Route path='guide/student/:roleId?' name='viewStudentTeacherPerformanceForecast'
