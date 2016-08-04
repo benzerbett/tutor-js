@@ -54,6 +54,10 @@ module.exports = React.createClass
 
   renderComment: (comment) ->
     cPostDate = <Time date={comment.post_date} format='concise'/>
+    tooltip = <BS.Tooltip id="endorse-tooltip">This comment was endorsed by the instructor!</BS.Tooltip>
+    className = "endorsement-area"
+    if comment.endorsed_at
+      className += " endorsed"
 
     <BS.Row className="comment-row" onClick={_.partial(@addReplyTag, comment.author)}>
       <BS.Col xs={2} sm={2} className="reply-prompt-col">
@@ -65,6 +69,13 @@ module.exports = React.createClass
       </BS.Col>
       <BS.Col xs={2} sm={2} className="comment-post-date">
         {cPostDate}
+      </BS.Col>
+      <BS.Col xs={1} sm={1} className={className}>
+        <div className="icon-endorse-container">
+          <BS.OverlayTrigger placement="right" overlay={tooltip}>
+            <i className="icon icon-endorse"/>
+          </BS.OverlayTrigger>
+        </div>
       </BS.Col>
     </BS.Row>
 

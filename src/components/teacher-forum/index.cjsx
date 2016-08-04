@@ -14,7 +14,7 @@ TeacherForumShell = React.createClass
 
   render: ->
     {courseId} = @context.router.getCurrentParams()
-    <BS.Panel className='student-dashboard '>
+    <BS.Panel className="teacher-forum-page">
       <LoadableItem
         id={courseId}
         store={ForumStore}

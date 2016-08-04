@@ -1,4 +1,131 @@
+#endorse-tooltip {
+  font-family: 'Lato', Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.delete-confirm-header {
+  .modal-title {
+    border-bottom: thin solid @tutor-neutral-light;
+    font-weight: bold;
+  }
+  margin-bottom: 5px;
+}
+
+.delete-confirm-body {
+  text-align: center;
+}
+
+.modal-content {
+  .modal-footer.delete-confirm-footer {
+    border-top: thin solid @tutor-neutral-light;
+    padding-top: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+}
+
+.teacher-forum-title {
+  font-size: 3rem;
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+.teacher-forum {
+  .row {
+    max-width: none;
+    margin: 0 auto;
+  }
+  .forum-toolbar {
+    max-width: none;
+    margin: 0 auto;
+  }
+  .icon-area {
+    padding: 0px;
+    text-align: left;
+    .icon-endorse-container {
+      max-height: 31px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .icon-delete-container {
+      max-height: 31px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .icon-delete {
+      background-image: url("../../../images/icons/icon-trash-closed.svg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0px 2px;
+      vertical-align: text-bottom;
+      &:hover {
+        background-image: url("../../../images/icons/icon-trash-open.svg");
+      }
+    }
+    .icon-endorse {
+      background-image: url("../../../images/icons/icon-endorse-empty.svg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0px 2px;
+      vertical-align: text-bottom;
+    }
+  }
+  .icon-area.endorsed {
+    .icon-endorse {
+      background-image: url("../../../images/icons/icon-endorse-active.svg");
+    }
+  }
+}
+
 .student-forum {
+  .row {
+    max-width: @tutor-task-width;
+    margin: 0 auto;
+  }
+  .icon-area {
+    padding: 0px;
+    text-align: left;
+    .icon-endorse-container {
+      max-height: 31px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .icon-endorse {
+      display: none;
+    }
+  }
+  .icon-area.endorsed {
+    .icon-endorse {
+      background-image: url("../../../images/icons/icon-endorse-active.svg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0px 2px;
+      vertical-align: text-bottom;
+    }
+  }
+}
+
+.student-forum,
+.teacher-forum {
+
+  .panel-body {
+    padding: 0px;
+  }
 
   .post-date, .post-date-label { padding-left: 0px; }
 
@@ -8,13 +135,8 @@
     margin: 0px;
   }
 
-  .row {
-    max-width: @tutor-task-width;
-    margin: 0 auto;
-  }
-
   .post.active {
-    .icon {
+    .icon-lg {
       background-image: url("../../../images/icons/icon-question-mark.svg");
       background-position: center;
       // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
@@ -22,7 +144,7 @@
     }
   }
   .post.resolved {
-    .icon {
+    .icon-lg {
       background-image: url("../../../images/icons/icon-check.svg");
       background-position: center;
       // * 10 on icon-size-lg because less doesn't automatically convert icon-size-lg to px
@@ -74,12 +196,14 @@
         }
       }
       .comment-row {
+        transition: opacity 0.75s ease-in-out;
+        transition: max-height 0.75s ease-in-out;
         .reply-prompt-col {
           text-align: right;
-          padding: 0px;
+          padding-left: 0px;
+          padding-right: 4px;
           font-weight: bold;
           margin-top: 1px;
-          margin-right: 4px;
           white-space: nowrap;
           .reply-prompt {
             visibility: hidden;
@@ -97,6 +221,11 @@
             }
           }
         }
+        &.deleted {
+          max-height: 0px;
+          opacity: 0;
+          overflow: hidden;
+        }
       }
       .comment {
         border-top: thin solid @tutor-neutral-light;
@@ -110,6 +239,7 @@
       .comment-post-date {
         border-top: thin solid @tutor-neutral-light;
         padding: 0px;
+        text-align: right;
       }
       .comment-form {
         padding: 0px;
@@ -139,7 +269,7 @@
 
     &:hover {
       background-color: @tutor-neutral-lightest;
-      .icon { .tutor-icon-active(1.2); }
+      .icon-lg { .tutor-icon-active(1.2); }
     }
     // if the screen is wide enough, set a height and use line-height to vertically center content.
     // This breaks when the responsive small view kicks in and it becomes multi-line
@@ -204,6 +334,6 @@
     &:hover {
       background-color: @tutor-white;
     }
-    .icon { .tutor-icon-active(1.2); }
+    .icon-lg { .tutor-icon-active(1.2); }
   }
 }

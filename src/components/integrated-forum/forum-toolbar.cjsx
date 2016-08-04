@@ -19,16 +19,16 @@ module.exports = React.createClass
     courseId: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    showModal :false
+    showPostModal :false
 
-  closeModal: ->
-    @setState({showModal:false})
+  closePostModal: ->
+    @setState({showPostModal:false})
 
-  openModal: ->
-    @setState({showModal:true})
+  openPostModal: ->
+    @setState({showPostModal:true})
 
   handlePostSubmit: (newPost)->
-    @setState({showModal:false})
+    @setState({showPostModal:false})
     ForumActions.save(@props.courseId, newPost)
   renderTopicTag: (topicTag)->
     <MenuItem eventKey="1" className="toolbar-tag-menu">{topicTag}</MenuItem>
@@ -40,23 +40,23 @@ module.exports = React.createClass
     <div className="forum-toolbar">
       <BS.Row className={classes}>
 
-        <BS.Col xs={9} sm={9} xsOffset={0} smOffset={0} className="toolbar-tag-col">
+        <BS.Col xs={3} sm={3} xsOffset={0} smOffset={0} className="toolbar-tag-col">
           <DropdownButton bsStyle='success' title='Chapters' id="chapter-tag-button">
             <MenuItem eventKey="1" className="toolbar-tag-menu">{"Chapter 1"}</MenuItem>
             <MenuItem eventKey="2" className="toolbar-tag-menu">{"Chapter 2"}</MenuItem>
             <MenuItem eventKey="3" className="toolbar-tag-menu">{"Chapter 3"}</MenuItem>
             <MenuItem eventKey="4" className="toolbar-tag-menu">{"Chapter 4"}</MenuItem>
           </DropdownButton>
-          <DropdownButton bsStyle='success' title='Topics' id="topic-tag-button">
-            {_.map(topicTags, @renderTopicTag)}
-          </DropdownButton>
         </BS.Col>
 
-        <BS.Col xs={3} sm={3} className="new-post-modal-col">
-          <BS.Button bsStyle="primary" className="new-post-button" onClick={@openModal}>
+        <BS.Col xs={9} sm={9} className="new-post-modal-col">
+          <div className="info-icon">
+            <a id="forum-info-button">{"\uF05A"}</a>
+          </div>
+          <BS.Button bsStyle="primary" id="new-post-button" onClick={@openPostModal}>
             {"New Post"}
           </BS.Button>
-          <BS.Modal className="post-form-modal" show={@state.showModal} onHide={@closeModal}>
+          <BS.Modal className="post-form-modal" show={@state.showPostModal} onHide={@closePostModal}>
 
             <ModalHeader closeButton className="post-form-header">
               <BS.Modal.Title>{"New Post"}</BS.Modal.Title>

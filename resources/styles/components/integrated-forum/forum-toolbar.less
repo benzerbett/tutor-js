@@ -4,15 +4,10 @@
   margin: 0 auto;
   overflow: visible;
 
-  .row {
-    max-width: @tutor-task-width;
-    margin: 0;
-  }
-
   .new-post-modal-col {
     padding-left: 0px;
     text-align: right;
-    .new-post-button {
+    #new-post-button {
       margin-right: 0px;
       margin-left: 0px;
       white-space: normal;
@@ -29,11 +24,22 @@
     color: @tutor-white;
     text-transform: capitalize;
   }
-  #topic-tag-button {
-    margin-right: 0px;
+  .info-icon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 20px;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    margin-right: 18px;
     margin-left: 0px;
-    font-weight: 600;
-    color: @tutor-white;
-    text-transform: capitalize;
+    #forum-info-button {
+      color: #424242;
+      &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        color: @tutor-neutral;
+      }
+    }
   }
 }

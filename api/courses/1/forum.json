@@ -16,15 +16,16 @@
           "type":"comment",
           "id": 1,
           "author": "Ned",
-          "post_date":"2016-06-23T21:55:35.565Z",
+          "post_date":"2016-06-23T21:50:35.565Z",
           "text": "This is a comment on your question"
         },
         {
           "type":"comment",
           "id": 2,
           "author": "Ted",
-          "post_date":"2016-06-23T21:50:09.565Z",
-          "text": "Can we be friends?"
+          "post_date":"2016-06-23T21:52:09.565Z",
+          "text": "Can we be friends?",
+          "endorsed_at": "2016-06-23T21:55:09.565Z"
         }
       ]
     },

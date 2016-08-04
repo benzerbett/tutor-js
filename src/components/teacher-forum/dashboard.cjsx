@@ -1,7 +1,6 @@
 React  = require 'react'
 BS     = require 'react-bootstrap'
-ForumPanel   = require '../integrated-forum/forum-panel'
-ForumToolbar   = require '../integrated-forum/forum-toolbar'
+TeacherForumPanel   = require '../integrated-forum/teacher-forum-panel'
 
 module.exports = React.createClass
   displayName: 'TeacherForum'
@@ -14,11 +13,11 @@ module.exports = React.createClass
     router: React.PropTypes.func
   render: ->
     courseId = @props.courseId
-    <div className="course-scores-wrap">
-      <span className='course-scores-title'>Forum</span>
+    <div className="teacher-forum-wrap">
+      <span className='teacher-forum-title'>Forum</span>
         <BS.Row>
           <BS.Col xs=12 md=12 lg=12>
-              <ForumPanel courseId={courseId}/>
+              <TeacherForumPanel courseId={courseId}/>
           </BS.Col>
         </BS.Row>
     </div>
