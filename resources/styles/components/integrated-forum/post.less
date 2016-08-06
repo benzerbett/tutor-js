@@ -1,7 +1,11 @@
-#endorse-tooltip {
+#endorse-tooltip,
+#delete-tooltip {
   font-family: 'Lato', Helvetica, sans-serif;
   font-weight: 400;
   font-style: normal;
+  &.hidden {
+    display: none;
+  }
 }
 
 .delete-confirm-header {
@@ -42,20 +46,10 @@
     max-width: none;
     margin: 0 auto;
   }
-  .icon-area {
-    padding: 0px;
-    text-align: left;
-    .icon-endorse-container {
-      max-height: 31px;
-      display: inline-block;
-      vertical-align: top;
-    }
-    .icon-delete-container {
-      max-height: 31px;
-      display: inline-block;
-      vertical-align: top;
-    }
+  .post {
     .icon-delete {
+      opacity: 0;
+      transition: opacity 0.75s linear;
       background-image: url("../../../images/icons/icon-trash-closed.svg");
       background-position: center;
       background-size: contain;
@@ -68,6 +62,29 @@
       &:hover {
         background-image: url("../../../images/icons/icon-trash-open.svg");
       }
+    }
+    .icon-delete-container {
+      max-height: 31px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    &.expanded {
+      .icon-delete-container {
+        cursor: pointer;
+      }
+      .icon-delete {
+        opacity: 1;
+        transition: opacity 0.75s linear;
+      }
+    }
+  } 
+  .icon-area {
+    padding: 0px;
+    text-align: left;
+    .icon-endorse-container {
+      max-height: 31px;
+      display: inline-block;
+      vertical-align: top;
     }
     .icon-endorse {
       background-image: url("../../../images/icons/icon-endorse-empty.svg");
@@ -159,9 +176,8 @@
 
     transition: all 0.1s ease-in;
 
-    .post-data
-    {
-      max-height: 0;
+    .post-data {
+      max-height: 0px;
       overflow: hidden;
       transition: max-height 0.75s ease-in-out;
       .tag-row {
@@ -196,8 +212,8 @@
         }
       }
       .comment-row {
-        transition: opacity 0.75s ease-in-out;
         transition: max-height 0.75s ease-in-out;
+        max-height: 9999px;
         .reply-prompt-col {
           text-align: right;
           padding-left: 0px;
@@ -223,7 +239,6 @@
         }
         &.deleted {
           max-height: 0px;
-          opacity: 0;
           overflow: hidden;
         }
       }
@@ -335,5 +350,9 @@
       background-color: @tutor-white;
     }
     .icon-lg { .tutor-icon-active(1.2); }
+  }
+  .post.deleted {
+    max-height: 0px;
+    overflow: hidden;
   }
 }
