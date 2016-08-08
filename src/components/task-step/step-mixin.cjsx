@@ -37,6 +37,16 @@ module.exports =
       {@continueButtonText?() or 'Continue'}
     </AsyncButton>
 
+  renderAskButton: ->
+    <AsyncButton
+      bsStyle='primary'
+      className='ask'
+      onClick={@onContinue}
+      isFailed={TaskStepStore.isFailed(@props.id)}
+      >
+      {"Ask A Question"}
+    </AsyncButton>
+
   render: ->
     {pinned, courseId, id, taskId, review, className} = @props
 

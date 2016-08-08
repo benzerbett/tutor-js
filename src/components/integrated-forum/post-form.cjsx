@@ -18,7 +18,6 @@ module.exports = React.createClass
     topicTags: React.PropTypes.array.isRequired
     chapterTags: React.PropTypes.array.isRequired
 
-
   getInitialState: ->
     title: ''
     text: ''

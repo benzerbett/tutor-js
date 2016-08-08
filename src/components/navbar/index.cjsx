@@ -29,7 +29,7 @@ module.exports = React.createClass
 
   getCourseFromParams: ->
     {courseId} = @context.router.getCurrentParams()
-    CourseStore.get(courseId) if courseId?
+    CourseStore.get(courseId) if courseId? 
 
   handleCourseChanges: ->
     if @isMounted()

@@ -100,6 +100,7 @@ module.exports =
         to='viewScores'
         key='step-back'
         params={{courseId}}
+        params={{courseId}}
         className={custombuttonClasses or defaultButtonClasses}>
           Back to Scores
       </Router.Link>

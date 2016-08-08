@@ -1,3 +1,14 @@
+.navbar-fixed-top .center-control .tutor-icon.fa.fa-forum-ask {
+  &:hover {
+    color: #00abc5;
+    cursor: pointer;
+  }
+  &::before {
+    content: "\F059";
+    vertical-align: middle;
+  }
+}
+#ask-tooltip,
 #endorse-tooltip,
 #delete-tooltip {
   font-family: 'Lato', Helvetica, sans-serif;
@@ -173,7 +184,8 @@
     border-top: thin dotted @tutor-neutral-light;
     position: relative;
     cursor: pointer;
-
+    transition: max-height 0.75s ease-in-out;
+    max-height: 9999px;
     transition: all 0.1s ease-in;
 
     .post-data {

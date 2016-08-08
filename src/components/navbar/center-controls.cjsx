@@ -3,9 +3,12 @@ Router = require 'react-router'
 moment = require 'moment'
 classnames = require 'classnames'
 _ = require 'underscore'
+BS = require 'react-bootstrap'
 
 Icon = require '../icon'
 {TaskStore} = require '../../flux/task'
+ModalHeader = require 'react-bootstrap/lib/ModalHeader'
+PostForm = require '../integrated-forum/post-form'
 
 
 module.exports = React.createClass
@@ -22,8 +25,19 @@ module.exports = React.createClass
     params = @context.router?.getCurrentParams() or {}
     taskInfo = @getTaskInfo(params)
     controlInfo = @getControlInfo(params)
+    showPostModal: false
 
     _.extend {}, taskInfo, controlInfo
+
+  closePostModal: ->
+    @setState({showPostModal:false})
+
+  openPostModal: ->
+    @setState({showPostModal:true})
+
+  handlePostSubmit: (newPost)->
+    @setState({showPostModal:false})
+    ForumActions.save(@props.courseId, newPost)
 
   componentWillMount: ->
     location = @context.router?.getLocation()
@@ -99,6 +113,10 @@ module.exports = React.createClass
 
   render: ->
     {show, assignment, due, hasMilestones} = @state
+    askTooltip = <BS.Tooltip id="ask-tooltip" className="ask-tooltip">Ask a Question</BS.Tooltip>
+    topicTags = []
+    chapterTags = []
+
     return null unless show
 
     linkProps = _.pick @state, 'to', 'params'
@@ -122,5 +140,23 @@ module.exports = React.createClass
           className={milestonesToggleClasses}>
           <Icon type='th' />
         </Router.Link>
+        <BS.OverlayTrigger className="ask-tooltip" placement="bottom" overlay={askTooltip}>
+          <Icon type='forum-ask'
+            onClick={@openPostModal} />
+        </BS.OverlayTrigger>
+        <BS.Modal className="post-form-modal" show={@state.showPostModal} onHide={@closePostModal}>
+
+          <ModalHeader closeButton className="post-form-header">
+            <BS.Modal.Title>{"New Post"}</BS.Modal.Title>
+          </ModalHeader>
+
+          <BS.Modal.Body className="post-form-body">
+            <PostForm onPostSubmit = {@handlePostSubmit} topicTags = {topicTags} chapterTags = {chapterTags}/>
+          </BS.Modal.Body>
+
+          <BS.Modal.Footer>
+          </BS.Modal.Footer>
+
+        </BS.Modal>
       </div>
     </div>

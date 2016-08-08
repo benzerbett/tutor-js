@@ -19,7 +19,7 @@ module.exports = React.createClass
     courseId: React.PropTypes.string.isRequired
 
   getInitialState: ->
-    showPostModal :false
+    showPostModal: false
 
   closePostModal: ->
     @setState({showPostModal:false})
