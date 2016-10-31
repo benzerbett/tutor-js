@@ -1,0 +1,46 @@
+// guide-dashboard-progress component inherits from above
+// dashboard specific styles only inside .dashboard-container below
+@import "../performance-forecast/section-mixin";
+@import "../performance-forecast/guide-key-mixin";
+
+.student-dashboard {
+  .progress-guide {
+    .section {
+      .performance-forecast-section();
+      text-align: left;
+      margin-bottom: 20px;
+      &:last-of-type{ margin-bottom: 0; }
+    }
+
+    h1,h2,h3 { margin: 0; text-align: left; }
+    .panel-title {
+      #fonts > .sans(2.5rem, 5rem);
+      font-weight: 900;
+      border-bottom: thin dotted @tutor-neutral-light;
+    }
+    .recent {
+      color: @tutor-neutral-darker;
+      font-size: 1.4rem;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    .current { #fonts > .sans(1.6rem, 5rem); }
+
+    .guide-key {
+      margin: 10px 0;
+      .performance-forecast-key();
+    }
+
+    // full width buttons
+    .practice,
+    .view-performance-forecast {
+      width: 100%;
+    }
+
+    &.empty .actions-box{
+      text-align: left;
+      line-height: 1.5em;
+      margin-top: 10px;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# `sudo:false` for faster builds.
+sudo: false
+language: node_js
+env:
+  - OX_PROJECT=tutor
+  - OX_PROJECT=coach
+  - OX_PROJECT=exercises
+  - OX_PROJECT=shared
+script:
+  - npm run ci
+after_failure:
+  - npm list
+after_success:
+  - cat ./coverage/all.lcov.txt | node ./node_modules/.bin/coveralls --verbose
