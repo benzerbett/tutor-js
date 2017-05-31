@@ -138,6 +138,9 @@ connectModelAction = (action, apiHandler, klass, method, options) ->
     else
       apiHandler.getOptions().handlers.onFail
     this.apiRequestsInProgress?.set(action, requestConfig)
+
+    this.isPending = partial(apiHandler.records.isPending, requestConfig)
+
     apiHandler.send(requestConfig, perRequestOptions, firstArg).then((reply) =>
       this.apiRequestsInProgress?.delete(action)
       reply
