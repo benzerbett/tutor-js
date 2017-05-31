@@ -1,5 +1,6 @@
 hash = require 'object-hash'
 moment = require 'moment'
+{observable, extendObservable, computed} = require 'mobx'
 
 partial   = require 'lodash/partial'
 every     = require 'lodash/every'
@@ -31,8 +32,8 @@ makeHashWith = (uniqueProperties...) ->
   (objectToHash) ->
     hashWithArrays(pick(objectToHash, uniqueProperties...))
 
-constructCollection = (context, makeItem, lookup) ->
-  context._cache = {}
+constructCollection = (context, makeItem, lookup, testing) ->
+  context._cache = observable.map()
   context.make = makeItem
   context.lookup = memoize(lookup) or memoize(flow(makeItem, hashWithArrays))
 
@@ -43,19 +44,19 @@ class Collection
     constructCollection(@, makeItem, lookup)
 
   set: (args...) =>
-    @_cache[@lookup(args...)] = @make(args...)
+    @_cache.set(@lookup(args...), @make(args...))
 
   update: (args...) =>
-    merge(@_cache[@lookup(args...)], args...)
+    @_cache.set(@lookup(args...), merge(@_cache.get(args...), args...))
 
   load: (items) =>
     forEach items, @set
 
   get: (args...) =>
-    cloneDeep(@_cache[@lookup(args...)])
+    cloneDeep(@_cache.get(@lookup(args...)))
 
   delete: (args...) =>
-    delete @_cache[@lookup(args...)]
+    @_cache.delete(@lookup(args...))
     true
 
 
@@ -64,20 +65,20 @@ class CollectionCached
     constructCollection(@, makeItem, lookup)
 
   update: (args...) =>
-    @_cache[@lookup(args...)] ?= []
-    @_cache[@lookup(args...)].push(@make(args...))
+    @_cache.set(@lookup(args...), observable.array()) unless @_cache.has(@lookup(args...))
+    @_cache.get(@lookup(args...)).push(@make(args...))
 
   get: (args...) =>
-    flow(last, cloneDeep)(@_cache[@lookup(args...)])
+    flow(last, cloneDeep)(@_cache.get(@lookup(args...)))
 
   getAll: (args...) =>
-    cloneDeep(@_cache[@lookup(args...)])
+    cloneDeep(@_cache.get(@lookup(args...)))
 
   getSize: (args...) =>
-    size(@_cache[@lookup(args...)]) or 0
+    size(@_cache.get(@lookup(args...))) or 0
 
   reset: (args...) =>
-    delete @_cache[@lookup(args...)]
+    @_cache.delete(@lookup(args...))
     true
 
 
@@ -153,6 +154,18 @@ class XHRRecords
 
     @_requests = new CollectionCached(makeTime, hashRequestConfig)
     @_responses = new CollectionCached(makeTime, hashRequestConfig)
+
+    extendObservable(@,
+      _pending: observable.map()
+      _isBusy: computed () =>
+        some(@_pending.values())
+    )
+    @_requests._cache.observe(({name}) =>
+      @_pending.set(name, true)
+    )
+    @_responses._cache.observe(({name}) =>
+      @_pending.set(name, !@_pending.get(name))
+    )
     @
 
   queRequest: (requestConfig) =>
@@ -163,7 +176,7 @@ class XHRRecords
 
   isPending: (requestConfig) =>
     if requestConfig
-      @_requests.getSize(requestConfig) > @_responses.getSize(requestConfig)
+      @_pending.get(@_responses.lookup(requestConfig))
     else
       some @_requests._cache, (cachedRequests, requestKey) =>
         size(cachedRequests) > size(@_responses._cache[requestKey])
@@ -171,7 +184,7 @@ class XHRRecords
   getResponseTime: (requestConfig) =>
     @_requests.get(requestConfig).diff(@_responses.get(requestConfig))
 
-
+window.size = size
 utils = {validateOptions, hashWithArrays, makeHashWith, constructCollection, makeRoute, simplifyRequestConfig}
 
 module.exports = {Collection, CollectionCached, Routes, XHRRecords, utils, METHODS_TO_ACTIONS}
