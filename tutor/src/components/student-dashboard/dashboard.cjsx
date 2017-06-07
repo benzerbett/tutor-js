@@ -84,7 +84,7 @@ module.exports = React.createClass
                 courseId={courseId}
                 data-appearance={Courses.get(courseId).appearance_code}
               >
-                <div>Browse the Book</div>
+                <div>Browse the book</div>
               </BrowseTheBook>
             </div>
           </BS.Col>

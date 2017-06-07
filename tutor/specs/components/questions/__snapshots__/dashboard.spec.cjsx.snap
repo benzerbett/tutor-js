@@ -14,7 +14,7 @@ exports[`Questions Dashboard Component matches snapshot 1`] = `
         className="wrapper"
       >
         <h2>
-          Question Library
+          Question library
         </h2>
         <a
           className="btn btn-default"
@@ -22,7 +22,7 @@ exports[`Questions Dashboard Component matches snapshot 1`] = `
           onClick={[Function]}
           style={Object {}}
         >
-          Back to Dashboard
+          Back to dashboard
         </a>
       </div>
     </div>
@@ -521,7 +521,7 @@ exports[`Questions Dashboard Component matches snapshot 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Show Questions
+          Show questions
         </button>
         <button
           className="btn btn-default"

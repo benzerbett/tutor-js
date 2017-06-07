@@ -50,7 +50,7 @@ CalendarSidebarToggle = React.createClass
       className={classnames("sidebar-toggle", open: @state.isOpen)}
     >
       <Icon type={@state.iconType} />
-      <span className="text">Add Assignment</span>
+      <span className="text">Add assignment</span>
     </Button>
 
 

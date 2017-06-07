@@ -35,17 +35,17 @@ CCDashboardHelp = React.createClass
             </b>
             <ol>
               <li>
-                Click your name in the top right corner and select “Course Settings and Roster”
+                Click your name in the top right corner and select "Course settings and roster"
               </li>
               <li>
-                Click the blue “Add {uCaseSection}” link and follow the prompts to create your {section}.
+                Click the blue "Add {uCaseSection}" link and follow the prompts to create your {section}.
                 If you have more than one {section}, repeat this step as needed.
               </li>
             </ol>
             <b>Get student enrollment code and send to your students.</b>
             <ol>
               <li>
-                Select your first {section} and click the blue “Get Student Enrollment Code” link.
+                Select your first {section} and click the blue "Get Student Enrollment Code" link.
               </li>
               <li>
                 Copy the example message and share this message with your students in that {section}.
@@ -57,7 +57,7 @@ CCDashboardHelp = React.createClass
             <b>Assign Concept Coach.</b>
             <ol>
               <li>
-                On the top menu, click “Get Assignment Links.” Follow the instructions to assign Concept Coach question sets.
+                On the top menu, click "Get Assignment Links." Follow the instructions to assign Concept Coach question sets.
               </li>
               <li>
                 View your students’ progress.
@@ -70,7 +70,7 @@ CCDashboardHelp = React.createClass
             <div className="tip">
               <b>Tip</b>:
               To view all Concept Coach questions, click your name in the top right corner of your dashboard
-              and select “Question Library.”
+              and select "Question library."
             </div>
           </div>
           <div className='graphic'>

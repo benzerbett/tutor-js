@@ -11,7 +11,7 @@ const STUDENT_MENU = [
   {
     name: 'myCourses',
     options: { separator: 'after' },
-    label: 'My Courses',
+    label: 'My courses',
   },
   {
     name: 'dashboard',
@@ -21,17 +21,17 @@ const STUDENT_MENU = [
   {
     name: 'browseBook',
     params: { courseId: '1' },
-    label: 'Browse the Book',
+    label: 'Browse the book',
   },
   {
     name: 'viewPerformanceGuide',
     params: { courseId: '1' },
-    label: 'Performance Forecast',
+    label: 'Performance forecast',
   },
   {
     name: 'changeStudentId',
     params: { courseId: '1' },
-    label: 'Change Student ID',
+    label: 'Change student ID',
     options: { separator: 'after' },
   },
 ];
@@ -40,7 +40,7 @@ const TEACHER_MENU = [
   {
     name: 'myCourses',
     options: { separator: 'after' },
-    label: 'My Courses',
+    label: 'My courses',
   },
   {
     name: 'dashboard',
@@ -50,39 +50,39 @@ const TEACHER_MENU = [
   {
     name: 'browseBook',
     params: { courseId: '2' },
-    label: 'Browse the Book',
+    label: 'Browse the book',
   },
   {
     name: 'viewPerformanceGuide',
     params: { courseId: '2' },
-    label: 'Performance Forecast',
+    label: 'Performance forecast',
   },
   {
     name: 'viewQuestionsLibrary',
     params: { courseId: '2' },
-    label: 'Question Library',
+    label: 'Question library',
   },
   {
     name: 'viewScores',
-    label: 'Student Scores',
+    label: 'Student scores',
     params: { courseId: '2' },
   },
   {
     name: 'courseSettings',
-    label: 'Course Settings and Roster',
+    label: 'Course settings and roster',
     params: { courseId: '2' },
   },
   {
     name: 'createNewCourse',
     options: { separator: 'before' },
     params: { courseId: '2' },
-    label: 'Create a Course',
+    label: 'Create a course',
   },
   {
     name: 'createNewCourse',
     options: { key: 'clone-course', separator: 'after' },
     params: { sourceId: '2' },
-    label: 'Copy this Course',
+    label: 'Copy this course',
   },
 ];
 
@@ -90,7 +90,7 @@ const TEACHER_NO_COURSE_MENU = [
   {
     name: 'createNewCourse',
     options: { separator: 'both' },
-    label: 'Create a Course',
+    label: 'Create a course',
   },
 ];
 

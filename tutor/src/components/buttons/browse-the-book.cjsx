@@ -71,7 +71,7 @@ module.exports = React.createClass
   render: ->
     courseId = @getCourseId()
 
-    text = @props.children or 'Browse the Book'
+    text = @props.children or 'Browse the book'
     linkProps = @getLinkProps()
 
     # Unable to browse course-less

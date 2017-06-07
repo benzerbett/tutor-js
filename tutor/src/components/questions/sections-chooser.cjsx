@@ -34,9 +34,9 @@ QLSectionsChooser = React.createClass
 
       <div className="header">
         <div className="wrapper">
-          <h2>Question Library</h2>
+          <h2>Question library</h2>
           <BackButton fallbackLink={
-            text: 'Back to Dashboard', to: 'viewTeacherDashBoard', params: {courseId: @props.courseId}
+            text: 'Back to dashboard', to: 'viewTeacherDashBoard', params: {courseId: @props.courseId}
           }/>
         </div>
       </div>
@@ -61,7 +61,7 @@ QLSectionsChooser = React.createClass
             disabled={_.isEmpty(@state.sectionIds)}
             onClick={@showQuestions}
           >
-            Show Questions
+            Show questions
           </BS.Button>
           <BS.Button onClick={@clearQuestions}>Cancel</BS.Button>
         </div>

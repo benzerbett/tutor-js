@@ -13,7 +13,7 @@ const TEACHER_DASHROUTE = 'taskplans';
 const STUDENT_MENU = [
   {
     name: 'myCourses',
-    label: 'My Courses',
+    label: 'My courses',
   },
   { label: '' }, // divider has no label
   {
@@ -24,26 +24,26 @@ const STUDENT_MENU = [
   {
     name: 'viewPerformanceForecast',
     params: { courseId: '1' },
-    label: 'Performance Forecast',
+    label: 'Performance forecast',
   },
   {
     name: 'changeStudentId',
     params: { courseId: '1' },
-    label: 'Change Student ID',
+    label: 'Change student ID',
   },
   { label: '' }, // divider has no label
   {
-    label: 'Get Help',
+    label: 'Get help',
   },
   {
-    label: 'Browse the Book',
+    label: 'Browse the book',
   },
 ];
 
 const TEACHER_MENU = [
   {
     name: 'myCourses',
-    label: 'My Courses',
+    label: 'My courses',
   },
   { label: '' }, // divider has no label
   {
@@ -53,31 +53,31 @@ const TEACHER_MENU = [
   {
     name: 'viewTeacherPerformanceForecast',
     params: { courseId: '1' },
-    label: 'Performance Forecast',
+    label: 'Performance forecast',
   },
   {
     name: 'viewQuestionsLibrary',
     params: { courseId: '2' },
-    label: 'Question Library',
+    label: 'Question library',
   },
   {
     name: 'viewScores',
-    label: 'Student Scores',
+    label: 'Student scores',
   },
   {
     name: 'courseSettings',
-    label: 'Course Settings and Roster',
+    label: 'Course settings and roster',
   },
   {
     label: '', // divider has no label
   },
   {
     name: 'createNewCourse',
-    label: 'Create a Course',
+    label: 'Create a course',
   },
   {
     name: 'cloneCourse',
-    label: 'Copy this Course',
+    label: 'Copy this course',
   },
   {
     label: '', // divider has no label
@@ -86,7 +86,7 @@ const TEACHER_MENU = [
     label: 'Get Help',
   },
   {
-    label: 'Browse the Book',
+    label: 'Browse the book',
   },
 ];
 

@@ -13,7 +13,7 @@ export default class HowToUseQL extends React.PureComponent {
       <SuperTrainingWheel {...this.props}>
         <ValueProp className="question-library">
           <h1 className="heading">
-            How to use the Question Library
+            How to use the Question library
           </h1>
           <h2 className="sub-heading">
             View and manage assignment questions here, or let us do the work.
@@ -26,7 +26,7 @@ export default class HowToUseQL extends React.PureComponent {
             </Column>
             <Column className="question-details">
               <p>
-                If you want to see the questions OpenStax Tutor might use, view them in the Question Library.
+                If you want to see the questions OpenStax Tutor might use, view them in the Question library.
               </p>
             </Column>
             <Column className="exclude-question">

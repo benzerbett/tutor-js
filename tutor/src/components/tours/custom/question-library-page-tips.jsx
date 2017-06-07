@@ -7,7 +7,7 @@ export default class QuestionLibraryPageTips extends React.PureComponent {
   render () {
     return (
       <TipsNowOrLater {...this.props}>
-        More about the Question Library in our "Page tips."
+        More about the Question library in our "Page tips."
       </TipsNowOrLater>
     );
   }

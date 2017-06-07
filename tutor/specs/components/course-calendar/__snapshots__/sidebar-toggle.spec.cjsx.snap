@@ -15,7 +15,7 @@ exports[`CourseCalendar Sidebar Toggle matches snapshot 1`] = `
   <span
     className="text"
   >
-    Add Assignment
+    Add assignment
   </span>
 </button>
 `;

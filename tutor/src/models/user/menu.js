@@ -7,7 +7,7 @@ import Courses from '../courses-map';
 const ROUTES = {
 
   myCourses: {
-    label: 'My Courses',
+    label: 'My courses',
     isAllowed(course) { return !!course; },
     params: () => undefined,
     options: {
@@ -19,11 +19,11 @@ const ROUTES = {
     isAllowed(course) { return !!course; },
   },
   browseBook: {
-    label: 'Browse the Book',
+    label: 'Browse the book',
     isAllowed(course) { return !!course; },
   },
   guide: {
-    label: 'Performance Forecast',
+    label: 'Performance forecast',
     isAllowed(course) { return get(course, 'is_concept_coach') !== true; },
     roles: {
       student: 'viewPerformanceGuide',
@@ -31,32 +31,32 @@ const ROUTES = {
     },
   },
   questions: {
-    label: 'Question Library',
+    label: 'Question library',
     roles: {
       teacher: 'viewQuestionsLibrary',
     },
   },
   scores: {
-    label: 'Student Scores',
+    label: 'Student scores',
     roles: {
       teacher: 'viewScores',
     },
   },
   course: {
-    label: 'Course Settings and Roster',
+    label: 'Course settings and roster',
     roles: {
       teacher: 'courseSettings',
     },
   },
   get_started: {
-    label: 'Getting Started',
+    label: 'Getting started',
     isAllowed(course) { return get(course, 'is_concept_coach') === true; },
     roles: {
       teacher: 'ccDashboardHelp',
     },
   },
   changeId: {
-    label: 'Change Student ID',
+    label: 'Change student ID',
     roles: {
       student: 'changeStudentId',
     },
@@ -65,14 +65,14 @@ const ROUTES = {
     },
   },
   createNewCourse: {
-    label: 'Create a Course',
+    label: 'Create a course',
     isAllowed() { return User.isConfirmedFaculty; },
     options({ courseId }) {
       return courseId ? { separator: 'before' } : { separator: 'both' };
     },
   },
   cloneCourse: {
-    label: 'Copy this Course',
+    label: 'Copy this course',
     params(course) {
       return { sourceId: course.courseId };
     },
@@ -96,11 +96,11 @@ const ROUTES = {
     isAllowed() { return !!User.is_admin; },
   },
   QADashboard: {
-    label: 'QA Dashboard',
+    label: 'QA dashboard',
     isAllowed() { return !!User.is_content_analyst; },
   },
   qaHome: {
-    label: 'Content Analyst',
+    label: 'Content analyst',
     href: '/content_analyst',
     isAllowed() { return !!User.is_content_analyst; },
   },

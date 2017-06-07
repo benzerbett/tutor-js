@@ -44,7 +44,7 @@ CourseCalendarHeader = React.createClass
             to='viewQuestionsLibrary'
             params={{courseId}}
           >
-            Question Library
+            Question library
           </TutorLink>
         </TourAnchor>
 
@@ -54,7 +54,7 @@ CourseCalendarHeader = React.createClass
             to='viewPerformanceGuide'
             params={{courseId}}
           >
-            Performance Forecast
+            Performance forecast
           </TutorLink>
         </TourAnchor>
 
@@ -63,7 +63,7 @@ CourseCalendarHeader = React.createClass
             to='viewScores'
             params={{courseId}}
           >
-            Student Scores
+            Student scores
           </TutorLink>
         </TourAnchor>
       </div>
