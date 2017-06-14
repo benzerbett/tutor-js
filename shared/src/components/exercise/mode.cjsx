@@ -6,6 +6,8 @@ ArbitraryHtmlAndMath = require '../html'
 Question = require '../question'
 FreeResponse = require './free-response'
 
+speech = require './speech-text.js'
+
 RESPONSE_CHAR_LIMIT = 10000
 
 {propTypes, props} = require './props'
@@ -81,6 +83,7 @@ ExMode = React.createClass
       <FreeResponse free_response={free_response}/>
 
   render: ->
+    
     {mode, content, onChangeAnswerAttempt, answerKeySet, choicesEnabled} = @props
     {answerId} = @state
 
@@ -118,11 +121,14 @@ ExMode = React.createClass
         answer_id={answerId}
         keySet={answerKeySet}>
         {@getFreeResponse()}
+
       </Question>
 
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
+
+      <speech />
     </div>
 
 
