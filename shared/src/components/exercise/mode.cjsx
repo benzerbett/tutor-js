@@ -82,8 +82,25 @@ ExMode = React.createClass
     else
       <FreeResponse free_response={free_response}/>
 
+  startDictation: ->
+    if window.hasOwnProperty('webkitSpeechRecognition')
+      recognition = new webkitSpeechRecognition
+      recognition.continuous = false
+      recognition.interimResults = false
+      recognition.lang = 'en-US'
+      recognition.start()
+
+      recognition.onresult = (e) ->
+        document.getElementById('transcript').value = e.results[0][0].transcript
+        recognition.stop()
+        document.getElementById('labnol').submit()
+        return
+
+      recognition.onerror = (e) ->
+        recognition.stop()
+        return
   render: ->
-    
+
     {mode, content, onChangeAnswerAttempt, answerKeySet, choicesEnabled} = @props
     {answerId} = @state
 
@@ -113,6 +130,7 @@ ExMode = React.createClass
 
     questions = _.map content.questions, (question) =>
       question = _.omit(question, 'answers') if mode is 'free-response'
+
       <Question
         {...questionProps}
         {...changeProps}
@@ -128,7 +146,13 @@ ExMode = React.createClass
       {stimulus}
       {questions}
 
-      <speech />
+      <form id="labnol" method="get" action="https://www.google.com/search">
+        <div class="speech">
+          <input type="text" name="q" id="transcript" placeholder="Speak" />
+          <img onclick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
+
+        </div>
+      </form>
     </div>
 
 
