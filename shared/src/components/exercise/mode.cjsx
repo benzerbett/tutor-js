@@ -6,7 +6,7 @@ ArbitraryHtmlAndMath = require '../html'
 Question = require '../question'
 FreeResponse = require './free-response'
 
-speech = require './speech-text.js'
+
 
 RESPONSE_CHAR_LIMIT = 10000
 
