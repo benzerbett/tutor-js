@@ -65,23 +65,6 @@ ExMode = React.createClass
     @setState {answerId: answer.id}
     @props.onAnswerChanged?(answer)
 
-  getFreeResponse: ->
-    {mode, free_response, disabled} = @props
-    {freeResponse} = @state
-
-
-    if mode is 'free-response'
-      <textarea
-        aria-labelledby="question response text box"
-        disabled={disabled}
-        ref='freeResponse'
-        placeholder='Enter your response'
-        value={freeResponse}
-        onChange={@onFreeResponseChange}
-      />
-    else
-      <FreeResponse free_response={free_response}/>
-
   startDictation: ->
     if window.hasOwnProperty('webkitSpeechRecognition')
       recognition = new webkitSpeechRecognition
@@ -93,12 +76,35 @@ ExMode = React.createClass
       recognition.onresult = (e) ->
         document.getElementById('transcript').value = e.results[0][0].transcript
         recognition.stop()
-        document.getElementById('labnol').submit()
+        document.getElementById('transcript').submit()
         return
 
       recognition.onerror = (e) ->
         recognition.stop()
         return
+
+  getFreeResponse: ->
+    {mode, free_response, disabled} = @props
+    {freeResponse} = @state
+
+
+    if mode is 'free-response'
+      <textarea
+        id = "transcript"
+        aria-labelledby="question response text box"
+        disabled={disabled}
+        ref='freeResponse'
+        placeholder='Enter your response'
+        value={freeResponse}
+        onChange={@onFreeResponseChange}
+      />
+
+
+
+
+    else
+      <FreeResponse free_response={free_response}/>
+
   render: ->
 
     {mode, content, onChangeAnswerAttempt, answerKeySet, choicesEnabled} = @props
@@ -145,14 +151,8 @@ ExMode = React.createClass
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
+      <img onclick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
 
-      <form id="labnol" method="get" action="https://www.google.com/search">
-        <div class="speech">
-          <input type="text" name="q" id="transcript" placeholder="Speak" />
-          <img onclick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
-
-        </div>
-      </form>
     </div>
 
 
