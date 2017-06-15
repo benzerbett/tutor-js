@@ -76,7 +76,7 @@ ExMode = React.createClass
       recognition.onresult = (e) ->
         document.getElementById('transcript').value = e.results[0][0].transcript
         recognition.stop()
-        document.getElementById('transcript').submit()
+        document.getElementById('labnol').submit()
         return
 
       recognition.onerror = (e) ->
@@ -151,7 +151,10 @@ ExMode = React.createClass
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
-      <img onclick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
+      <div>
+        <img onClick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
+      </div>
+
 
     </div>
 
