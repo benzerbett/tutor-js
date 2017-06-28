@@ -21,11 +21,14 @@ ExMode = React.createClass
     disabled: false
     free_response: ''
     answer_id: ''
+
   getInitialState: ->
     {free_response, answer_id} = @props
 
     freeResponse: free_response
     answerId: answer_id
+    voice: true
+
 
   componentDidMount: ->
     {mode} = @props
@@ -74,14 +77,27 @@ ExMode = React.createClass
       recognition.start()
 
       recognition.onresult = (e) ->
-        document.getElementById('transcript').value = e.results[0][0].transcript
+        document.getElementById('transcript').value += e.results[0][0].transcript
         recognition.stop()
-        document.getElementById('labnol').submit()
         return
 
       recognition.onerror = (e) ->
         recognition.stop()
         return
+
+
+  checkVoice : ->
+    console.log('step1')
+    console.log(@voice)
+    if @state.voice == true
+      console.log('step2')
+      @startDictation()
+
+  toggleVoice : ->
+    if @state.voice == true
+      @setState voice: false
+    else
+      @setState voice: true
 
   getFreeResponse: ->
     {mode, free_response, disabled} = @props
@@ -148,11 +164,20 @@ ExMode = React.createClass
 
       </Question>
 
+
+
+
+
+
+
+
+
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
       <div>
-        <img onClick={@startDictation()} src="//i.imgur.com/cHidSVu.gif" />
+        <img onClick={@checkVoice.bind this} style={{height:'30px', paddingRight:'10px' }} src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Microphone_1.png" />
+        <button onClick={@toggleVoice.bind this} >Toggle voice</button>
       </div>
 
 
