@@ -88,6 +88,28 @@ Answer = React.createClass
   contextTypes:
     processHtmlAndMath: React.PropTypes.func
 
+  startDictation: ->
+    if window.hasOwnProperty('webkitSpeechRecognition')
+      recognition = new webkitSpeechRecognition
+      recognition.continuous = false
+      recognition.interimResults = false
+      recognition.lang = 'en-US'
+      recognition.start()
+
+      recognition.onresult = (e) ->
+        letter_choices = ["a", "b", "c", "d", "e"]
+        letter = letter_choices.indexOf(e.results[0][0].transcript)
+        if letter > -1
+          transcript_el = document.getElementById(letter_choices[letter])
+          transcript_el.focus()
+          transcript_el.click()
+        recognition.stop()
+        return
+
+      recognition.onerror = (e) ->
+        recognition.stop()
+        return
+
   onKeyPress: (ev, answer) ->
     @props.onChangeAnswer(answer) if ev.key is 'Enter' and @props.disabled isnt true
     null # silence react event return value warning
@@ -133,7 +155,7 @@ Answer = React.createClass
       accessbilityProps =
         tabIndex: 0
 
-    <div className='openstax-answer'>
+    <div className='openstax-answer' onClick={@startDictation()}>
       <div className={classes}>
         {selectedCount}
         {radioBox}
@@ -144,6 +166,7 @@ Answer = React.createClass
           className='answer-label'
         >
           <div
+            id = {ALPHABET[iter]}
             className='answer-letter'
             aria-labelledby={"Answer choice: #{ALPHABET[iter]}"}
           >

@@ -74,9 +74,13 @@ ExMode = React.createClass
       recognition.start()
 
       recognition.onresult = (e) ->
-        document.getElementById('transcript').value = e.results[0][0].transcript
+        transcript_el = document.getElementById('transcript')
+        transcript_el.focus()
+        transcript_el.value += e.results[0][0].transcript
+        transcript_el.innerHTML += e.results[0][0].transcript
         recognition.stop()
-        document.getElementById('labnol').submit()
+        transcript_el.submit()
+        transcript_el.onchange()
         return
 
       recognition.onerror = (e) ->
