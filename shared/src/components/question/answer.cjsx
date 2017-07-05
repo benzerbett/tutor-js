@@ -97,7 +97,7 @@ Answer = React.createClass
       recognition.start()
 
       recognition.onresult = (e) ->
-        letter_choices = ["a", "b", "c", "d", "e"]
+        letter_choices = ["a", "be", "see", "d", "e"]
         letter = letter_choices.indexOf(e.results[0][0].transcript)
         if letter > -1
           transcript_el = document.getElementById(letter_choices[letter])
