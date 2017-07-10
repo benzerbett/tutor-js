@@ -97,14 +97,22 @@ Answer = React.createClass
       recognition.start()
 
       recognition.onresult = (e) ->
-        letter_choices = ["a", "be", "see", "d", "e"]
-        letter = letter_choices.indexOf(e.results[0][0].transcript)
-        if letter > -1
-          transcript_el = document.getElementById(letter_choices[letter])
-          transcript_el.focus()
-          transcript_el.click()
+        letter_choice = e.results[0][0].transcript
+        if letter_choice == "a"
+          transcript_el = document.getElementById("a")
+        if letter_choice == "be" || letter_choice == "bee" || letter_choice == "B"
+          transcript_el = document.getElementById("b")
+        if letter_choice == "see" || letter_choice == "sea"
+          transcript_el = document.getElementById("c")
+        if letter_choice == "d"
+          transcript_el = document.getElementById("d")
+        if letter_choice == "e"
+          transcript_el = document.getElementById("e")
+        transcript_el.focus()
+        transcript_el.click()
         recognition.stop()
         return
+
 
       recognition.onerror = (e) ->
         recognition.stop()

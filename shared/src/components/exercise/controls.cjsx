@@ -18,6 +18,7 @@ ExContinueButton = React.createClass
     buttonText = children or 'Continue'
 
     <AsyncButton
+      id='contine_button'
       bsStyle='primary'
       className='continue'
       key='step-continue'

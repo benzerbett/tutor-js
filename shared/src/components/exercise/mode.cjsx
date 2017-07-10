@@ -78,12 +78,27 @@ ExMode = React.createClass
 
       recognition.onresult = (e) ->
         transcript_el = document.getElementById('transcript')
-        transcript_el.focus()
-        transcript_el.value += e.results[0][0].transcript
-        transcript_el.innerHTML += e.results[0][0].transcript
-        recognition.stop()
-        transcript_el.submit()
-        transcript_el.onchange()
+        # transcript_el.focus()
+        response = e.results[0][0].transcript
+        if response.endsWith("answer")
+          transcript_el.value += response
+          transcript_el.innerHTML += response
+          keyEvent = document.createEvent("KeyboardEvent")
+          keyEvent.initKeyEvent("keypress", true, true, null, false, false, false, false, 8, 0)
+          field.dispatchEvent(keyEvent)
+
+          transcript_el = document.getElementById("contine_button")
+          transcript_el.focus()
+          transcript_el.click()
+
+          recognition.stop()
+
+        else
+          transcript_el.value += response
+          transcript_el.innerHTML += response
+          recognition.stop()
+        # transcript_el.submit()
+        # transcript_el.onchange()
         return
 
       recognition.onerror = (e) ->
@@ -91,23 +106,9 @@ ExMode = React.createClass
         return
 
 
-  checkVoice : ->
-    console.log('step1')
-    console.log(@voice)
-    if @state.voice == true
-      console.log('step2')
-      @startDictation()
-
-  toggleVoice : ->
-    if @state.voice == true
-      @setState voice: false
-    else
-      @setState voice: true
-
   getFreeResponse: ->
     {mode, free_response, disabled} = @props
     {freeResponse} = @state
-
 
     if mode is 'free-response'
       <textarea
@@ -119,9 +120,6 @@ ExMode = React.createClass
         value={freeResponse}
         onChange={@onFreeResponseChange}
       />
-
-
-
 
     else
       <FreeResponse free_response={free_response}/>
@@ -172,17 +170,11 @@ ExMode = React.createClass
 
 
 
-
-
-
-
-
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
-      <div>
-        <img onClick={@checkVoice.bind this} style={{height:'30px', paddingRight:'10px' }} src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Microphone_1.png" />
-        <button onClick={@toggleVoice.bind this} >Toggle voice</button>
+      <div onLoad={@startDictation}>
+        <img onClick={@startDictation} style={{height:'30px', paddingRight:'10px' }} src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Microphone_1.png" />
       </div>
 
 
