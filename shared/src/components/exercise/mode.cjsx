@@ -81,11 +81,11 @@ ExMode = React.createClass
         # transcript_el.focus()
         response = e.results[0][0].transcript
         if response.endsWith("answer")
-          transcript_el.value += response
-          transcript_el.innerHTML += response
+          transcript_el.value += response + " "
+          transcript_el.innerHTML += response + " "
           keyEvent = document.createEvent("KeyboardEvent")
-          keyEvent.initKeyEvent("keypress", true, true, null, false, false, false, false, 8, 0)
-          field.dispatchEvent(keyEvent)
+          transcript_el.click()
+          transcript_el.focus()
 
           transcript_el = document.getElementById("contine_button")
           transcript_el.focus()
@@ -97,8 +97,10 @@ ExMode = React.createClass
           transcript_el.value += response
           transcript_el.innerHTML += response
           recognition.stop()
-        # transcript_el.submit()
-        # transcript_el.onchange()
+
+          transcript_el.focus()
+          transcript_el.click()
+
         return
 
       recognition.onerror = (e) ->
@@ -119,6 +121,7 @@ ExMode = React.createClass
         placeholder='Enter your response'
         value={freeResponse}
         onChange={@onFreeResponseChange}
+        onClick={@onFreeResponseChange}
       />
 
     else
