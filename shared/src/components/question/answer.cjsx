@@ -88,36 +88,6 @@ Answer = React.createClass
   contextTypes:
     processHtmlAndMath: React.PropTypes.func
 
-  startDictation: ->
-    if window.hasOwnProperty('webkitSpeechRecognition')
-      recognition = new webkitSpeechRecognition
-      recognition.continuous = false
-      recognition.interimResults = false
-      recognition.lang = 'en-US'
-      recognition.start()
-
-      recognition.onresult = (e) ->
-        letter_choice = e.results[0][0].transcript
-        if letter_choice == "a"
-          transcript_el = document.getElementById("a")
-        if letter_choice == "be" || letter_choice == "bee" || letter_choice == "B"
-          transcript_el = document.getElementById("b")
-        if letter_choice == "see" || letter_choice == "sea"
-          transcript_el = document.getElementById("c")
-        if letter_choice == "d"
-          transcript_el = document.getElementById("d")
-        if letter_choice == "e"
-          transcript_el = document.getElementById("e")
-        transcript_el.focus()
-        transcript_el.click()
-        recognition.stop()
-        return
-
-
-      recognition.onerror = (e) ->
-        recognition.stop()
-        return
-
   onKeyPress: (ev, answer) ->
     @props.onChangeAnswer(answer) if ev.key is 'Enter' and @props.disabled isnt true
     null # silence react event return value warning
@@ -163,7 +133,7 @@ Answer = React.createClass
       accessbilityProps =
         tabIndex: 0
 
-    <div className='openstax-answer' onClick={@startDictation()}>
+    <div className='openstax-answer'>
       <div className={classes}>
         {selectedCount}
         {radioBox}

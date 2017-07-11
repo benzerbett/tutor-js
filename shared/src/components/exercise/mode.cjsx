@@ -77,29 +77,46 @@ ExMode = React.createClass
       recognition.start()
 
       recognition.onresult = (e) ->
-        transcript_el = document.getElementById('transcript')
-        # transcript_el.focus()
         response = e.results[0][0].transcript
-        if response.endsWith("answer")
-          transcript_el.value += response + " "
-          transcript_el.innerHTML += response + " "
-          keyEvent = document.createEvent("KeyboardEvent")
-          transcript_el.click()
-          transcript_el.focus()
+        transcript_el = document.getElementById('transcript')
+        if transcript_el == null
+          # then it is multiple choice
+          if response == "answer" || response == "submit"
+            transcript_el = document.getElementById("contine_button")
+            transcript_el.focus()
+            transcript_el.click()
+            recognition.stop()
+          else
+            if response == "a"
+              transcript_el = document.getElementById("a")
+            if response == "be" || response == "bee" || response == "B"
+              transcript_el = document.getElementById("b")
+            if response == "see" || response == "sea"
+              transcript_el = document.getElementById("c")
+            if response == "d"
+              transcript_el = document.getElementById("d")
+            if response == "e"
+              transcript_el = document.getElementById("e")
+            transcript_el.focus()
+            transcript_el.click()
+            recognition.stop()
+            return
 
-          transcript_el = document.getElementById("contine_button")
-          transcript_el.focus()
-          transcript_el.click()
-
-          recognition.stop()
 
         else
-          transcript_el.value += response
-          transcript_el.innerHTML += response
-          recognition.stop()
+          if response == "answer" || response == "submit"
+            transcript_el = document.getElementById("contine_button")
+            transcript_el.focus()
+            transcript_el.click()
+            recognition.stop()
+          else
+            transcript_el = document.getElementById('transcript')
+            transcript_el.value += response + " "
+            transcript_el.innerHTML += response + " "
+            recognition.stop()
 
-          transcript_el.focus()
-          transcript_el.click()
+            transcript_el.focus()
+            transcript_el.click()
 
         return
 
@@ -167,9 +184,7 @@ ExMode = React.createClass
         answer_id={answerId}
         keySet={answerKeySet}>
         {@getFreeResponse()}
-
       </Question>
-
 
 
 
