@@ -81,7 +81,7 @@ ExMode = React.createClass
         transcript_el = document.getElementById('transcript')
         if transcript_el == null
           # then it is multiple choice
-          if response == "answer" || response == "submit"
+          if response == "answer" || response == "submit" || response == "next question"
             transcript_el = document.getElementById("contine_button")
             transcript_el.focus()
             transcript_el.click()
@@ -104,7 +104,7 @@ ExMode = React.createClass
 
 
         else
-          if response == "answer" || response == "submit"
+          if response == "answer" || response == "submit" || response == "next question"
             transcript_el = document.getElementById("contine_button")
             transcript_el.focus()
             transcript_el.click()
