@@ -93,6 +93,7 @@ module.exports =
       </TutorLink>
     else
       <TutorLink
+        id='back_to_dashboard'
         to='dashboard'
         key='step-back-sd'
         params={{courseId}}

@@ -61,6 +61,20 @@ Question = React.createClass
 
     @hasAnswerCorrectness() and @doesArrayHaveProperty(collaborator_solutions, 'content_html')
 
+  speechHelp: ->
+    pop_up = document.getElementById('speechHelpPopUp')
+    help_button = document.getElementById('help_button')
+    if pop_up.innerHTML == ""
+      pop_up.innerHTML = "• Double check that the microphone icon says 'Listening' <br> "
+      pop_up.innerHTML += "• Simply say 'answer' when you are finished speaking your response <br> "
+      pop_up.innerHTML += "• Pause for a second between completing you answering and submission"
+      help_button.innerHTML = "Close"
+      pop_up.style.border = "1px solid #3399ff"
+    else
+      pop_up.innerHTML = ""
+      help_button.innerHTML = "Help"
+      pop_up.style.border = ""
+
   render: ->
     {model, correct_answer_id, exercise_uid, className, questionNumber, context, task} = @props
     {stem_html, collaborator_solutions, formats, stimulus_html} = model
@@ -86,6 +100,8 @@ Question = React.createClass
       <QuestionHtml type='context' html={context} />
       <QuestionHtml type='stimulus' html={stimulus_html} />
       <QuestionHtml type='stem' html={stem_html} questionNumber={questionNumber} />
+      <div id="help_button" onClick={@speechHelp} style={{fontSize:"12px", color:"#3399ff"}}>Help </div>
+      <div id="speechHelpPopUp"  style={{fontSize:"14px", padding:"8px"}}></div>
       {@props.children}
       <AnswersTable {...@props} hasCorrectAnswer={hasCorrectAnswer}/>
       {<FormatsListing formats={formats} /> if @props.displayFormats}
