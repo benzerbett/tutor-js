@@ -6,7 +6,8 @@ ArbitraryHtmlAndMath = require '../html'
 Question = require '../question'
 FreeResponse = require './free-response'
 
-
+mic_image = require './speech-symbol.png'
+listening_image = require './listening.gif'
 
 RESPONSE_CHAR_LIMIT = 10000
 
@@ -68,7 +69,25 @@ ExMode = React.createClass
     @setState {answerId: answer.id}
     @props.onAnswerChanged?(answer)
 
-  startDictation: ->
+  # recognizing: true
+  # final_transcript = ''
+  # recognizing = false
+  # ignore_onend = false
+  #
+  # if window.hasOwnProperty('webkitSpeechRecognition')
+  #   recognition = new webkitSpeechRecognition
+  #   recognition.continuous = true
+  #   recognition.interimResults = true
+  #   recognition.lang = 'en-US'
+  #
+  # recognition.onstart = function() {
+  #   recognizing = true;
+  #   showInfo('info_speak_now');
+  #   start_img.src = 'mic-animate.gif';
+  # };
+
+
+  startDictation: (e) ->
     if window.hasOwnProperty('webkitSpeechRecognition')
       recognition = new webkitSpeechRecognition
       recognition.continuous = false
@@ -76,9 +95,33 @@ ExMode = React.createClass
       recognition.lang = 'en-US'
       recognition.start()
 
+      recognition.onstart = () ->
+        recognizing = true
+        # icon = document.getElementById('speech_icon')
+        # speech_icon.src = listening_image
+
+      recognition.onend = () ->
+        recognizing = false
+        # icon = document.getElementById('speech_icon')
+        # speech_icon.src = mic_image
+
       recognition.onresult = (e) ->
-        response = e.results[0][0].transcript
+
         transcript_el = document.getElementById('transcript')
+
+        # interim_transcript = ''
+        # i = e.resultIndex
+        # while i < e.results.length
+        #   if e.results[i].isFinal
+        #     final_transcript += e.results[i][0].transcript
+        #   else
+        #     interim_transcript += e.results[i][0].transcript
+        #   i += 1
+        # }
+        # final_span.innerHTML = final_transcript
+        # interim_span.innerHTML = interim_transcript
+
+        response = e.results[0][0].transcript
         if transcript_el == null
           # then it is multiple choice
           if response == "answer" || response == "submit" || response == "next question"
@@ -100,8 +143,6 @@ ExMode = React.createClass
             transcript_el.focus()
             transcript_el.click()
             recognition.stop()
-            return
-
 
         else
           if response == "answer" || response == "submit" || response == "next question"
@@ -117,12 +158,26 @@ ExMode = React.createClass
 
             transcript_el.focus()
             transcript_el.click()
-
         return
 
       recognition.onerror = (e) ->
         recognition.stop()
         return
+
+
+  startButton: (event) ->
+    if (recognizing)
+      recognition.stop()
+      return
+
+    final_transcript = ''
+    recognition.start()
+    final_span.innerHTML = ''
+    interim_span.innerHTML = ''
+    start_img.src = listening_image;
+    # showInfo('info_allow');
+    # showButtons('none');
+    # start_timestamp = event.timeStamp;
 
 
   getFreeResponse: ->
@@ -139,7 +194,10 @@ ExMode = React.createClass
         value={freeResponse}
         onChange={@onFreeResponseChange}
         onClick={@onFreeResponseChange}
-      />
+      >
+      </textarea>
+      <span id="final_transcript"></span>
+      <span id="interim_transcript"></span>
 
     else
       <FreeResponse free_response={free_response}/>
@@ -192,7 +250,7 @@ ExMode = React.createClass
       {stimulus}
       {questions}
       <div onLoad={@startDictation}>
-        <img onClick={@startDictation} style={{height:'30px', paddingRight:'10px' }} src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Microphone_1.png" />
+        <img id="speech_icon" onClick={@startDictation} style={{height:'30px', paddingRight:'10px' }} src={mic_image} />
       </div>
 
 
