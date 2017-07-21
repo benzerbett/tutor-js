@@ -90,10 +90,14 @@ ExMode = React.createClass
   startDictation: (e) ->
     if window.hasOwnProperty('webkitSpeechRecognition')
       recognition = new webkitSpeechRecognition
-      recognition.continuous = false
+      recognition.continuous = true
       recognition.interimResults = false
       recognition.lang = 'en-US'
       recognition.start()
+      icon = document.getElementById('speech_icon')
+      speech_icon.src = listening_image
+      submit_tiggers = ["answer", "submit", "next question", "next",
+                        " answer", " submit", " next question", " next"]
 
       recognition.onstart = () ->
         recognizing = true
@@ -102,60 +106,48 @@ ExMode = React.createClass
 
       recognition.onend = () ->
         recognizing = false
-        # icon = document.getElementById('speech_icon')
-        # speech_icon.src = mic_image
+        icon = document.getElementById('speech_icon')
+        speech_icon.src = mic_image
 
       recognition.onresult = (e) ->
-
         transcript_el = document.getElementById('transcript')
-
-        # interim_transcript = ''
-        # i = e.resultIndex
-        # while i < e.results.length
-        #   if e.results[i].isFinal
-        #     final_transcript += e.results[i][0].transcript
-        #   else
-        #     interim_transcript += e.results[i][0].transcript
-        #   i += 1
-        # }
-        # final_span.innerHTML = final_transcript
-        # interim_span.innerHTML = interim_transcript
-
-        response = e.results[0][0].transcript
+        index = e.results.length - 1
+        response = e.results[index][0].transcript
         if transcript_el == null
           # then it is multiple choice
-          if response == "answer" || response == "submit" || response == "next question"
+          if response in submit_tiggers
             transcript_el = document.getElementById("contine_button")
             transcript_el.focus()
             transcript_el.click()
-            recognition.stop()
+            # recognition.stop()
           else
-            if response == "a"
+            if response == "a" || response == " a"
               transcript_el = document.getElementById("a")
-            if response == "be" || response == "bee" || response == "B"
+            if response == "be" || response == "bee" || response == "B" ||
+                response == " be" || response == " bee" || response == " B"
               transcript_el = document.getElementById("b")
-            if response == "see" || response == "sea"
+            if response == "see" || response == "sea" || response == " see" || response == " sea"
               transcript_el = document.getElementById("c")
-            if response == "d"
+            if response == "d" || response == " d"
               transcript_el = document.getElementById("d")
-            if response == "e"
+            if response == "e" || response == " e"
               transcript_el = document.getElementById("e")
             transcript_el.focus()
             transcript_el.click()
-            recognition.stop()
+            # recognition.stop()
 
         else
-          if response == "answer" || response == "submit" || response == "next question"
+          console.log(response)
+          if response in submit_tiggers
             transcript_el = document.getElementById("contine_button")
             transcript_el.focus()
             transcript_el.click()
-            recognition.stop()
+            # recognition.stop()
           else
             transcript_el = document.getElementById('transcript')
-            transcript_el.value += response + " "
-            transcript_el.innerHTML += response + " "
-            recognition.stop()
-
+            transcript_el.value += response
+            transcript_el.innerHTML += response
+            # recognition.stop()
             transcript_el.focus()
             transcript_el.click()
         return
@@ -164,17 +156,20 @@ ExMode = React.createClass
         recognition.stop()
         return
 
+  recognizing: false
 
   startButton: (event) ->
     if (recognizing)
       recognition.stop()
-      return
 
+      return
+    recognizing = true
     final_transcript = ''
     recognition.start()
     final_span.innerHTML = ''
     interim_span.innerHTML = ''
     start_img.src = listening_image;
+    # @startDictation
     # showInfo('info_allow');
     # showButtons('none');
     # start_timestamp = event.timeStamp;
@@ -196,8 +191,6 @@ ExMode = React.createClass
         onClick={@onFreeResponseChange}
       >
       </textarea>
-      <span id="final_transcript"></span>
-      <span id="interim_transcript"></span>
 
     else
       <FreeResponse free_response={free_response}/>
@@ -249,7 +242,7 @@ ExMode = React.createClass
     <div className='openstax-exercise'>
       {stimulus}
       {questions}
-      <div onLoad={@startDictation}>
+      <div >
         <img id="speech_icon" onClick={@startDictation} style={{height:'30px', paddingRight:'10px' }} src={mic_image} />
       </div>
 
