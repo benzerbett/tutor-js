@@ -31,7 +31,6 @@ export default class BookUX {
   }
 
   @action.bound onEcosystemChange({ newValue: ecosystemId }) {
-    console.log(ecosystemId, this.book)
     if (this.book && this.book.id == ecosystemId){ return; }
     this.book = new Book({ id: ecosystemId });
     this.book.fetch().then(() => {
