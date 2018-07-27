@@ -22,7 +22,10 @@ $rw-img-path: '~react-widgets/dist/img';
 
 @import '../../../shared/resources/styles/main.scss';
 
-@import '~bootstrap/dist/css/bootstrap.min.css';
+.qk {
+  @import '~bootstrap/dist/css/bootstrap.min';
+  @import './../../src/components/qk/qkstyles';
+}
 
 @import "global/defaults";
 @import "global/widgets";
@@ -33,8 +36,6 @@ $rw-img-path: '~react-widgets/dist/img';
 @import "./vocabulary";
 @import './tags';
 @import './preview';
-
-@import './../../src/components/qk/qkstyles.scss';
 
 .exercises-body {
   margin-top: 60px;
