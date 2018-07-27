@@ -1,0 +1,18 @@
+
+h5.subject.card-title{
+    color: rgba(72, 68, 71, 0.98);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    max-height: 50px;
+    margin-bottom: 75px;
+    overflow:hidden;
+}
+
+div.forum.card-body{
+    cursor:pointer;
+}
+
+.subject-card{
+    background-color: rgba(243, 244, 245, 0.78);
+}

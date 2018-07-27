@@ -1,0 +1,27 @@
+.qk {
+  .navbar-brand {
+    font-size: 25px !important;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-item{
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  a.nav-link{
+    padding-top: 2px;
+    padding-bottom: 5px;
+  }
+  
+  .menu-icon{
+    padding-top: 10px;
+    padding-bottom:3px;
+  }
+  
+  .logo{
+    height: 50px;
+    width: 50px;
+  }
+}
