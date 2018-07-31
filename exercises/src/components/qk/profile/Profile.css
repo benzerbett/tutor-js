@@ -1,0 +1,19 @@
+#face {
+  font-size: 55px;
+  vertical-align: middle;
+  width: 15%;
+  height: 10%;
+  border: 1;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#img {
+  padding: 10px;
+  width: 100%;
+  float: left;
+  margin: 1.66%;
+}
+#jumbo {
+  padding: 10px 10px;
+}
