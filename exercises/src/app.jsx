@@ -13,6 +13,7 @@ import QKQuestionRoute from './components/qk/questionroute/QuestionRoute';
 import QKNewQuestion from './components/qk/newquestion/NewQuestion';
 import QKHelp from './components/qk/help/Help';
 import QKSubjectPicker from './components/qk/subjectpicker/SubjectPicker';
+import QKBoardSearch from './components/qk/board/board';
 import UserActionsMenu from './components/user-actions-menu';
 
 export default class App extends React.Component {
@@ -61,7 +62,8 @@ export default class App extends React.Component {
               <Route path='/qk/questions' component={QKQuestionRoute}/>
               <Route path='/qk/new-question' component={QKNewQuestion}/>
               <Route path='/qk/help' component={QKHelp}/>
-              <Route path='/qk/subject-picker'component={QKSubjectPicker}/>
+              <Route path='/qk/subjects' component={QKSubjectPicker}/>
+              <Route path='/qk/subject/:subject' component={QKBoardSearch} />
             </div>
           </Grid>
         </BrowserRouter>

@@ -23,6 +23,7 @@ $rw-img-path: '~react-widgets/dist/img';
 @import '../../../shared/resources/styles/main.scss';
 
 .qk {
+  padding: 0;
   @import '~bootstrap/dist/css/bootstrap.min';
   @import './../../src/components/qk/qkstyles';
 }

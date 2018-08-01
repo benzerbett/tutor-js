@@ -10,9 +10,8 @@ import {
 // The FullRoster iterates over all of the players and creates
 // a link to their profile page.
 const Subjects = [
-    "Math",
+    "Calculus",
     "Physics",
-    "English",
     "Chemistry",
     "History",
     "Sociology",
@@ -27,7 +26,7 @@ export default class SubjectPicker extends React.Component {
                 {
                     Subjects.map(p => (
                         <div className="col-3" key={Subjects.indexOf(p)}>
-                            <LinkContainer to='/questions'>
+                            <LinkContainer to={"/qk/subject/" + p.toLowerCase()}>
                                 <Card className="mx-1 my-4">
                                     <div className='subject-card'>
                                     <CardBody className="forum">

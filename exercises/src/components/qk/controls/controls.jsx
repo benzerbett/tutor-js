@@ -53,7 +53,7 @@ class QKControls extends React.Component {
                                     <NavLink href=''>Home</NavLink>
                                 </NavItem>
                             </LinkContainer>
-                            <LinkContainer to="/qk/subject-picker">
+                            <LinkContainer to="/qk/subjects">
                                 <NavItem>
                                     <Icon className='menu-icon' icon={delicious} style={{color:'#737472'}}/>
                                     <NavLink href=''>Menu</NavLink>
