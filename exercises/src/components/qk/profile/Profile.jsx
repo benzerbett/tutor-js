@@ -113,10 +113,10 @@ export default class Profile extends React.Component {
                   </Jumbotron>
                   <div id="face">
                     <Card>
-                      <CardImg
+                      <img
                         id="img"
                         top
-                        width="100%"
+                        width="15%"
                         src="http://www.piachievers.com/img/users-female-2.png"
                         alt="Card image cap"
                       />
@@ -143,7 +143,7 @@ export default class Profile extends React.Component {
                   <CardText>
                     Create new set of questions and get more credit!
                   </CardText>
-                  <LinkContainer to="/qk/new-question">
+                  <LinkContainer to="../qk/new-question">
                     <Button>Create a question</Button>
                   </LinkContainer>
                 </Card>

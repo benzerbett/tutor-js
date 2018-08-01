@@ -18,6 +18,7 @@ import { home } from "react-icons-kit/icomoon/home";
 import { delicious } from "react-icons-kit/icomoon/delicious";
 import { question } from "react-icons-kit/icomoon/question";
 import { fileText } from "react-icons-kit/icomoon/fileText";
+import { profile } from "react-icons-kit/icomoon/profile";
 import logo from "./logo.png";
 
 @withRouter
