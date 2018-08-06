@@ -77,7 +77,7 @@ class QKControls extends React.Component {
                   <NavLink href="">Help</NavLink>
                 </NavItem>
               </LinkContainer>
-              <LinkContainer to="/qk/new-question">
+              <LinkContainer to="/exercise/new">
                 <NavItem>
                   <Icon
                     className="menu-icon"

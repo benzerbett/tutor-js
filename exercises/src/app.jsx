@@ -25,6 +25,7 @@ export default class App extends React.Component {
     ev.preventDefault();
     this.router.history.push(ev.currentTarget.pathname);
   }
+  
 
   render() {
     const {
@@ -33,7 +34,7 @@ export default class App extends React.Component {
         data: { user }
       }
     } = this;
-    const inQK = window.location.pathname.includes("/qk");
+    var inQK = window.location.pathname.includes("/qk");
 
     return (
       <Provider ux={ux}>
@@ -67,19 +68,12 @@ export default class App extends React.Component {
               <Route path="/exercise/:uid" component={Exercise} />
               <Route path="/preview/:uid" component={Preview} />
               <Route path="/qk/home" component={QK} />
-<<<<<<< HEAD
-              <Route path='/qk/questions' component={QKQuestionRoute}/>
-              <Route path='/qk/new-question' component={QKNewQuestion}/>
-              <Route path='/qk/help' component={QKHelp}/>
-              <Route path='/qk/subjects' component={QKSubjectPicker}/>
-              <Route path='/qk/subject/:subject' component={QKBoardSearch} />
-=======
               <Route path="/qk/questions" component={QKQuestionRoute} />
               <Route path="/qk/new-question" component={QKNewQuestion} />
               <Route path="/qk/help" component={QKHelp} />
-              <Route path="/qk/subject-picker" component={QKSubjectPicker} />
+              <Route path='/qk/subjects' component={QKSubjectPicker}/>
+              <Route path='/qk/subject/:subject' component={QKBoardSearch} />
               <Route path="/qk/profile" component={QKProfile} />
->>>>>>> 5ba0e608a557fe6fd031f7d740c098e603676384
             </div>
           </Grid>
         </BrowserRouter>

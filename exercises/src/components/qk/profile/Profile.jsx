@@ -20,6 +20,8 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import { LinkContainer } from "react-router-bootstrap";
+import QKMyQuestions from './../myquestions/myquestions';
+
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -85,7 +87,7 @@ export default class Profile extends React.Component {
                       and go through your stored questions
                     </p>
                     <hr className="my-2" />
-                    <p>
+                    <div>
                       <div>
                         <div className="text-center">Your Progress</div>
                         <Progress multi>
@@ -106,7 +108,7 @@ export default class Profile extends React.Component {
                           </Progress>
                         </Progress>
                       </div>
-                    </p>
+                    </div>
                     <p className="lead">
                       <Button color="primary">Learn More</Button>
                     </p>
@@ -143,7 +145,7 @@ export default class Profile extends React.Component {
                   <CardText>
                     Create new set of questions and get more credit!
                   </CardText>
-                  <LinkContainer to="../qk/new-question">
+                  <LinkContainer to="/exercise/new">
                     <Button>Create a question</Button>
                   </LinkContainer>
                 </Card>
@@ -151,8 +153,8 @@ export default class Profile extends React.Component {
               <Col sm="6">
                 <Card body>
                   <CardTitle>Question Library</CardTitle>
-                  <CardText>Your personal favorite questions</CardText>
-                  <Button>Questions saved</Button>
+                  <CardText>Your authored questions</CardText>
+                  <QKMyQuestions />
                 </Card>
               </Col>
             </Row>

@@ -1,6 +1,7 @@
 import { get, last } from 'lodash';
 import { ExercisesMap, Exercise } from '../models/exercises';
 import Search from '../models/search';
+import User from '../models/user';
 import Adapter from './adapter';
 
 const {
@@ -8,6 +9,11 @@ const {
 } = Adapter;
 
 const start = function() {
+
+  connectModelRead(User, 'fetch', {
+    pattern: 'user',
+    onSuccess: 'onComplete',
+  });
 
   connectModelRead(Search, 'perform', {
     pattern: 'exercises',
