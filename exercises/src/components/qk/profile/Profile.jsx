@@ -12,11 +12,8 @@ import {
   CardText,
   Row,
   Col,
-  CardImg,
   CardBody,
-  CardSubtitle,
   Jumbotron,
-  Progress
 } from "reactstrap";
 import classnames from "classnames";
 import { LinkContainer } from "react-router-bootstrap";
@@ -40,7 +37,29 @@ export default class Profile extends React.Component {
   render() {
     return (
       <div>
-        <Nav tabs>
+
+        <div>
+          <Jumbotron id="jumbo">
+            <h1 className="display-3">
+              <img
+                id="img"
+                width="140"
+                style={{paddingRight:25}}
+                src="http://www.piachievers.com/img/users-female-2.png"
+                alt="Card image cap"
+              />
+                John Adams
+            </h1>
+            <p className="lead" style={{paddingLeft: 140}}>
+              This is a page where you can see your personal
+              information, your progress, create new set of questions,
+              and go through your stored questions.
+            </p>
+          </Jumbotron>
+        </div>
+
+
+        <Nav tabs style={{paddingLeft: 25}}>
           <NavItem>
             <NavLink
               className={classnames({ active: this.state.activeTab === "1" })}
@@ -72,63 +91,27 @@ export default class Profile extends React.Component {
             </NavLink>
           </NavItem>
         </Nav>
+
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <Row>
               <Col sm="12">
                 <div>
-                  <Jumbotron id="jumbo">
-                    <h1 className="display-3">
-                      Welcome to Question Kitchen, John!
-                    </h1>
-                    <p className="lead">
-                      This is a page where you can see your personal
-                      information, your progress, create new set of questions,
-                      and go through your stored questions
-                    </p>
-                    <hr className="my-2" />
-                    <div>
-                      <div>
-                        <div className="text-center">Your Progress</div>
-                        <Progress multi>
-                          <Progress bar value="15">
-                            Calculus
-                          </Progress>
-                          <Progress bar color="success" value="30">
-                            English
-                          </Progress>
-                          <Progress bar color="info" value="25">
-                            Biology
-                          </Progress>
-                          <Progress bar color="warning" value="20">
-                            Statistics
-                          </Progress>
-                          <Progress bar color="danger" value="5">
-                            Chemistry
-                          </Progress>
-                        </Progress>
-                      </div>
-                    </div>
-                    <p className="lead">
-                      <Button color="primary">Learn More</Button>
-                    </p>
-                  </Jumbotron>
                   <div id="face">
                     <Card>
-                      <img
-                        id="img"
-                        top
-                        width="15%"
-                        src="http://www.piachievers.com/img/users-female-2.png"
-                        alt="Card image cap"
-                      />
-                      <CardBody>
-                        <CardTitle id="jumbo">John King </CardTitle>
-                        <CardSubtitle id="jumbo">
-                          Cascade High School
-                        </CardSubtitle>
-                        <CardSubtitle id="jumbo">English teacher</CardSubtitle>
-                        <CardText />
+                      <CardBody style={{paddingLeft: 25}}>
+                      <p id = "profile">
+                        <strong>Name: </strong> John Adams
+                      </p>
+                      <p id = "profile">
+                        <strong>School: </strong> Rice University
+                      </p>
+                      <p id = "profile">
+                        <strong>Subject(s) Taught: </strong> English
+                      </p>
+                      <p id = "profile">
+                        <strong>QK Standing: </strong> Valued Contributor
+                      </p>
                         <Button>Edit</Button>
                       </CardBody>
                     </Card>
@@ -140,7 +123,7 @@ export default class Profile extends React.Component {
           <TabPane tabId="2">
             <Row>
               <Col sm="6">
-                <Card body>
+                <Card body style={{paddingLeft:25}}>
                   <CardTitle>Create New Questions</CardTitle>
                   <CardText>
                     Create new set of questions and get more credit!
