@@ -9,7 +9,7 @@ import {
 export default class Help extends React.Component {
     render() {
         return (
-            <div>
+            <div className="qk">
                 <Card className='m-5'>
                     <CardBody>
                         <h1>This is where the help page would go</h1>

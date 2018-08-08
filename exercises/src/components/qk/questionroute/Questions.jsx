@@ -30,7 +30,7 @@ export default class Questions extends React.Component {
 
     render(){
         return (
-            <div className="row">
+            <div className="row qk">
                 <div className="col-8">
                     {
                         this.state.questions.map(p => (

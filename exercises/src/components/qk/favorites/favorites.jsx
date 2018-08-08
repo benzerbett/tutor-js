@@ -5,7 +5,7 @@ import UX from './../../../ux';
 
 @inject('ux')
 @observer
-export default class QKMyQuestions extends React.Component {
+export default class QKFavorites extends React.Component {
   constructor(props) {
     super(props);
     this.props.ux.user.fetch()
@@ -18,7 +18,7 @@ export default class QKMyQuestions extends React.Component {
   render() {
     if(this.props.ux.user.getUsername() != "") {
       return(
-        <QKQueryGroup filter='author' value={this.props.ux.user.getUsername()} showEdit={true} showFave={false}/>
+        <QKQueryGroup filter='favorite' value={this.props.ux.user.getUsername()} showEdit={false} showFave={false}/>
       );
     }
     return (

@@ -33,6 +33,7 @@ class Clause extends BaseModel {
   }
 
   get asQuery() {
+    console.log(`query: ${this.filter}:"${this.value}"`)
     return `${this.filter}:"${this.value}"`;
   }
 }
@@ -46,6 +47,7 @@ export default class Search extends BaseModel {
 
   constructor() {
     super();
+    console.log("Search constructor")
     if (!this.clauses.length) { this.clauses.push({}); }
   }
 
@@ -60,6 +62,7 @@ export default class Search extends BaseModel {
 
   //called by api
   perform() {
+    console.log("performing search")
     return { query: { q: map(this.clauses, 'asQuery').join(' ') } };
   }
 

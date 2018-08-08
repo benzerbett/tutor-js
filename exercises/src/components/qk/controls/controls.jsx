@@ -39,7 +39,7 @@ class QKControls extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="qk">
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/qk/home">
             <img className="logo ml-4" src={logo} />

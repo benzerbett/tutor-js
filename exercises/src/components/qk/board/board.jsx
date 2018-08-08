@@ -9,8 +9,10 @@ import QKQueryGrouper from './../grouper/querygroup';
 class QKBoardSearch extends React.Component {
   render() {
     return(
-      <QKQueryGrouper filter="tag" value={this.props.match.params.subject} />
-    )
+      <div className="qk">
+        <QKQueryGrouper filter="tag" value={this.props.match.params.subject} showEdit={false} showFave={true} />
+      </div>
+    );
   }
 }
 export default QKBoardSearch;

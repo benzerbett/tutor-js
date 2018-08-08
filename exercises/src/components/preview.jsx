@@ -50,7 +50,7 @@ export default class Preview extends React.Component {
           displayFeedback
           exercise={exercise}
         >
-          <Link className="btn" to={`/exercise/${exercise.uid}`}>EDIT</Link>
+          {/* <Link className="btn" to={`/exercise/${exercise.uid}`}>EDIT</Link> */}
         </ExercisePreview>
       </div>
     );

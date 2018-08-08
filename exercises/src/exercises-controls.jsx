@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Navbar, Nav, NavItem, } from 'react-bootstrap';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { Provider, observer } from 'mobx-react';
+import { Provider, observer, inject } from 'mobx-react';
 import { action } from 'mobx';
 import UX from './ux';
 import Search from './components/search';
@@ -44,7 +44,7 @@ export default class ExercisesControls extends React.Component {
           <Route path="/exercise/:uid" component={Exercise.Controls} />
           <Route path="/preview/:uid" component={Preview.Controls} />
         </Nav>
-        <UserActionsMenu user={this.props.user} />
+        <UserActionsMenu />
       </Navbar>
     )
   }

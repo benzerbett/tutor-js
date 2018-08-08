@@ -2,13 +2,26 @@ import { get, last } from 'lodash';
 import { ExercisesMap, Exercise } from '../models/exercises';
 import Search from '../models/search';
 import User from '../models/user';
+import Favorite from '../models/favorite';
+import Query from '../models/query';
 import Adapter from './adapter';
 
 const {
-  connectModelUpdate, connectModelRead,
+  connectModelUpdate, connectModelRead, connectModelCreate
 } = Adapter;
 
 const start = function() {
+
+  connectModelRead(Query, 'perform', {
+    pattern: 'exercises',
+    onSuccess: 'onComplete',
+  });
+
+  connectModelCreate(Favorite, 'add', {
+    method: 'POST',
+    pattern: 'favorites',
+    onSuccess: 'onCreated',
+  });
 
   connectModelRead(User, 'fetch', {
     pattern: 'user',

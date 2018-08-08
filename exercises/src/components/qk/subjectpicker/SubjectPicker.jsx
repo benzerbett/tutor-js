@@ -22,23 +22,25 @@ const Subjects = [
 export default class SubjectPicker extends React.Component {
     render() {
         return (
-            <div className="row mx-4">
-                {
-                    Subjects.map(p => (
-                        <div className="col-3" key={Subjects.indexOf(p)}>
-                            <LinkContainer to={"/qk/subject/" + p.toLowerCase()}>
-                                <Card className="mx-1 my-4">
-                                    <div className='subject-card'>
-                                    <CardBody className="forum">
-                                        <CardTitle className="subject">{p}</CardTitle>
-                                        <CardBody/>
-                                    </CardBody></div>
-                                </Card>
-                            </LinkContainer>
-                        </div>
+            <div className="qk">
+                <div className="row mx-4">
+                    {
+                        Subjects.map(p => (
+                            <div className="col-3" key={Subjects.indexOf(p)}>
+                                <LinkContainer to={"/qk/subject/" + p.toLowerCase()}>
+                                    <Card className="mx-1 my-4">
+                                        <div className='subject-card'>
+                                        <CardBody className="forum">
+                                            <CardTitle className="subject">{p}</CardTitle>
+                                            <CardBody/>
+                                        </CardBody></div>
+                                    </Card>
+                                </LinkContainer>
+                            </div>
 
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
         );
     }

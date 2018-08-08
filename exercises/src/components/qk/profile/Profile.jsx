@@ -21,6 +21,7 @@ import {
 import classnames from "classnames";
 import { LinkContainer } from "react-router-bootstrap";
 import QKMyQuestions from './../myquestions/myquestions';
+import QKFavorites from './../favorites/favorites';
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ export default class Profile extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="qk">
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -141,13 +142,9 @@ export default class Profile extends React.Component {
             <Row>
               <Col sm="6">
                 <Card body>
-                  <CardTitle>Create New Questions</CardTitle>
-                  <CardText>
-                    Create new set of questions and get more credit!
-                  </CardText>
-                  <LinkContainer to="/exercise/new">
-                    <Button>Create a question</Button>
-                  </LinkContainer>
+                  <CardTitle>Favorited Questions</CardTitle>
+                  <CardText>Questions that you've saved</CardText>
+                  <QKFavorites />
                 </Card>
               </Col>
               <Col sm="6">

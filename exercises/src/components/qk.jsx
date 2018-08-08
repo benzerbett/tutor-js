@@ -7,7 +7,7 @@ import kitchen from "./qk/kitchen.png";
 export default class QK extends React.Component {
   render() {
     return (
-      <div className="mt-5">
+      <div className="mt-5 qk">
         <div id="welcome" className="row">
           <div className="col-7">
             <img

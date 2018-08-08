@@ -16,6 +16,7 @@ import QKProfile from './components/qk/profile/Profile';
 import QKSubjectPicker from './components/qk/subjectpicker/SubjectPicker';
 import QKBoardSearch from './components/qk/board/board';
 import UserActionsMenu from './components/user-actions-menu';
+import ExercisesControls from './exercises-controls';
 
 export default class App extends React.Component {
   ux = new UX();
@@ -34,36 +35,16 @@ export default class App extends React.Component {
         data: { user }
       }
     } = this;
-    var inQK = window.location.pathname.includes("/qk");
-
+    
     return (
       <Provider ux={ux}>
         <BrowserRouter ref={br => (this.router = br)}>
-          <Grid fluid className={"exercises" + (inQK ? " qk" : "")}>
-            {!inQK ? (
-              <Navbar fixedTop>
-                <Navbar.Header>
-                  <Navbar.Brand>
-                    <a href="#home">OX Exercises</a>
-                  </Navbar.Brand>
-                </Navbar.Header>
-                <Nav className="exercise-navbar-controls">
-                  <NavItem onClick={this.onNav} href="/search">
-                    Search
-                  </NavItem>
-                  <NavItem onClick={this.onNav} href="/exercise/new">
-                    New
-                  </NavItem>
-                  <Route path="/search" component={Search.Controls} />
-                  <Route path="/exercise/:uid" component={Exercise.Controls} />
-                  <Route path="/preview/:uid" component={Preview.Controls} />
-                </Nav>
-                <UserActionsMenu user={user} />
-              </Navbar>
-            ) : (
-              <Route path="/qk" component={QKControls} />
-            )}
-            <div className={"exercises-body" + (inQK ? " qk" : "")}>
+          <Grid fluid className={"exercises"}>
+            <Route path="/search" component={ExercisesControls} />
+            <Route path="/exercise" component={ExercisesControls} />
+            <Route path="/preview" component={ExercisesControls} />
+            <Route path="/qk" component={QKControls} />
+            <div className={"exercises-body"}>
               <Route path="/search" component={Search} />
               <Route path="/exercise/:uid" component={Exercise} />
               <Route path="/preview/:uid" component={Preview} />
