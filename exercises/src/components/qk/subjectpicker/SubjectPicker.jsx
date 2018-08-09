@@ -10,12 +10,14 @@ import {
 // The FullRoster iterates over all of the players and creates
 // a link to their profile page.
 const Subjects = [
-    "Calculus",
+    "Math",
     "Physics",
     "Chemistry",
     "History",
     "Sociology",
     "Biology",
+    "Economics",
+    "Government",
 ];
 
 @observer

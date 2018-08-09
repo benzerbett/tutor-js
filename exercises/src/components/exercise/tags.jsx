@@ -3,6 +3,7 @@ import { Row } from 'react-bootstrap';
 import Books from '../tags/books';
 import Lo from '../tags/lo';
 import QuestionType from '../tags/question-type';
+import SubjectType from '../tags/subjects';
 import FilterType from '../tags/filter-type';
 import CnxMod from '../tags/cnx-mod';
 import CnxFeature from '../tags/cnx-feature';
@@ -18,6 +19,7 @@ function ExerciseTags({ exercise }) {
 
   return (
     <div className="tags">
+      <SubjectType {...tagProps}/>
       <Books {...tagProps} />
       <Lo {...tagProps} />
       <QuestionType {...tagProps} />
