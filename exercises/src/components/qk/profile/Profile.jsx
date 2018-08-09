@@ -81,16 +81,6 @@ export default class Profile extends React.Component {
               Questions
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === "3" })}
-              onClick={() => {
-                this.toggle("3");
-              }}
-            >
-              Draft
-            </NavLink>
-          </NavItem>
         </Nav>
 
         <TabContent activeTab={this.state.activeTab}>

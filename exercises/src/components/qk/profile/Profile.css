@@ -1,21 +1,14 @@
-#face {
-  font-size: 55px;
-  vertical-align: middle;
-  width: 15%;
-  height: 10%;
-  border: 1;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-#img {
-  padding: 10px;
-  width: 100%;
-  float: left;
-  margin: 1.66%;
+.jumbotron {
+  background-color: initial;
 }
 
+h5.card-title {
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: .5em;
+}
 
-#lead{
-  padding-left: 4rem;
+h5.card-title + p.card-text {
+  text-align: center;
 }

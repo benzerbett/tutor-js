@@ -10,7 +10,7 @@ class QKBoardSearch extends React.Component {
   render() {
     return(
       <div className="qk">
-        <QKQueryGrouper filter="tag" value={this.props.match.params.subject} showEdit={false} showFave={true} />
+        <QKQueryGrouper filter="tag" value={`subject:${this.props.match.params.subject}`} showEdit={false} showFave={true} />
       </div>
     );
   }
