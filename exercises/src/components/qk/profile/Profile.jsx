@@ -81,6 +81,26 @@ export default class Profile extends React.Component {
               Questions
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "3" })}
+              onClick={() => {
+                this.toggle("3");
+              }}
+            >
+              Create Worksheet
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "4" })}
+              onClick={() => {
+                this.toggle("4");
+              }}
+            >
+              Create Online Quiz
+            </NavLink>
+          </NavItem>
         </Nav>
 
         <TabContent activeTab={this.state.activeTab}>
@@ -128,6 +148,12 @@ export default class Profile extends React.Component {
                 </Card>
               </Col>
             </Row>
+          </TabPane>
+          <TabPane tabId="3">
+            <p className="announce">This feature would be great if it existed!</p>
+          </TabPane>
+          <TabPane tabId="4">
+            <p className="announce">This feature would be great if it existed!</p>
           </TabPane>
         </TabContent>
       </div>
