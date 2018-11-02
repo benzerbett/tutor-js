@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-
+import CourseSpyInfo from '../components/course-spy-info';
 import Router from '../helpers/router';
 import Analytics from '../helpers/analytics';
 import Navbar from './navbar';
@@ -71,6 +71,7 @@ class App extends React.PureComponent {
             <TourConductor>
               <Navbar.bar {...this.props} />
               <MatchForTutor routes={Router.getRenderableRoutes()} />
+              <CourseSpyInfo course={course} />
             </TourConductor>
           </Navbar.context>
         </SpyMode.Wrapper>

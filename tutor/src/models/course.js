@@ -75,6 +75,7 @@ export default class Course extends BaseModel {
   @field reading_score_weight;
   @field reading_progress_weight;
   @field just_created = false;
+  @field({ type: 'object' }) spy_info;
 
   @hasMany({ model: Period, inverseOf: 'course', extend: extendHasMany({
     sorted()   { return PH.sort(this.active);                        },
